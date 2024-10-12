@@ -1,10 +1,12 @@
 <template>
   <nav class="govgr-nav govgr-nav--horizontal">
     <ul class="govgr-nav__list">
-      <li><a href="" class="govgr-nav__list-item-link govgr-nav__list-item-link--active">Home</a></li>
-      <li><a href="#" class="govgr-nav__list-item-link">Form registration</a></li>
-      <li><a href="#" class="govgr-nav__list-item-link">News</a></li>
-      <li><a href="#" class="govgr-nav__list-item-link">Contact</a></li>
+      <li><a href="" class="govgr-nav__list-item-link govgr-nav__list-item-link--active">Σχετικά</a></li>
+      <li><a href="#" class="govgr-nav__list-item-link">Αξιολόγηση</a></li>
+      <li><a href="#" class="govgr-nav__list-item-link">Επίδομα Παιδιού-Α21</a></li>
+      <li><a href="#" class="govgr-nav__list-item-link">Επίδομα Ενοικίου</a></li>
+      <li><a href="#" class="govgr-nav__list-item-link">Επίδομα Θέρμανσης</a></li>
+      <li><a href="#" class="govgr-nav__list-item-link">ΚΕΠΑ</a></li>
     </ul>
   </nav>
 </template>
