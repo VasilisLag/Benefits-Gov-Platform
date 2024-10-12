@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import HeaderElement from '@/components/HeaderElement.vue';
-import NavElement from '@/components/NavElement.vue';
+import HeaderElement from '@/components/Elements/HeaderElement.vue';
+import NavElement from '@/components/Elements/NavElement.vue';
 
 export default {
   name: 'HomePage',
