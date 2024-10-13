@@ -3,8 +3,31 @@
     <HeaderElement />
     <NavElement />
     <main class="p-4">
-      <h1 class="text-2xl font-bold">Welcome to the Home Page</h1>
-      <p class="mt-2">This is where your main content will go.</p>
+      <section>
+        <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Καλωσορίσατε στην Πλατφόρμα Υπολογισμού Δικαιώματος Επιδόματος</h2>
+        <p class="govgr-!-font-size-16">
+          Αυτή η πλατφόρμα σας βοηθά να δείτε γρήγορα και εύκολα αν δικαιούστε επιδόματα όπως:
+        </p>
+        <ol class="govgr-list govgr-list--bullet govgr-!-font-size-16">
+          <li>Επίδομα Ενοικίου</li>
+          <li>Επίδομα Αναπηρίας (ΚΕΠΑ)</li>
+          <li>Επίδομα Θέρμανσης</li>
+          <li>Επίδομα Παιδιού (Α21)</li>
+        </ol>
+        <p>
+          Η διαδικασία είναι απλή! Απαντήστε σε μερικές ερωτήσεις και θα δείτε αμέσως αν δικαιούστε κάποιο επίδομα.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 2 Heading</h2>
+        <p>This is the content of the second section.</p>
+      </section>
+
+      <section>
+        <h2>Section 3 Heading</h2>
+        <p>This is the content of the third section.</p>
+      </section>
     </main>
   </div>
 </template>
@@ -23,5 +46,8 @@ export default {
 </script>
 
 <style scoped>
-/* You can add specific styles for the home page here if needed */
+section {
+  margin: 4vw;
+  text-align: left;
+}
 </style>
