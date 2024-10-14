@@ -9,9 +9,7 @@
     </button>
 
     <!-- Show more info when expanded -->
-    <p v-if="isExpanded" class="more-info">
-      {{ moreInformation }}
-    </p>
+    <p v-if="isExpanded" class="more-info"  v-html="moreInformation"></p>
   </div>
 </template>
 
