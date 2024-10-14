@@ -1,10 +1,11 @@
 <template>
   <div class="info-box">
-    <h3>{{ title }}</h3>
+    <h2 class="govgr-!-font-weight-bold" id="service-title">{{ title }}</h2>
+    <p>{{ briefDescription }}</p>
     
     <button @click="toggleContent">
       {{ isExpanded ? '−' : '+' }}
-      Δείτε περισσότερα...
+       Μάθετε περισσότερα για τo {{ title }}.
     </button>
 
     <!-- Show more info when expanded -->
@@ -20,6 +21,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    briefDescription: {
+        type: String,
+        required: true
     },
     moreInformation: {
       type: String,
@@ -59,5 +64,9 @@ button {
 
 .more-info {
   margin-top: 10px;
+}
+
+#service-title{
+    font-size: 20px;
 }
 </style>
