@@ -3,7 +3,7 @@
     <HeaderElement />
     <NavElement />
     <main class="p-4">
-      <section>
+      <section data-section="welcome">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Καλωσορίσατε στην Πλατφόρμα Υπολογισμού Δικαιώματος Επιδόματος</h2>
         <p class="govgr-!-font-size-16">
           Αυτή η πλατφόρμα σας βοηθά να δείτε γρήγορα και εύκολα αν δικαιούστε επιδόματα όπως:
@@ -19,7 +19,7 @@
         </p>
       </section>
 
-      <section>
+      <section data-section="benefits">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Πώς Λειτουργεί η Πλατφόρμα</h2>
         <ol class="govgr-list govgr-list--number govgr-!-font-size-16">
           <li> Μεταβείτε στην καρτέλα "Αξιολόγηση" για να κάνετε μια προσομοίωση και να δείτε συνολικά για ποια επιδόματα μπορεί να είστε επιλέξιμοι.</li>
@@ -53,7 +53,7 @@
         /> 
       </section>
 
-      <section>
+      <section data-section="q-and-a">
         <h2>Section 3 Heading</h2>
         <p>This is the content of the third section.</p>
       </section>
