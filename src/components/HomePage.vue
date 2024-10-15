@@ -54,8 +54,19 @@
       </section>
 
       <section data-section="q-and-a">
-        <h2>Section 3 Heading</h2>
-        <p>This is the content of the third section.</p>
+        <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Συχνές Ερωτήσεις</h2>
+        <QuestionElement
+          question = "Πώς μπορώ να μάθω αν δικαιούμαι κάποιο επίδομα;"
+          answer = "Μπορείτε να χρησιμοποιήσετε το εργαλείο προσομοίωσης στην πλατφόρμα για να ελέγξετε αν πληροίτε τα κριτήρια για τα επιδόματα που σας ενδιαφέρουν."
+        />
+        <QuestionElement
+          question = "Είναι οι πληροφορίες που παρέχω ασφαλείς;"
+          answer = "Ναι, η πλατφόρμα δεν αποθηκεύει προσωπικά δεδομένα. Όλες οι πληροφορίες χρησιμοποιούνται μόνο για να γίνει ο υπολογισμός των δικαιωμάτων σας."
+        />
+        <QuestionElement
+          question = "Τι κάνω αν δικαιούμαι ένα επίδομα;"
+          answer = "Αφού μάθετε αν δικαιούστε κάποιο επίδομα, μπορείτε να ακολουθήσετε τις οδηγίες και να υποβάλετε αίτηση μέσω των επίσημων ιστοσελίδων του κράτους."
+        />
       </section>
     </main>
   </div>
@@ -65,13 +76,15 @@
 import HeaderElement from '@/components/Elements/HeaderElement.vue';
 import NavElement from '@/components/Elements/NavElement.vue';
 import ExpandableSection from '@/components/Elements/ExpandableSection.vue';
+import QuestionElement from '@/components/Elements/QuestionElement.vue';
 
 export default {
   name: 'HomePage',
   components: {
     HeaderElement,
     NavElement,
-    ExpandableSection
+    ExpandableSection,
+    QuestionElement
   }
 };
 </script>
