@@ -18,5 +18,17 @@ export default {
 </script>
 
 <style scoped>
-/* You can add specific styles for the nav here if needed */
+@media (min-width: 1024px) {
+  .govgr-nav--horizontal .govgr-nav__list {
+    width: 80%;
+    margin-left: 10%;
+  }
+}
+
+@media (min-width: 1440px) {
+  ul.govgr-nav__list{
+    font-size:20px;
+  }
+}
+
 </style>

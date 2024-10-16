@@ -24,4 +24,14 @@ export default {
 .service-title{
   color:white
 }
+
+@media (min-width: 1440px) {
+  .govgr-header__container {
+      max-width: 96rem;
+  }
+
+  .logo-image{
+    width:60%
+  }
+}
 </style>
