@@ -3,13 +3,16 @@
     <h2 class="govgr-!-font-weight-bold" id="service-title">{{ title }}</h2>
     <p>{{ briefDescription }}</p>
     
-    <button @click="toggleContent">
+    <button class="button-expand" @click="toggleContent">
       {{ isExpanded ? '−' : '+' }}
        Μάθετε περισσότερα για τo {{ title }}.
     </button>
 
     <!-- Show more info when expanded -->
     <p v-if="isExpanded" class="more-info"  v-html="moreInformation"></p>
+    <p v-if="isExpanded" class="more-info">
+      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3">Δείτε αν δικαιούστε το {{ title }}</button>
+    </p>
   </div>
 </template>
 
@@ -51,7 +54,7 @@ export default {
   border-radius: 5px;
 }
 
-button {
+.button-expand {
   margin-top: 10px;
   background-color: transparent;
   border: none;
@@ -67,4 +70,10 @@ button {
 #service-title{
     font-size: 20px;
 }
+
+#button-assesment{
+  font-size: 14px;
+  width:auto;
+}
+
 </style>
