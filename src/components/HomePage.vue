@@ -70,6 +70,7 @@
         />
       </section>
     </main>
+    <FooterElement/>
   </div>
 </template>
 
@@ -78,6 +79,7 @@ import HeaderElement from '@/components/Elements/HeaderElement.vue';
 import NavElement from '@/components/Elements/NavElement.vue';
 import ExpandableSection from '@/components/Elements/ExpandableSection.vue';
 import QuestionElement from '@/components/Elements/QuestionElement.vue';
+import FooterElement from '@/components/Elements/FooterElement.vue';
 
 export default {
   name: 'HomePage',
@@ -85,7 +87,8 @@ export default {
     HeaderElement,
     NavElement,
     ExpandableSection,
-    QuestionElement
+    QuestionElement,
+    FooterElement,
   }
 };
 </script>
