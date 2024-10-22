@@ -11,7 +11,7 @@
     <!-- Show more info when expanded -->
     <p v-if="isExpanded" class="more-info"  v-html="moreInformation"></p>
     <p v-if="isExpanded" class="more-info">
-      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3">Δείτε αν δικαιούστε το {{ title }}</button>
+      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3">Αξιολόγηση - {{ title }}</button>
     </p>
   </div>
 </template>
@@ -64,7 +64,7 @@ export default {
 }
 
 .more-info {
-  margin-top: 10px;
+  margin: 10px;
 }
 
 #service-title{
