@@ -57,6 +57,7 @@ export default {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .option-button {

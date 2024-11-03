@@ -1,15 +1,16 @@
 <template>
   <div>
     <label>{{ question }}</label>
-    <select @change="onChange($event.target.value)">
-      <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
-    </select>
+    <div v-for="option in options" :key="option">
+      <input type="radio" :value="option" @change="onChange(option)" />
+      {{ option }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DropdownElement',
+  name: 'RadiobuttonElement',
   props: {
     question: String,
     options: Array,
