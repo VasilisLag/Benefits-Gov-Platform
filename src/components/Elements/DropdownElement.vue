@@ -14,6 +14,9 @@ export default {
     question: String,
     options: Array,
   },
+  mounted() {
+    this.$emit('onAnswerChange', this.options[0]);
+  },
   methods: {
     onChange(value) {
       this.$emit('onAnswerChange', value);
