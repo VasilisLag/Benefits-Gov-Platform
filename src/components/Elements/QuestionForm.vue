@@ -8,9 +8,11 @@
       <div class="back-skip-container">
         <button @click="goBack" class="back-button">Back</button>
         <button @click="skipQuestion" class="submit-button">Skip</button>
+        <button @click="nextQuestion" class="submit-button">Next</button>
       </div>
       <button @click="submitAnswers" class="submit-button">Submit Answers</button>
     </div>
+
   </div>
 </template>
 
@@ -32,6 +34,9 @@ export default {
     },
     skipQuestion() {
       this.$emit('skip');
+    },
+    nextQuestion() {
+      this.$emit('next');
     },
   },
 };

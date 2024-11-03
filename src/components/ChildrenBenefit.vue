@@ -4,7 +4,7 @@
     <NavElement />
     <main class="p-4">
       <div class="form-container">
-        <QuestionForm title="Children Benefit Eligibility" @back="goBack" @skip="skipQuestion" @submit="handleSubmit">
+        <QuestionForm title="Children Benefit Eligibility" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
           <InputElement
             v-if="currentQuestion"
             :question="currentQuestion.question"
@@ -40,6 +40,7 @@ export default {
     return {
       currentQuestionIndex: 0,
       questions: questions,
+      currentOption: null,
       answers: []
     };
   },
@@ -50,10 +51,12 @@ export default {
   },
   methods: {
     handleAnswerChange(selectedOption) {
+      this.currentOption = selectedOption
       console.log("Selected Option:", selectedOption);
-      this.answers[this.currentQuestionIndex] = selectedOption;
+    },
+    nextQuestion() {
+      this.answers[this.currentQuestionIndex] = this.currentOption;
       this.currentQuestionIndex++;
-      
       if (this.currentQuestionIndex >= this.questions.length) {
         this.calculateBenefits();
       }
@@ -69,10 +72,9 @@ export default {
       }
     },
     calculateBenefits() {
-      console.log(questions)
       console.log("Calculating benefits based on responses...", this.answers);
     },
-  },
+  }
 };
 </script>
 
