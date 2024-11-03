@@ -7,6 +7,7 @@
         <QuestionForm title="Children Benefit Eligibility" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
           <InputElement
             v-if="currentQuestion"
+            ref="inputElement"
             :question="currentQuestion.question"
             :options="currentQuestion.options"
             :category="currentQuestion.category"
@@ -56,6 +57,7 @@ export default {
     },
     nextQuestion() {
       this.answers[this.currentQuestionIndex] = this.currentOption;
+      this.$refs.inputElement.resetInput();
       this.currentQuestionIndex++;
       if (this.currentQuestionIndex >= this.questions.length) {
         this.calculateBenefits();

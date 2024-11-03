@@ -27,14 +27,19 @@ export default {
       required: true,
       default: () => ["Yes", "No"],
     },
-    selectedOption: {
-      type: String,
-      default: null,
-    },
+  },
+  data() {
+    return {
+      selectedOption: null,
+    };
   },
   methods: {
     selectOption(option) {
+      this.selectedOption = option
       this.$emit("onAnswerChange", option);
+    },
+    resetOption() {
+      this.selectedOption = null;
     },
   },
 };

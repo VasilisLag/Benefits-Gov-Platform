@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MultiplechoiceElement v-if="isMultipleChoice" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
+    <MultiplechoiceElement v-if="isMultipleChoice" ref="inputComponent" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
     <DropdownElement v-else-if="isDropdown" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
     <RadioButtonElement v-else-if="isRadio" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
     <TextboxElement v-else-if="isTextbox" :question="question" @onAnswerChange="onAnswerChange" />
@@ -43,6 +43,14 @@ export default {
   methods: {
     onAnswerChange(answer) {
       this.$emit('onAnswerChange', answer);
+    },
+    resetInput() {
+        console.log("DogSHit");
+        console.log(this.$refs.inputComponent);
+        if (this.$refs.inputComponent && typeof this.$refs.inputComponent.resetOption === 'function') {
+            this.$refs.inputComponent.resetOption();
+            console.log("SHit");
+        }
     },
   },
 };
