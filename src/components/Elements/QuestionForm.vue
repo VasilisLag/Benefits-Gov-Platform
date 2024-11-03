@@ -4,7 +4,13 @@
     <div class="questions-container">
       <slot></slot>
     </div>
-    <button @click="submitAnswers" class="submit-button">Submit Answers</button>
+    <div class="button-container">
+      <div class="back-skip-container">
+        <button @click="goBack" class="back-button">Back</button>
+        <button @click="skipQuestion" class="submit-button">Skip</button>
+      </div>
+      <button @click="submitAnswers" class="submit-button">Submit Answers</button>
+    </div>
   </div>
 </template>
 
@@ -19,8 +25,13 @@ export default {
   },
   methods: {
     submitAnswers() {
-      // Logic for handling the form submission
-      this.$emit('submit'); // Emit an event to notify parent component
+      this.$emit('submit'); 
+    },
+    goBack() {
+      this.$emit('back');
+    },
+    skipQuestion() {
+      this.$emit('skip');
     },
   },
 };
@@ -39,14 +50,38 @@ export default {
   margin: 1.5rem 0;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Adjusted for spacing */
+  width: 100%;
+}
+
+.back-skip-container {
+  display: flex; /* Flex to align back and skip buttons */
+  gap: 1rem; /* Space between the buttons */
+}
+
+.back-button,
 .submit-button {
   padding: 0.6rem 1.2rem;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.back-button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
 }
 
 .submit-button:hover {
