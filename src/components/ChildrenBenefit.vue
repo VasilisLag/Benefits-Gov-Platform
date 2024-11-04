@@ -4,7 +4,7 @@
     <NavElement />
     <main class="p-4">
       <div class="form-container">
-        <QuestionForm title="Children Benefit Eligibility" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
+        <QuestionForm title="Επίδομα Παιδιού Α21" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
           <InputElement
             v-if="currentQuestion"
             ref="inputElement"

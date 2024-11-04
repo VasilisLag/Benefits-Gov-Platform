@@ -6,11 +6,11 @@
     </div>
     <div class="button-container">
       <div class="back-skip-container">
-        <button @click="goBack" class="back-button">Back</button>
-        <button @click="skipQuestion" class="submit-button">Skip</button>
-        <button @click="nextQuestion" class="submit-button">Next</button>
+        <button @click="goBack" class="back-button">Πίσω</button>
+        <button @click="skipQuestion" class="submit-button">Παράλειψη</button>
+        <button @click="nextQuestion" class="submit-button">Επόμενο</button>
       </div>
-      <button @click="submitAnswers" class="submit-button">Submit Answers</button>
+      <button @click="submitAnswers" class="submit-button">Υποβολή Απαντήσεων</button>
     </div>
 
   </div>
