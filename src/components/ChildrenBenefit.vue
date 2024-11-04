@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
     <HeaderElement />
     <NavElement />
     <main class="p-4">
@@ -16,7 +16,7 @@
         </QuestionForm>
       </div>
     </main>
-    <FooterElement />
+    <FooterElement class="footer" />
   </div>
 </template>
 
@@ -82,7 +82,21 @@ export default {
 
 <style scoped>
 .form-container {
-  width: 70%; /* Set width to 70% of the parent */
-  margin: 0 auto; /* Center the container */
+  width: 70%;
+  margin: 0 auto;
+}
+
+main {
+  flex:1;
+}
+
+.page {
+  display:flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  align-self:end;
 }
 </style>
