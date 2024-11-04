@@ -6,11 +6,11 @@
     </div>
     <div class="button-container">
       <div class="back-skip-container">
-        <button @click="goBack" class="back-button">Πίσω</button>
-        <button @click="skipQuestion" class="submit-button">Παράλειψη</button>
-        <button @click="nextQuestion" class="submit-button">Επόμενο</button>
+        <button @click="goBack" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
+        <button @click="skipQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
+        <button @click="nextQuestion" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
       </div>
-      <button @click="submitAnswers" class="submit-button">Υποβολή Απαντήσεων</button>
+      <button @click="submitAnswers" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
     </div>
 
   </div>
@@ -57,39 +57,17 @@ export default {
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* Adjusted for spacing */
+  justify-content: space-between;
   width: 100%;
 }
 
 .back-skip-container {
-  display: flex; /* Flex to align back and skip buttons */
-  gap: 1rem; /* Space between the buttons */
+  display: flex;
+  gap: 1rem;
 }
 
-.back-button,
-.submit-button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.nav-button {
+  font-size: 12px;
 }
 
-.back-button {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-.back-button:hover {
-  background-color: #e0e0e0;
-}
-
-.submit-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
 </style>
