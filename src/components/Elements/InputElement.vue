@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import MultiplechoiceElement from './MultiplechoiceElement.vue';
-import DropdownElement from './DropdownElement.vue';
-import RadioButtonElement from './RadiobuttonElement.vue';
-import TextboxElement from './TextboxElement.vue';
+import MultiplechoiceElement from './Input Elements/MultiplechoiceElement.vue';
+import DropdownElement from './Input Elements/DropdownElement.vue';
+import RadioButtonElement from './Input Elements/RadiobuttonElement.vue';
+import TextboxElement from './Input Elements/TextboxElement.vue';
 
 export default {
   name: 'InputElement',

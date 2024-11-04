@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
     <HeaderElement />
     <NavElement />
     <main class="p-4">
@@ -99,11 +99,11 @@
 </template>
 
 <script>
-import HeaderElement from '@/components/Elements/HeaderElement.vue';
-import NavElement from '@/components/Elements/NavElement.vue';
+import HeaderElement from '@/components/Elements/Page Elements/HeaderElement.vue';
+import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
 import ExpandableSection from '@/components/Elements/ExpandableSection.vue';
 import QuestionElement from '@/components/Elements/QuestionElement.vue';
-import FooterElement from '@/components/Elements/FooterElement.vue';
+import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 
 export default {
   name: 'HomePage',
@@ -121,5 +121,19 @@ export default {
 section {
   margin: 4vw;
   text-align: left;
+}
+
+main {
+  flex:1;
+}
+
+.page {
+  display:flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  align-self:end;
 }
 </style>

@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import HeaderElement from '@/components/Elements/HeaderElement.vue';
-import NavElement from '@/components/Elements/NavElement.vue';
-import FooterElement from '@/components/Elements/FooterElement.vue';
+import HeaderElement from '@/components/Elements/Page Elements/HeaderElement.vue';
+import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
+import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
 import questions from '@/questions/childrenBenefitQs.js'; 
