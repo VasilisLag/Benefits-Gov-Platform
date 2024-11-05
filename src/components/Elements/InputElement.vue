@@ -45,12 +45,9 @@ export default {
       this.$emit('onAnswerChange', answer);
     },
     resetInput() {
-        console.log("DogSHit");
-        console.log(this.$refs.inputComponent);
-        if (this.$refs.inputComponent && typeof this.$refs.inputComponent.resetOption === 'function') {
+      if (this.$refs.inputComponent && typeof this.$refs.inputComponent.resetOption === 'function') {
             this.$refs.inputComponent.resetOption();
-            console.log("SHit");
-        }
+      }
     },
   },
 };
