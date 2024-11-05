@@ -57,7 +57,9 @@ export default {
     },
     nextQuestion() {
       this.answers[this.currentQuestionIndex] = this.currentOption;
-      this.$refs.inputElement.resetInput();
+      if (this.$refs.inputElement) {
+        this.$refs.inputElement.resetInput();
+      }
       this.currentQuestionIndex++;
       if (this.currentQuestionIndex >= this.questions.length) {
         this.calculateBenefits();
