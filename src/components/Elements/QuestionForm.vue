@@ -6,9 +6,9 @@
     </div>
     <div class="button-container">
       <div class="back-skip-container">
-        <button @click="goBack" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
-        <button @click="skipQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
-        <button @click="nextQuestion" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
+        <button @click="goBack" :disabled="isFirstQuestion" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
+        <button @click="skipQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
+        <button @click="nextQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
       </div>
       <button @click="submitAnswers" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
     </div>
@@ -24,6 +24,14 @@ export default {
       type: String,
       required: true,
     },
+    isLastQuestion : {
+      type: Boolean,
+      required: true
+    },
+    isFirstQuestion : {
+      type: Boolean,
+      required: true
+    }
   },
   methods: {
     submitAnswers() {
@@ -70,4 +78,8 @@ export default {
   font-size: 12px;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  background-color:gray;
+}
 </style>

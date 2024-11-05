@@ -4,7 +4,10 @@
     <NavElement />
     <main class="p-4">
       <div class="form-container">
-        <QuestionForm title="Επίδομα Παιδιού Α21" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
+        <QuestionForm title="Επίδομα Παιδιού Α21" 
+        :isLastQuestion="isLastQuestion"
+        :isFirstQuestion="isFirstQuestion" 
+        @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
           <InputElement
             v-if="currentQuestion"
             ref="inputElement"
@@ -49,6 +52,12 @@ export default {
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.questions.length - 1;
+    },
+    isFirstQuestion() {
+      return this.currentQuestionIndex === 0;
+    }
   },
   methods: {
     handleAnswerChange(selectedOption) {
