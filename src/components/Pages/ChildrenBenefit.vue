@@ -7,6 +7,7 @@
         <QuestionForm title="Επίδομα Παιδιού Α21" 
         :isLastQuestion="isLastQuestion"
         :isFirstQuestion="isFirstQuestion" 
+        :selectedOption= "currentOption"
         @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
           <InputElement
             v-if="currentQuestion"
@@ -65,11 +66,13 @@ export default {
       console.log("Selected Option:", selectedOption);
     },
     nextQuestion() {
-      this.answers[this.currentQuestionIndex] = this.currentOption;
-      if (this.$refs.inputElement) {
+      if (this.$refs.inputElement && this.currentOption != null) {
         this.$refs.inputElement.resetInput();
+        this.answers[this.currentQuestionIndex] = this.currentOption;
+        this.currentQuestionIndex++;
+        this.currentOption = null;
       }
-      this.currentQuestionIndex++;
+
       if (this.currentQuestionIndex >= this.questions.length) {
         this.calculateBenefits();
       }

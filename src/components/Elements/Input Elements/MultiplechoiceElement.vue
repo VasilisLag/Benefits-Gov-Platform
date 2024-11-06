@@ -32,6 +32,9 @@ export default {
     return {
       selectedOption: null,
     };
+  },  
+  mounted() {
+    this.$emit('onAnswerChange', null);
   },
   methods: {
     selectOption(option) {

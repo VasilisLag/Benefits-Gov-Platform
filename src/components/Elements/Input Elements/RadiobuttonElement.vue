@@ -15,10 +15,19 @@ export default {
     question: String,
     options: Array,
   },
+  data() {
+    return {
+      selectedOption: null,
+    };
+  },
   methods: {
     onChange(value) {
+      this.resetOption();
       this.$emit('onAnswerChange', value);
     },
+    resetOption() {
+      this.selectedOption = null;
+    }
   },
 };
 </script>

@@ -8,7 +8,7 @@
       <div class="back-skip-container">
         <button @click="goBack" :disabled="isFirstQuestion" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
         <button @click="skipQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
-        <button @click="nextQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
+        <button @click="nextQuestion" :disabled="isLastQuestion || hasNotChosen" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
       </div>
       <button @click="submitAnswers" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
     </div>
@@ -31,7 +31,8 @@ export default {
     isFirstQuestion : {
       type: Boolean,
       required: true
-    }
+    },
+    selectedOption: String
   },
   methods: {
     submitAnswers() {
@@ -47,6 +48,11 @@ export default {
       this.$emit('next');
     },
   },
+   computed: {
+    hasNotChosen() {
+      return this.selectedOption === null || this.selectedOption === '';
+    }
+  }
 };
 </script>
 
