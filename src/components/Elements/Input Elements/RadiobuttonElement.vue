@@ -2,7 +2,7 @@
   <div>
     <label>{{ question }}</label>
     <div v-for="option in options" :key="option">
-      <input type="radio" :value="option" @change="onChange(option)" />
+      <input type="radio" v-model="selectedOption" :value="option" @change="onChange(option)" />
       {{ option }}
     </div>
   </div>
@@ -22,12 +22,8 @@ export default {
   },
   methods: {
     onChange(value) {
-      this.resetOption();
       this.$emit('onAnswerChange', value);
     },
-    resetOption() {
-      this.selectedOption = null;
-    }
   },
 };
 </script>
