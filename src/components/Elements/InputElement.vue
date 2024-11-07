@@ -25,6 +25,7 @@
       v-else-if="isTextbox" 
       :question="question" 
       :answer="answer"
+      :inputValue="input"
       @onAnswerChange="onAnswerChange"
     />
   </div>
@@ -44,6 +45,10 @@ export default {
     category: String,
     answer: {
       type: [String, Array, Number, null],
+      default: null
+    },
+    input: {
+      type: [String, Number, null],
       default: null
     }
   },
