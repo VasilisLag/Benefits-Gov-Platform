@@ -4,17 +4,23 @@
     <NavElement />
     <main class="p-4">
       <div class="form-container">
-        <QuestionForm title="Επίδομα Παιδιού Α21" 
-        :isLastQuestion="isLastQuestion"
-        :isFirstQuestion="isFirstQuestion" 
-        :selectedOption= "currentOption"
-        @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="submitAnswers">
+        <QuestionForm 
+          title="Επίδομα Παιδιού Α21"
+          :isLastQuestion="isLastQuestion"
+          :isFirstQuestion="isFirstQuestion"
+          :selectedOption="currentOption"
+          @back="goBack"
+          @skip="skipQuestion"
+          @next="nextQuestion"
+          @submit="submitAnswers"
+        >
           <InputElement
             v-if="currentQuestion"
-            ref="inputElement"
             :question="currentQuestion.question"
+            :key="currentQuestionIndex"
             :options="currentQuestion.options"
             :category="currentQuestion.category"
+            :answer="answer"
             @onAnswerChange="handleAnswerChange"
           />
         </QuestionForm>
@@ -30,7 +36,7 @@ import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
-import questions from '@/questions/childrenBenefitQs.js'; 
+import questions from '@/questions/childrenBenefitQs.js';
 
 export default {
   name: 'ChildrenBenefit',
@@ -46,7 +52,7 @@ export default {
       currentQuestionIndex: 0,
       questions: questions,
       currentOption: null,
-      answers: []
+      answers: [], 
     };
   },
   computed: {
@@ -54,40 +60,44 @@ export default {
       return this.questions[this.currentQuestionIndex];
     },
     isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length;
+      return this.currentQuestionIndex === this.questions.length - 1;
     },
     isFirstQuestion() {
       return this.currentQuestionIndex === 0;
+    },
+    answer() {
+      return this.answers[this.currentQuestionIndex];
     }
   },
   methods: {
     handleAnswerChange(selectedOption) {
-      this.currentOption = selectedOption
-      console.log("Selected Option:", selectedOption);
+      this.currentOption = selectedOption;
     },
     nextQuestion() {
-      if (this.$refs.inputElement && this.currentOption != null) {
-        this.$refs.inputElement.resetInput();
+      if (this.currentOption !== null) {
         this.answers[this.currentQuestionIndex] = this.currentOption;
-        this.currentQuestionIndex++;
-        this.currentOption = null;
       }
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;
+      this.currentQuestionIndex++;
     },
     goBack() {
       if (this.currentQuestionIndex > 0) {
         this.currentQuestionIndex--;
+        console.log(this.answers[this.currentQuestionIndex]);
+        this.currentOption = this.answers[this.currentQuestionIndex] || null;
       }
     },
     skipQuestion() {
-      if (this.currentQuestionIndex < this.questions.length) {
-        this.currentQuestionIndex++;
-      }
+      this.answers[this.currentQuestionIndex] = null;
+      this.currentOption = null;
+      this.currentQuestionIndex++;
     },
     submitAnswers() {
       this.calculateBenefits();
     },
+    
     calculateBenefits() {
-      console.log("Calculating benefits based on responses...", this.answers);
+      console.log('Calculating benefits based on responses...', this.answers);
     },
   }
 };

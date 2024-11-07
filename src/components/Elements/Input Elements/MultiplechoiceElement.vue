@@ -18,35 +18,32 @@
 export default {
   name: "MultiplechoiceElement",
   props: {
-    question: {
+    question: String,
+    options: Array,
+    answer: {
       type: String,
-      required: true,
-    },
-    options: {
-      type: Array,
-      required: true,
-      default: () => ["Yes", "No"],
-    },
+      default: null
+    }
   },
   data() {
     return {
-      selectedOption: null,
+      selectedOption: this.answer
     };
-  },  
-  mounted() {
-    this.$emit('onAnswerChange', null);
+  },
+  watch: {
+    answer(newAnswer) {
+      this.selectedOption = newAnswer;
+    }
   },
   methods: {
     selectOption(option) {
-      this.selectedOption = option
+      this.selectedOption = option;
       this.$emit("onAnswerChange", option);
-    },
-    resetOption() {
-      this.selectedOption = null;
-    },
-  },
+    }
+  }
 };
 </script>
+
 
 <style scoped>
 .multiple-choice-question {

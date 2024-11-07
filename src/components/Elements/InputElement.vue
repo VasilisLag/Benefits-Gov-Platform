@@ -1,9 +1,32 @@
 <template>
   <div>
-    <MultiplechoiceElement v-if="isMultipleChoice" ref="inputComponent" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
-    <DropdownElement v-else-if="isDropdown" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
-    <RadioButtonElement v-else-if="isRadio" :question="question" :options="options" @onAnswerChange="onAnswerChange" />
-    <TextboxElement v-else-if="isTextbox" :question="question" @onAnswerChange="onAnswerChange" />
+    <MultiplechoiceElement 
+      v-if="isMultipleChoice" 
+      :question="question" 
+      :options="options" 
+      :answer="answer"
+      @onAnswerChange="onAnswerChange"
+    />
+    <DropdownElement 
+      v-else-if="isDropdown" 
+      :question="question" 
+      :options="options" 
+      :answer="answer"
+      @onAnswerChange="onAnswerChange"
+    />
+    <RadioButtonElement 
+      v-else-if="isRadio" 
+      :question="question" 
+      :options="options" 
+      :answer="answer"
+      @onAnswerChange="onAnswerChange"
+    />
+    <TextboxElement 
+      v-else-if="isTextbox" 
+      :question="question" 
+      :answer="answer"
+      @onAnswerChange="onAnswerChange"
+    />
   </div>
 </template>
 
@@ -19,12 +42,16 @@ export default {
     question: String,
     options: Array,
     category: String,
+    answer: {
+      type: [String, Array, Number, null],
+      default: null
+    }
   },
   components: {
     MultiplechoiceElement,
     DropdownElement,
     RadioButtonElement,
-    TextboxElement,
+    TextboxElement
   },
   computed: {
     isMultipleChoice() {
@@ -38,17 +65,12 @@ export default {
     },
     isTextbox() {
       return this.category === 'textbox';
-    },
+    }
   },
   methods: {
     onAnswerChange(answer) {
       this.$emit('onAnswerChange', answer);
-    },
-    resetInput() {
-      if (this.$refs.inputComponent && typeof this.$refs.inputComponent.resetOption === 'function') {
-            this.$refs.inputComponent.resetOption();
-      }
-    },
-  },
+    }
+  }
 };
 </script>
