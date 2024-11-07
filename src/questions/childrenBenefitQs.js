@@ -10,6 +10,21 @@ const questions = [
       category: "multiple-choice",
     },
     {
+      question: "Please provide your feedback on our service:",
+      category: "textbox",
+      answer: "", 
+    },
+    {
+      question: "What suggestions do you have for improving our platform?",
+      category: "textbox",
+      answer: "", 
+    },
+    {
+      question: "Please enter your preferred contact method (e.g., email, phone):",
+      category: "textbox",
+      answer: "", 
+    },
+    {
       question: "Is your household income below $50,000?",
       options: ["Yes", "No", "Prefer not to say"],
       category: "multiple-choice",
@@ -53,6 +68,16 @@ const questions = [
       question: "Do you have any disabilities?",
       options: ["Yes", "No", "Prefer not to say"],
       category: "multiple-choice",
+    },
+    {
+      question: "Select your preferred contact method:",
+      options: ["Email", "Phone", "Mail"],
+      category: "radio",
+    },
+    {
+      question: "Select your preferred contact method:",
+      options: ["Email", "Phone", "Mail"],
+      category: "radio",
     },
   ];
   
