@@ -63,10 +63,15 @@ export default {
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   background-color: #f9f9f9;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
 .questions-container {
   margin: 1.5rem 0;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .button-container {
@@ -86,6 +91,6 @@ export default {
 
 button:disabled {
   cursor: not-allowed;
-  background-color:gray;
+  background-color: gray;
 }
 </style>
