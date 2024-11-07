@@ -75,22 +75,21 @@ export default {
     },
     nextQuestion() {
       if (this.currentOption !== null) {
-        this.answers[this.currentQuestionIndex] = this.currentOption;
+        this.answers[this.currentQuestionIndex++] = this.currentOption;
       }
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
-      this.currentQuestionIndex++;
+      console.log(this.answers);
     },
     goBack() {
       if (this.currentQuestionIndex > 0) {
-        this.currentQuestionIndex--;
-        console.log(this.answers[this.currentQuestionIndex]);
-        this.currentOption = this.answers[this.currentQuestionIndex] || null;
+        this.currentOption = this.answers[--this.currentQuestionIndex] || null;
       }
+      console.log(this.answers);
     },
     skipQuestion() {
-      this.answers[this.currentQuestionIndex] = null;
-      this.currentOption = null;
-      this.currentQuestionIndex++;
+      this.answers[this.currentQuestionIndex++] = null;
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;
+      console.log(this.answers);
     },
     submitAnswers() {
       this.calculateBenefits();
