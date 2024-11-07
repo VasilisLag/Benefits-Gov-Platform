@@ -1,8 +1,10 @@
 <template>
   <div>
     <label>{{ question }}</label>
-    <select @change="onChange($event.target.value)">
-      <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
+    <select v-model="selectedOption" @change="onChange(selectedOption)">
+      <option v-for="option in options" :key="option" :value="option">
+        {{ option }}
+      </option>
     </select>
   </div>
 </template>
@@ -13,14 +15,28 @@ export default {
   props: {
     question: String,
     options: Array,
+    answer: {
+      type: String,
+      default: null
+    }
   },
-  mounted() {
-    this.$emit('onAnswerChange', this.options[0]);
+  data() {
+    return {
+      selectedOption: this.answer || this.options[0]
+    };
+  },
+  watch: {
+    answer(newAnswer) {
+      this.selectedOption = newAnswer;
+    }
   },
   methods: {
     onChange(value) {
       this.$emit('onAnswerChange', value);
     },
   },
+  mounted() {
+    this.$emit('onAnswerChange', this.selectedOption);
+  }
 };
 </script>
