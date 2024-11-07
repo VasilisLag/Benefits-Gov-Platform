@@ -60,7 +60,7 @@ export default {
       return this.questions[this.currentQuestionIndex];
     },
     isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length - 1;
+      return this.currentQuestionIndex === this.questions.length;
     },
     isFirstQuestion() {
       return this.currentQuestionIndex === 0;
