@@ -27,23 +27,20 @@ export default {
   },
   data() {
     return {
-      selectedOption: this.answer || null // Initialize selectedOption with answer or null
+      selectedOption: this.answer || null
     };
   },
   watch: {
-    // Watch for changes in the 'answer' prop and update selectedOption accordingly
     answer(newAnswer) {
       this.selectedOption = newAnswer;
     }
   },
   methods: {
     onChange(value) {
-      // Emit the selected value whenever a radio button is selected
       this.$emit('onAnswerChange', value);
     }
   },
   mounted() {
-    // Emit the initial selected option when the component is mounted
     this.$emit('onAnswerChange', this.selectedOption);
   }
 };
