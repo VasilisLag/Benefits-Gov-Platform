@@ -10,7 +10,7 @@
         <button @click="skipQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
         <button @click="nextQuestion" :disabled="isLastQuestion || hasNotChosen" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
       </div>
-      <button @click="submitAnswers" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
+      <button @click="submitAnswers" :disabled="!isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
     </div>
 
   </div>

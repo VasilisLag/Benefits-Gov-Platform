@@ -8,7 +8,7 @@
         :isLastQuestion="isLastQuestion"
         :isFirstQuestion="isFirstQuestion" 
         :selectedOption= "currentOption"
-        @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
+        @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="submitAnswers">
           <InputElement
             v-if="currentQuestion"
             ref="inputElement"
@@ -54,7 +54,7 @@ export default {
       return this.questions[this.currentQuestionIndex];
     },
     isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length - 1;
+      return this.currentQuestionIndex === this.questions.length;
     },
     isFirstQuestion() {
       return this.currentQuestionIndex === 0;
@@ -72,10 +72,6 @@ export default {
         this.currentQuestionIndex++;
         this.currentOption = null;
       }
-
-      if (this.currentQuestionIndex >= this.questions.length) {
-        this.calculateBenefits();
-      }
     },
     goBack() {
       if (this.currentQuestionIndex > 0) {
@@ -86,6 +82,9 @@ export default {
       if (this.currentQuestionIndex < this.questions.length) {
         this.currentQuestionIndex++;
       }
+    },
+    submitAnswers() {
+      this.calculateBenefits();
     },
     calculateBenefits() {
       console.log("Calculating benefits based on responses...", this.answers);
