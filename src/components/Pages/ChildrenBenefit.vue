@@ -91,12 +91,102 @@ export default {
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
     },
     submitAnswers() {
-      this.calculateBenefits();
+      this.calculateBenefits(this.answers);
     },
     
-    calculateBenefits() {
-      console.log('Calculating benefits based on responses...', this.answers);
-    },
+    calculateBenefits(answers) {
+    // Προϋποθέσεις για επιλεξιμότητα
+    const submittedTaxDeclaration = answers[0] === "Ναι";
+    const income = parseFloat(answers[1]);
+    const dependentChildren = parseInt(answers[2]);
+    const residesInGreece = answers[3] === "Ελλάδα";
+    const yearsInGreece = parseInt(answers[4]) >= 5;
+    //const residencyStatus = answers[5];
+    const isSingleParent = answers[6] === "Ναι";
+    const hasDisability = answers[7] === "Ναι";
+    const custody = answers[8] === "Ναι";
+    const custodyDisruption = answers[9] === "Όχι";
+    //const judicialDecision = answers[10] === "Ναι" || answers[10] === "Όχι";
+    console.log(answers);
+    // Έλεγχος επιλεξιμότητας
+    if (
+      !submittedTaxDeclaration ||
+      !residesInGreece ||
+      !yearsInGreece ||
+      !custody ||
+      !custodyDisruption ||
+      dependentChildren === 0
+    ) {
+      console.log("Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.");
+      return {
+        eligible: false,
+        benefitAmount: 0,
+        message: "Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.",
+      };
+    }
+
+    // Υπολογισμός κλίμακας ισοδυναμίας
+    let equivalenceScale = 1; // Πρώτος γονέας
+    
+    if (!isSingleParent) {
+      equivalenceScale += 1 / 2; // Στάθμιση δεύτερου γονέα για μη μονογονεϊκές οικογένειες
+    }
+    
+    // Εφαρμογή στάθμισης για τα παιδιά
+    for (let i = 0; i < dependentChildren; i++) {
+      if (isSingleParent && i === 0) {
+        equivalenceScale += 1 / 2; // Στάθμιση 1/2 για το πρώτο παιδί μονογονεϊκής οικογένειας
+      } else {
+        equivalenceScale += 1 / 4; // Στάθμιση 1/4 για τα υπόλοιπα παιδιά
+      }
+    }
+
+    // Υπολογισμός ισοδύναμου εισοδήματος
+    const equivalentIncome = income / equivalenceScale;
+
+    // Κατηγοριοποίηση του ισοδύναμου εισοδήματος
+    let incomeCategory;
+    if (equivalentIncome <= 6000) {
+      incomeCategory = "A";
+    } else if (equivalentIncome <= 10000) {
+      incomeCategory = "B";
+    } else if (equivalentIncome <= 15000) {
+      incomeCategory = "C";
+    } else {
+      console.log("Το εισόδημά σας υπερβαίνει τα όρια για το επίδομα.");
+      return {
+        eligible: false,
+        benefitAmount: 0,
+        message: "Το εισόδημά σας υπερβαίνει τα όρια για το επίδομα.",
+      };
+    }
+
+    // Υπολογισμός ποσού επιδόματος βάσει κατηγορίας και αριθμού εξαρτώμενων τέκνων
+    let benefitAmount = 0;
+    switch (incomeCategory) {
+      case "A":
+        benefitAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
+        break;
+      case "B":
+        benefitAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
+        break;
+      case "C":
+        benefitAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
+        break;
+    }
+
+    // Προσαύξηση λόγω αναπηρίας
+    if (hasDisability) {
+      benefitAmount += 50;
+    }
+    console.log(`Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`);
+    return {
+      eligible: true,
+      benefitAmount: benefitAmount,
+      message: `Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`,
+    };
+  }
+
   }
 };
 </script>

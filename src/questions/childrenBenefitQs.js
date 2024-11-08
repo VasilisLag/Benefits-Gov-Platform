@@ -1,85 +1,65 @@
 const questions = [
-    {
-      question: "Do you have children under 18 years old?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-    {
-      question: "Is your household income below $50,000?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-    {
-      question: "Please provide your feedback on our service:",
-      category: "textbox",
-      answer: "", 
-    },
-    {
-      question: "What suggestions do you have for improving our platform?",
-      category: "textbox",
-      answer: "", 
-    },
-    {
-      question: "Please enter your preferred contact method (e.g., email, phone):",
-      category: "textbox",
-      answer: "", 
-    },
-    {
-      question: "Is your household income below $50,000?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-    {
-      question: "Is your household income below $50,000?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-    {
-      question: "Select your state of residence:",
-      options: ["State 1", "State 2", "State 3"],
-      category: "dropdown",
-    },
-    {
-      question: "Select your state of residence:",
-      options: ["State 1", "State 2", "State 3"],
-      category: "dropdown",
-    },
-    {
-      question: "Select your state of residence:",
-      options: ["State 1", "State 2", "State 3"],
-      category: "dropdown",
-    },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-    {
-      question: "Do you have any disabilities?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-  ];
-  
-  export default questions;
-  
+  {
+    question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
+    category: "textbox",
+  },
+  {
+    question: "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
+    category: "textbox",
+  },
+  {
+    question: "Πού διαμένετε αυτή τη στιγμή;",
+    options: ["Ελλάδα", "Άλλο"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
+    category: "textbox",
+  },
+  {
+    question: "Ποιο είναι το καθεστώς διαμονής ή πολιτογράφησής σας στην Ελλάδα;",
+    options: [
+      "Έλληνας πολίτης",
+      "Ομογενής αλλοδαπός",
+      "Πολίτης Ε.Ε.",
+      "Πολίτης Ε.Ο.Χ. (Νορβηγία, Ισλανδία, Λιχτενστάιν) ή Ελβετός πολίτης",
+      "Αναγνωρισμένος πρόσφυγας",
+      "Ανιθαγενής",
+      "Δικαιούχος ανθρωπιστικού καθεστώτος",
+      "Άλλο (νόμιμος και μόνιμος κάτοικος Ελλάδας)"
+    ],
+    category: "dropdown",
+  },
+  {
+    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Υπάρχει κάποιο εξαρτώμενο τέκνο με ποσοστό αναπηρίας 67% ή άνω;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Έχει διακοπεί η επιμέλεια ή συγκατοίκηση με τα τέκνα σας λόγω διαζυγίου ή εγκατάλειψης;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  },
+  {
+    question: "Υπήρξε δικαστική απόφαση για την επιμέλεια των τέκνων;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+  }
+];
+
+export default questions;
