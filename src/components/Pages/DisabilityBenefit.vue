@@ -4,13 +4,24 @@
     <NavElement />
     <main class="p-4">
       <div class="form-container">
-        <QuestionForm title="Επίδομα Αναπηρίας (ΚΕΠΑ)" @back="goBack" @skip="skipQuestion" @next="nextQuestion" @submit="handleSubmit">
+        <QuestionForm 
+          title="Επίδομα Αναπηρίας (ΚΕΠΑ))"
+          :isLastQuestion="isLastQuestion"
+          :isFirstQuestion="isFirstQuestion"
+          :selectedOption="currentOption"
+          @back="goBack"
+          @skip="skipQuestion"
+          @next="nextQuestion"
+          @submit="submitAnswers"
+        >
           <InputElement
             v-if="currentQuestion"
-            ref="inputElement"
             :question="currentQuestion.question"
+            :key="currentQuestionIndex"
             :options="currentQuestion.options"
             :category="currentQuestion.category"
+            :input="answer"
+            :answer="answer"
             @onAnswerChange="handleAnswerChange"
           />
         </QuestionForm>
@@ -42,41 +53,49 @@ export default {
       currentQuestionIndex: 0,
       questions: questions,
       currentOption: null,
-      answers: []
+      answers: [], 
     };
   },
   computed: {
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.questions.length;
+    },
+    isFirstQuestion() {
+      return this.currentQuestionIndex === 0;
+    },
+    answer() {
+      return this.answers[this.currentQuestionIndex];
+    }
   },
   methods: {
     handleAnswerChange(selectedOption) {
-      this.currentOption = selectedOption
-      console.log("Selected Option:", selectedOption);
+      this.currentOption = selectedOption;
     },
     nextQuestion() {
-      this.answers[this.currentQuestionIndex] = this.currentOption;
-      if (this.$refs.inputElement) {
-        this.$refs.inputElement.resetInput();
+      if (this.currentOption !== null) {
+        this.answers[this.currentQuestionIndex++] = this.currentOption;
       }
-      this.currentQuestionIndex++;
-      if (this.currentQuestionIndex >= this.questions.length) {
-        this.calculateBenefits();
-      }
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;
+      
     },
     goBack() {
       if (this.currentQuestionIndex > 0) {
-        this.currentQuestionIndex--;
+        this.currentOption = this.answers[--this.currentQuestionIndex] || null;
       }
     },
     skipQuestion() {
-      if (this.currentQuestionIndex < this.questions.length) {
-        this.currentQuestionIndex++;
-      }
+      this.answers[this.currentQuestionIndex++] = null;
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;
     },
+    submitAnswers() {
+      this.calculateBenefits();
+    },
+    
     calculateBenefits() {
-      console.log("Calculating benefits based on responses...", this.answers);
+      console.log('Calculating benefits based on responses...', this.answers);
     },
   }
 };
