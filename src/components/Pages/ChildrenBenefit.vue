@@ -79,10 +79,19 @@ export default {
         this.answers[this.currentQuestionIndex++] = this.currentOption;
       }
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
+
+      if (this.answers[5] === "Όχι") {
+        this.currentQuestionIndex = this.questions.length;
+      }
       
     },
     goBack() {
-      if (this.currentQuestionIndex > 0) {
+      if(this.currentQuestionIndex === this.questions.length &&
+          this.answers[5] === "Όχι") {
+            this.currentQuestionIndex = 5;
+            this.currentOption = this.answers[this.currentQuestionIndex] || null;
+          }
+      else if (this.currentQuestionIndex > 0) {
         this.currentOption = this.answers[--this.currentQuestionIndex] || null;
       }
     },
@@ -101,12 +110,9 @@ export default {
     const dependentChildren = parseInt(answers[2]);
     const residesInGreece = answers[3] === "Ελλάδα";
     const yearsInGreece = parseInt(answers[4]) >= 5;
-    //const residencyStatus = answers[5];
-    const isSingleParent = answers[6] === "Ναι";
-    const hasDisability = answers[7] === "Ναι";
-    const custody = answers[8] === "Ναι";
-    const custodyDisruption = answers[9] === "Όχι";
-    //const judicialDecision = answers[10] === "Ναι" || answers[10] === "Όχι";
+    const isSingleParent = answers[5] === "Ναι";
+    const custody = answers[6] === "Ναι";
+    const judicialDecision = answers[7] === "Ναι";
     console.log(answers);
     // Έλεγχος επιλεξιμότητας
     if (
@@ -114,7 +120,7 @@ export default {
       !residesInGreece ||
       !yearsInGreece ||
       !custody ||
-      !custodyDisruption ||
+      (isSingleParent && (!custody || !judicialDecision)) ||
       dependentChildren === 0
     ) {
       console.log("Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.");
@@ -175,10 +181,6 @@ export default {
         break;
     }
 
-    // Προσαύξηση λόγω αναπηρίας
-    if (hasDisability) {
-      benefitAmount += 50;
-    }
     console.log(`Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`);
     return {
       eligible: true,
@@ -205,7 +207,6 @@ main {
   display:flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-y: scroll;
 }
 
 .footer {
