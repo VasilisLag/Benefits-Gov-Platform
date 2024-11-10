@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>{{ question }}</label>
+    <label v-html="question"></label>
     <div v-for="option in options" :key="option">
       <input 
         type="radio" 

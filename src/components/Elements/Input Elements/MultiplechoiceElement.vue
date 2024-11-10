@@ -1,6 +1,6 @@
 <template>
   <div class="multiple-choice-question">
-    <label class="question-label">{{ question }}</label>
+    <label class="question-label" v-html="question"></label>
     <div class="options-group">
       <button
         v-for="(option, index) in options"

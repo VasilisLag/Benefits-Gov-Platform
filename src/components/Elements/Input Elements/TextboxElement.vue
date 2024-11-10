@@ -1,7 +1,7 @@
 <template>
   <div>
-    <label>{{ question }}</label>
-    <input type="number" v-model.number="input" @input="onInput(input)" />
+    <label v-html="question"></label>
+    <input id="input-field" class="govgr-input" type="number" v-model.number="input" @input="onInput(input)" />
   </div>
 </template>
 
@@ -41,3 +41,12 @@ watch: {
   }
 };
 </script>
+
+<style scoped>
+#input-field {
+  display: block;
+  margin: 1rem auto;
+  width: 30%;
+  max-height: 2rem;
+}
+</style>
