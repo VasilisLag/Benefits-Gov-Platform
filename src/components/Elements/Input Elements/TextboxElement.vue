@@ -1,7 +1,7 @@
 <template>
   <div>
     <label>{{ question }}</label>
-    <input type="text" v-model="input" @input="onInput(input)" />
+    <input type="number" v-model.number="input" @input="onInput(input)" />
   </div>
 </template>
 
