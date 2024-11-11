@@ -3,10 +3,12 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
+    required: true
   },
   {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
+    required: true
   },
   {
     question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
@@ -22,31 +24,37 @@ const questions = [
       <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση, στο «Μεταλυκειακό έτος – Τάξη Μαθητείας» των ΕΠΑ.Λ. ή σε ΙΕΚ, έως το 24ο έτος</li>
       <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
       <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια (όταν έχει επέλθει θάνατος και των δύο γονέων)</li>
-    </ul><br>`
+    </ul><br>`,
+    required: true
   },
   {
     question: "Πού διαμένετε αυτή τη στιγμή;",
     options: ["Ελλάδα", "Άλλο"],
     category: "multiple-choice",
+    required: true
   },
   {
     question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
     category: "textbox",
+    required: true
   },
   {
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
+    required: true
   },
   {
     question: "Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
+    required: true
   },
   {
     question: "Υπήρξε δικαστική απόφαση για την επιμέλεια των τέκνων;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
+    required: true
   }
 ];
 

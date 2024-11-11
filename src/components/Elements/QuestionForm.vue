@@ -7,7 +7,7 @@
     <div class="button-container">
       <div class="back-skip-container">
         <button @click="goBack" :disabled="isFirstQuestion" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
-        <button @click="skipQuestion" :disabled="isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
+        <button @click="skipQuestion" :disabled="isLastQuestion || isQuestionRequired" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
         <button @click="nextQuestion" :disabled="isLastQuestion || hasNotChosen" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
       </div>
       <button @click="submitAnswers" :disabled="!isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
@@ -31,6 +31,10 @@ export default {
     isFirstQuestion : {
       type: Boolean,
       required: true
+    },
+    isQuestionRequired: {
+      type: Boolean,
+      default: false
     },
     selectedOption: String
   },

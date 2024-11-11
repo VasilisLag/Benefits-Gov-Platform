@@ -9,6 +9,7 @@
           :isLastQuestion="isLastQuestion"
           :isFirstQuestion="isFirstQuestion"
           :selectedOption="currentOption"
+          :isQuestionRequired="isQuestionReq"
           @back="goBack"
           @skip="skipQuestion"
           @next="nextQuestion"
@@ -79,6 +80,13 @@ export default {
     },
     isFormSummary() {
       return this.currentQuestionIndex === this.questions.length;
+    },
+    isQuestionReq() {
+      if (this.currentQuestion != null){
+        return this.currentQuestion.required
+      }else {
+        return false;
+      }
     }
   },
   methods: {
@@ -137,6 +145,7 @@ export default {
       (isSingleParent && (!custody || !judicialDecision)) ||
       dependentChildren === 0
     ) {
+      console.log("Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.");
       return {
         eligible: false,
         benefitAmount: 0,
