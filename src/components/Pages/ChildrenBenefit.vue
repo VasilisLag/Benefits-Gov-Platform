@@ -26,7 +26,7 @@
             :answer="answer"
             @onAnswerChange="handleAnswerChange"
           />
-          <SummaryTable v-if="currentQuestionIndex === questions.length && isFormSummary"
+          <SummaryTable v-if="isFormSummary"
             :questions="questions.map(q => q.question)"
             :answers="answers"
           />
@@ -117,6 +117,7 @@ export default {
       if(this.currentQuestionIndex === this.questions.length) {
         if(this.answers[5] === "Όχι"){
           this.currentQuestionIndex = 5;
+          this.currentOption =  this.answers[this.currentQuestionIndex];
         }
         else {
           this.currentOption = this.answers[--this.currentQuestionIndex] || null;
