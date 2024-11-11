@@ -6,6 +6,7 @@
         {{ option }}
       </option>
     </select>
+    <label v-html="note"> </label>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
     answer: {
       type: String,
       default: null
-    }
+    },
+    note: String
   },
   data() {
     return {

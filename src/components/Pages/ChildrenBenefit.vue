@@ -20,6 +20,7 @@
             :key="currentQuestionIndex"
             :options="currentQuestion.options"
             :category="currentQuestion.category"
+            :note="currentQuestion.note"
             :input="answer"
             :answer="answer"
             @onAnswerChange="handleAnswerChange"
@@ -119,11 +120,9 @@ export default {
       !submittedTaxDeclaration ||
       !residesInGreece ||
       !yearsInGreece ||
-      !custody ||
       (isSingleParent && (!custody || !judicialDecision)) ||
       dependentChildren === 0
     ) {
-      console.log("Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.");
       return {
         eligible: false,
         benefitAmount: 0,

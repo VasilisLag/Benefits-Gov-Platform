@@ -2,6 +2,7 @@
   <div>
     <label v-html="question"></label>
     <input id="input-field" class="govgr-input" type="number" v-model.number="input" @input="onInput(input)" />
+    <label v-html="note"> </label>
   </div>
 </template>
 
@@ -12,7 +13,8 @@ export default {
     question: String,
     inputValue: { 
       type: [String, Number, null]
-    }
+    },
+    note: String
   },
   data() {
     return {

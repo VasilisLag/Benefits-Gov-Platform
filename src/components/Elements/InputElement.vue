@@ -3,6 +3,7 @@
     <MultiplechoiceElement 
       v-if="isMultipleChoice" 
       :question="question" 
+      :note="note"
       :options="options" 
       :answer="answer"
       @onAnswerChange="onAnswerChange"
@@ -10,6 +11,7 @@
     <DropdownElement 
       v-else-if="isDropdown" 
       :question="question" 
+      :note="note"
       :options="options" 
       :answer="answer"
       @onAnswerChange="onAnswerChange"
@@ -18,6 +20,7 @@
       v-else-if="isRadio" 
       :question="question" 
       :options="options" 
+      :note="note"
       :answer="answer"
       @onAnswerChange="onAnswerChange"
     />
@@ -25,6 +28,7 @@
       v-else-if="isTextbox" 
       :question="question" 
       :answer="answer"
+      :note="note"
       :inputValue="input"
       @onAnswerChange="onAnswerChange"
     />
@@ -50,7 +54,8 @@ export default {
     input: {
       type: [String, Number, null],
       default: null
-    }
+    },
+    note: String
   },
   components: {
     MultiplechoiceElement,
