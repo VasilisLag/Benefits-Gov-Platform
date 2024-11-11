@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label v-html="question"></label>
+    <label class="question-label" v-html="question"></label>
     <input id="input-field" class="govgr-input" type="number" v-model.number="input" @input="onInput(input)" />
     <label v-html="note"> </label>
   </div>
@@ -50,5 +50,13 @@ watch: {
   margin: 1rem auto;
   width: 30%;
   max-height: 2rem;
+}
+
+.question-label {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
 }
 </style>

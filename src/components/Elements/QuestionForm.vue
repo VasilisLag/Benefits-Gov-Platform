@@ -1,6 +1,6 @@
 <template>
   <div class="question-form">
-    <h2>{{ title }}</h2>
+    <h2 id="benefit-title">{{ title }}</h2>
     <div class="questions-container">
       <slot></slot>
     </div>
@@ -87,6 +87,11 @@ export default {
 
 .nav-button {
   font-size: 12px;
+}
+
+#benefit-title {
+  font-size: 22px;
+  font-weight: bold;
 }
 
 button:disabled {

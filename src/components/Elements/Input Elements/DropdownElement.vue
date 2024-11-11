@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label v-html="question"></label>
+    <label class="question-label" v-html="question"></label>
     <select v-model="selectedOption" @change="onChange(selectedOption)">
       <option v-for="option in options" :key="option" :value="option">
         {{ option }}
@@ -42,3 +42,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.question-label {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+</style>
