@@ -9,9 +9,9 @@ const questions = [
     category: "textbox",
   },
   {
-    question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;<br>`,
+    question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
     category: "textbox",
-    note: `    
+    note: `  
     <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
       <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
         <ul style="list-style-type: circle; padding-left:20px;">

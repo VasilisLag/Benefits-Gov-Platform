@@ -25,6 +25,11 @@
             :answer="answer"
             @onAnswerChange="handleAnswerChange"
           />
+          <SummaryTable v-if="currentQuestionIndex === questions.length && isFormSummary"
+            :questions="questions.map(q => q.question)"
+            :answers="answers"
+          />
+
         </QuestionForm>
       </div>
     </main>
@@ -39,6 +44,7 @@ import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue
 import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
 import questions from '@/questions/childrenBenefitQs.js';
+import SummaryTable from '@/components/Elements/SummaryTable.vue';
 
 export default {
   name: 'ChildrenBenefit',
@@ -48,6 +54,7 @@ export default {
     InputElement,
     QuestionForm,
     FooterElement,
+    SummaryTable,
   },
   data() {
     return {
@@ -69,6 +76,9 @@ export default {
     },
     answer() {
       return this.answers[this.currentQuestionIndex];
+    },
+    isFormSummary() {
+      return this.currentQuestionIndex === this.questions.length;
     }
   },
   methods: {
@@ -82,16 +92,20 @@ export default {
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
 
       if (this.answers[5] === "Όχι") {
+        this.answers[6] = this.answers[7] = "-";
         this.currentQuestionIndex = this.questions.length;
       }
       
     },
     goBack() {
-      if(this.currentQuestionIndex === this.questions.length &&
-          this.answers[5] === "Όχι") {
-            this.currentQuestionIndex = 5;
-            this.currentOption = this.answers[this.currentQuestionIndex] || null;
-          }
+      if(this.currentQuestionIndex === this.questions.length) {
+        if(this.answers[5] === "Όχι"){
+          this.currentQuestionIndex = 5;
+        }
+        else {
+          this.currentOption = this.answers[--this.currentQuestionIndex] || null;
+        }
+      }
       else if (this.currentQuestionIndex > 0) {
         this.currentOption = this.answers[--this.currentQuestionIndex] || null;
       }
