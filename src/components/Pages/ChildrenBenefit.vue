@@ -94,15 +94,23 @@ export default {
       this.currentOption = selectedOption;
     },
     nextQuestion() {
-      if (this.currentOption !== null) {
+      if (this.currentOption !== null && this.currentQuestionIndex !=5) {
         this.answers[this.currentQuestionIndex++] = this.currentOption;
       }
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;
-
-      if (this.answers[5] === "Όχι") {
-        this.answers[6] = this.answers[7] = "-";
-        this.currentQuestionIndex = this.questions.length;
+      else if (this.currentOption !== null && this.currentQuestionIndex === 5) {
+        if(this.currentOption === "Όχι"){
+          this.answers[5] = this.currentOption;
+          this.answers[6] = this.answers[7] = "-";
+          this.currentQuestionIndex = this.questions.length;
+        } 
+        else {
+          console.log("test3");
+          console.log(this.currentQuestionIndex);
+          this.answers[this.currentQuestionIndex++] = this.currentOption;
+        }
       }
+
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;
       
     },
     goBack() {
