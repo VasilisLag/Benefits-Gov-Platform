@@ -1,11 +1,26 @@
 <template>
-  <div>
-    <h2> Αποτελέσματα </h2>
-    <p v-if="eligible">{{ message }}</p>
-    <p v-else>{{ message }}</p>
-    <ul v-if="reasons && reasons.length > 0">
-      <li v-for="(reason, index) in reasons" :key="index">{{ reason }}</li>
-    </ul>
+  <div class="result-container">
+    <div class="header">
+      <h2>Αποτελέσματα</h2>
+      <p v-html="message"></p>
+    </div>
+    <div v-if="eligible" class="eligible-message">
+      <span class="status eligible">Επιλέξιμος/η</span>
+    </div>
+    <div v-else class="eligible-message">
+      <span class="status not-eligible">Μη Επιλέξιμος/η</span>
+    </div>
+
+    <!-- Expandable reasons section -->
+    <div v-if="reasons && reasons.length > 0" class="reasons-container">
+      <button @click="toggleReasons" class="expand-toggle">
+        {{ expanded ? 'Σύμπτυξη' : 'Εμφάνιση Λόγων' }}
+      </button>
+
+      <ul v-show="expanded" class="reasons-list">
+        <li v-for="(reason, index) in reasons" :key="index">{{ reason }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -28,10 +43,87 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  data() {
+    return {
+      expanded: false
+    };
+  },
+  methods: {
+    toggleReasons() {
+      this.expanded = !this.expanded;
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Add your styling here */
+.result-container {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+.eligible-message {
+  margin-top: 10px;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.eligible {
+  color: #28a745;
+}
+
+.not-eligible {
+  color: #dc3545;
+}
+
+.reasons-container {
+  margin-top: 15px;
+}
+
+.expand-toggle {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.expand-toggle:hover {
+  background-color: #0056b3;
+}
+
+.reasons-list {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: disc;
+  color: #555;
+}
+
+.reasons-list li {
+  margin-bottom: 5px;
+}
 </style>
