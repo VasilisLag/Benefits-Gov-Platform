@@ -1,16 +1,14 @@
 <template>
   <div class="result-container">
-    <div class="header">
-      <h2>Αποτελέσματα</h2>
-      <p v-html="message"></p>
-    </div>
     <div v-if="eligible" class="eligible-message">
-      <span class="status eligible">Επιλέξιμος/η</span>
+    <span class="status eligible">Επιλέξιμος/η</span>
     </div>
     <div v-else class="eligible-message">
       <span class="status not-eligible">Μη Επιλέξιμος/η</span>
     </div>
-
+    <div class="header">
+      <p v-html="message"></p>
+    </div>
     <!-- Expandable reasons section -->
     <div v-if="reasons && reasons.length > 0" class="reasons-container">
       <button @click="toggleReasons" class="expand-toggle">
