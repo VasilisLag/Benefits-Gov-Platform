@@ -135,6 +135,7 @@ export default {
         else {
           this.currentOption = this.answers[--this.currentQuestionIndex] || null;
         }
+        this.results = null;
       }
       else if (this.currentQuestionIndex > 0) {
         this.currentOption = this.answers[--this.currentQuestionIndex] || null;
@@ -237,7 +238,7 @@ export default {
         reasons,
         eligible: true,
         benefitAmount: benefitAmount,
-        message: `Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`,
+        message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>€${benefitAmount}</b> το μήνα.`,
       };
     }
 
@@ -249,6 +250,7 @@ export default {
 .form-container {
   width: 70%;
   margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 main {
