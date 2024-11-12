@@ -113,7 +113,7 @@ export default {
       else if (this.currentOption !== null && this.currentQuestionIndex === 5) {
         if(this.currentOption === "Όχι"){
           this.answers[5] = this.currentOption;
-          this.answers[6] = this.answers[7] = "-";
+          this.answers[6] = this.answers[7] = null;
           this.currentQuestionIndex = this.questions.length;
         } 
         else {
