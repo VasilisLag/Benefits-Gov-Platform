@@ -32,6 +32,13 @@
           />
 
         </QuestionForm>
+        <ResultsForm 
+          v-if="results && isFormSummary"
+          :eligible="results.eligible"
+          :benefitAmount="results.benefitAmount"
+          :message="results.message"
+          :reasons="results.reasons"
+        />
       </div>
     </main>
     <FooterElement class="footer" />
@@ -46,6 +53,7 @@ import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
 import questions from '@/questions/childrenBenefitQs.js';
 import SummaryTable from '@/components/Elements/SummaryTable.vue';
+import ResultsForm from '@/components/Elements/ResultsForm.vue';
 
 export default {
   name: 'ChildrenBenefit',
@@ -56,6 +64,7 @@ export default {
     QuestionForm,
     FooterElement,
     SummaryTable,
+    ResultsForm
   },
   data() {
     return {
@@ -63,6 +72,7 @@ export default {
       questions: questions,
       currentOption: null,
       answers: [], 
+      results: null
     };
   },
   computed: {
@@ -87,6 +97,9 @@ export default {
       }else {
         return false;
       }
+    },
+    isResultsVisible() {
+      return this.results;
     }
   },
   methods: {
@@ -132,93 +145,101 @@ export default {
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
     },
     submitAnswers() {
-      this.calculateBenefits(this.answers);
+      this.results = this.calculateBenefits(this.answers);
     },
     
     calculateBenefits(answers) {
-    // Προϋποθέσεις για επιλεξιμότητα
-    const submittedTaxDeclaration = answers[0] === "Ναι";
-    const income = parseFloat(answers[1]);
-    const dependentChildren = parseInt(answers[2]);
-    const residesInGreece = answers[3] === "Ελλάδα";
-    const yearsInGreece = parseInt(answers[4]) >= 5;
-    const isSingleParent = answers[5] === "Ναι";
-    const custody = answers[6] === "Ναι";
-    const judicialDecision = answers[7] === "Ναι";
-    console.log(answers);
-    // Έλεγχος επιλεξιμότητας
-    if (
-      !submittedTaxDeclaration ||
-      !residesInGreece ||
-      !yearsInGreece ||
-      (isSingleParent && (!custody || !judicialDecision)) ||
-      dependentChildren === 0
-    ) {
-      console.log("Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.");
-      return {
-        eligible: false,
-        benefitAmount: 0,
-        message: "Δεν πληροίτε τις βασικές προϋποθέσεις για το επίδομα.",
-      };
-    }
+      
+      // Προϋποθέσεις για επιλεξιμότητα
+      const submittedTaxDeclaration = answers[0] === "Ναι";
+      const income = parseFloat(answers[1]);
+      const dependentChildren = parseInt(answers[2]);
+      const residesInGreece = answers[3] === "Ελλάδα";
+      const yearsInGreece = parseInt(answers[4]) >= 5;
+      const isSingleParent = answers[5] === "Ναι";
+      const custody = answers[6] === "Ναι";
+      const judicialDecision = answers[7] === "Ναι";
+      console.log(answers);
 
-    // Υπολογισμός κλίμακας ισοδυναμίας
-    let equivalenceScale = 1; // Πρώτος γονέας
-    
-    if (!isSingleParent) {
-      equivalenceScale += 1 / 2; // Στάθμιση δεύτερου γονέα για μη μονογονεϊκές οικογένειες
-    }
-    
-    // Εφαρμογή στάθμισης για τα παιδιά
-    for (let i = 0; i < dependentChildren; i++) {
-      if (isSingleParent && i === 0) {
-        equivalenceScale += 1 / 2; // Στάθμιση 1/2 για το πρώτο παιδί μονογονεϊκής οικογένειας
-      } else {
-        equivalenceScale += 1 / 4; // Στάθμιση 1/4 για τα υπόλοιπα παιδιά
+      let reasons = [];
+      if(!submittedTaxDeclaration)
+        reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
+      if(!residesInGreece)
+        reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα παιδιού.")
+      if(!yearsInGreece)
+        reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.")
+      if(isSingleParent && (!custody || !judicialDecision))
+        reasons.push("Η οικογένεια είναι μονογονεϊκή, παρόλα αυτά δεν υπάρχει απόφαση που να αποδεικνύει την επιμέλεια του/των παιδιών.")
+      if(dependentChildren === 0)
+        reasons.push("Ο αριθμός των εξαρτώμενων μελών είναι 0.")
+      // Έλεγχος επιλεξιμότητας
+      if (reasons.length > 0) {
+        return {
+          reasons,
+          eligible: false,
+          benefitAmount: 0,
+          message: "Δεν είστε δικαιούχος.",
+        };
       }
+
+      // Υπολογισμός κλίμακας ισοδυναμίας
+      let equivalenceScale = 1; // Πρώτος γονέας
+      
+      if (!isSingleParent) {
+        equivalenceScale += 1 / 2; // Στάθμιση δεύτερου γονέα για μη μονογονεϊκές οικογένειες
+      }
+      
+      // Εφαρμογή στάθμισης για τα παιδιά
+      for (let i = 0; i < dependentChildren; i++) {
+        if (isSingleParent && i === 0) {
+          equivalenceScale += 1 / 2; // Στάθμιση 1/2 για το πρώτο παιδί μονογονεϊκής οικογένειας
+        } else {
+          equivalenceScale += 1 / 4; // Στάθμιση 1/4 για τα υπόλοιπα παιδιά
+        }
+      }
+
+      // Υπολογισμός ισοδύναμου εισοδήματος
+      const equivalentIncome = income / equivalenceScale;
+
+      // Κατηγοριοποίηση του ισοδύναμου εισοδήματος
+      let incomeCategory;
+      if (equivalentIncome <= 6000) {
+        incomeCategory = "A";
+      } else if (equivalentIncome <= 10000) {
+        incomeCategory = "B";
+      } else if (equivalentIncome <= 15000) {
+        incomeCategory = "C";
+      } else {
+        reasons.push("Το εισόδημά σας υπερβαίνει τα όρια για το επίδομα.")
+        return {
+          reasons,
+          eligible: false,
+          benefitAmount: 0,
+          message: "Δεν είστε δικαιούχος.",
+        };
+      }
+
+      // Υπολογισμός ποσού επιδόματος βάσει κατηγορίας και αριθμού εξαρτώμενων τέκνων
+      let benefitAmount = 0;
+      switch (incomeCategory) {
+        case "A":
+          benefitAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
+          break;
+        case "B":
+          benefitAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
+          break;
+        case "C":
+          benefitAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
+          break;
     }
 
-    // Υπολογισμός ισοδύναμου εισοδήματος
-    const equivalentIncome = income / equivalenceScale;
-
-    // Κατηγοριοποίηση του ισοδύναμου εισοδήματος
-    let incomeCategory;
-    if (equivalentIncome <= 6000) {
-      incomeCategory = "A";
-    } else if (equivalentIncome <= 10000) {
-      incomeCategory = "B";
-    } else if (equivalentIncome <= 15000) {
-      incomeCategory = "C";
-    } else {
-      console.log("Το εισόδημά σας υπερβαίνει τα όρια για το επίδομα.");
       return {
-        eligible: false,
-        benefitAmount: 0,
-        message: "Το εισόδημά σας υπερβαίνει τα όρια για το επίδομα.",
+        reasons,
+        eligible: true,
+        benefitAmount: benefitAmount,
+        message: `Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`,
       };
     }
-
-    // Υπολογισμός ποσού επιδόματος βάσει κατηγορίας και αριθμού εξαρτώμενων τέκνων
-    let benefitAmount = 0;
-    switch (incomeCategory) {
-      case "A":
-        benefitAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
-        break;
-      case "B":
-        benefitAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
-        break;
-      case "C":
-        benefitAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
-        break;
-    }
-
-    console.log(`Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`);
-    return {
-      eligible: true,
-      benefitAmount: benefitAmount,
-      message: `Είστε επιλέξιμος/η για το επίδομα. Ποσό επιδόματος: €${benefitAmount} το μήνα.`,
-    };
-  }
 
   }
 };
