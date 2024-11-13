@@ -130,12 +130,13 @@ export default {
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const yearsInGreece = parseInt(answers[1]) >= 5;
       const income = parseFloat(answers[2]);
-      const dependentChildren = parseInt(answers[3]);
-      const isMarried = answers[4] === "Έγγαμος/η ή έχετε συναψει σύμωνο συμβίωσης";
-      const isSingleParent = answers[4] === "Μονγονέας";
+      const isMarried = answers[3] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
+      const isSingleParent = answers[3] === "Μονογονέας";
+      const dependentChildren = parseInt(answers[4]);
       const propertyValue = parseFloat(answers[5]);
       const isBusinessOwner = answers[6] === "Ναι";
       const businessIncome = isBusinessOwner ? parseFloat(answers[7]) : 0;
+      let areaCoefficient = answers[8]; 
       
       let reasons = [];
 
@@ -183,7 +184,7 @@ export default {
 
       // Υπολογισμός επιδόματος βάσει βάσης και συντελεστή
       const baseAmount = 350;
-      const areaCoefficient = 0.5; // Προσωρινός συντελεστής που θα προσαρμοστεί μελλοντικά
+      areaCoefficient = 0.5; // Προσωρινός συντελεστής που θα προσαρμοστεί μελλοντικά
       
       // Βασικό ποσό επιδόματος βάσει περιοχής
       let allowanceAmount = baseAmount * areaCoefficient;
