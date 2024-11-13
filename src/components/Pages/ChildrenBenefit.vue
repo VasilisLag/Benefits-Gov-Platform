@@ -117,8 +117,6 @@ export default {
           this.currentQuestionIndex = this.questions.length;
         } 
         else {
-          console.log("test3");
-          console.log(this.currentQuestionIndex);
           this.answers[this.currentQuestionIndex++] = this.currentOption;
         }
       }
@@ -160,7 +158,6 @@ export default {
       const isSingleParent = answers[5] === "Ναι";
       const custody = answers[6] === "Ναι";
       const judicialDecision = answers[7] === "Ναι";
-      console.log(answers);
 
       let reasons = [];
       if(!submittedTaxDeclaration)
