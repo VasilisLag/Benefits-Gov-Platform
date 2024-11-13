@@ -6,6 +6,11 @@ const questions = [
     required: true
   },
   {
+    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
+    category: "textbox",
+    required: true
+  },
+  {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
     required: true
@@ -27,15 +32,9 @@ const questions = [
     required: true
   },
   {
-    question: "Είστε έγγαμος/η ή έχετε σύμφωνο συμβίωσης;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    required: true
-  },
-  {
-    question: "Η οικογένειά σας είναι μονογονεϊκή;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
+    options: ["Ανύπαντρος/η", "Έγγαμος/η ή έχετε συναψει σύμωνο συμβίωσης", "Μονγονέας"],
+    category: "dropdown",
     required: true
   },
   {
@@ -56,11 +55,6 @@ const questions = [
     note: `Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.`,
     required: false
   },
-  {
-    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
-    category: "textbox",
-    required: true
-  }
 ];
 
 export default questions;
