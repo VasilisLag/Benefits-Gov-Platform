@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import locationData from '@/questions/postal_codes.json';
+import locationData from '@/utils/geo_data.json';
 
 export default {
   name: "GeoDropdown",
@@ -46,7 +46,7 @@ export default {
       searchQuery: "",
       isDropdownVisible: false,
       allOptions: locationData,
-      filteredOptions: locationData.slice(0, 5), // Display top 5 by default
+      filteredOptions: locationData.slice(0, 5),
       selectedOption: this.answer || ""
     };
   },

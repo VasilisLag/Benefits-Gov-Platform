@@ -54,6 +54,7 @@ import QuestionForm from '@/components/Elements/QuestionForm.vue';
 import questions from '@/questions/heatingBenefitQs.js';
 import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
+import {getCoefficient} from '@/utils/calcCoefficient.js';
 
 export default {
   name: 'ChildrenBenefit',
@@ -129,6 +130,7 @@ export default {
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const yearsInGreece = parseInt(answers[1]) >= 5;
+      const area = answers[2];
       const heatingSource = answers[3];
       const income = parseFloat(answers[4]);
       const isMarried = answers[5] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
@@ -137,6 +139,10 @@ export default {
       const propertyValue = parseFloat(answers[7]);
       const isBusinessOwner = answers[8] === "Ναι";
       const businessIncome = isBusinessOwner ? parseFloat(answers[9]) : 0;
+      console.log(area);
+      const coefficient = getCoefficient(area);
+      console.log(coefficient)
+      console.log(answers);
 
       let baseAmount = null;      
       let reasons = [];
@@ -152,7 +158,7 @@ export default {
       // Έλεγχος εισοδηματικών κριτηρίων
       let incomeThreshold = 16000;
       if (isSingleParent) {
-        incomeThreshold = 27000;
+        incomeThreshold = 29000;
       } else if (isMarried) {
         incomeThreshold = 24000;
       }
@@ -163,7 +169,7 @@ export default {
       }
 
       // Έλεγχος περιουσιακών κριτηρίων
-      let propertyThreshold = isMarried || isSingleParent ? 300000 : 200000;
+      let propertyThreshold = isMarried || isSingleParent ? 260000 : 200000;
       if (propertyValue > propertyThreshold) {
         reasons.push("Η αξία της ακίνητης περιουσίας σας υπερβαίνει τα όρια για το επίδομα.");
       }
@@ -201,23 +207,28 @@ export default {
           break;
       }
 
-
-      // Υπολογισμός επιδόματος βάσει βάσης και συντελεστή
-      let areaCoefficient = 0.5; // Προσωρινός συντελεστής που θα προσαρμοστεί μελλοντικά
       
       // Βασικό ποσό επιδόματος βάσει περιοχής
-      let allowanceAmount = baseAmount * areaCoefficient;
+      let allowanceAmount = baseAmount * coefficient;
 
       // Προσαύξηση για εξαρτώμενα τέκνα
       allowanceAmount += allowanceAmount * 0.2 * dependentChildren;
-
+      let limit = 800;
       // Έλεγχος για επιπλέον προσαύξηση περιοχών με δυσμενείς συνθήκες (συντελεστής >= 1)
-      if (areaCoefficient >= 1) {
+      if (coefficient >= 1) {
         allowanceAmount *= 1.25;
+        limit = 1000;
       }
 
+      if (coefficient >= 1.2) {
+        allowanceAmount *= 1.25;
+        limit = 1200
+      }
+
+      allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit));
+
       // Εφαρμογή ορίων επιδόματος
-      allowanceAmount = Math.max(100, Math.min(allowanceAmount, areaCoefficient >= 1 ? 1000 : 800));
+      
 
       return {
         reasons,
