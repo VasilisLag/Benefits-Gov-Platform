@@ -2,7 +2,6 @@
   <div class="geo-dropdown">
     <label class="question-label" v-html="question"></label>
 
-    <!-- Input field that doubles as a search and a trigger for dropdown -->
     <input
       type="text"
       v-model="searchQuery"
@@ -12,7 +11,6 @@
       class="search-input"
     />
 
-    <!-- Dropdown list that appears when input is focused or has a search query -->
     <ul v-if="isDropdownVisible && filteredOptions.length" class="dropdown-list">
       <li
         v-for="option in filteredOptions"
@@ -30,6 +28,7 @@
 
 <script>
 import locationData from '@/utils/geo_data.json';
+import greekCapitals from '@/utils/greek_capitals.js';
 
 export default {
   name: "GeoDropdown",
@@ -47,23 +46,32 @@ export default {
       isDropdownVisible: false,
       allOptions: locationData,
       filteredOptions: locationData.slice(0, 5),
-      selectedOption: this.answer || ""
+      selectedOption: this.answer || "",
+      priorityAreas: greekCapitals
     };
   },
   watch: {
     answer(newAnswer) {
       this.selectedOption = newAnswer;
-      this.searchQuery = newAnswer; // Update the input with the selected answer
+      this.searchQuery = newAnswer;
     }
   },
   methods: {
     filterOptions() {
-      // Filter locations based on the search query and limit results
-      this.filteredOptions = this.allOptions
-        .filter(option =>
-          option.area.toLowerCase().includes(this.searchQuery.toLowerCase())
-        )
-        .slice(0, 5); // Limit to first 5 results
+      const query = this.searchQuery.toLowerCase();
+
+      const priorityMatches = this.allOptions.filter(option =>
+        this.priorityAreas.includes(option.area) &&
+        option.area.toLowerCase().startsWith(query)
+      );
+
+      const otherMatches = this.allOptions.filter(option =>
+        option.area.toLowerCase().startsWith(query) &&
+        !this.priorityAreas.includes(option.area)
+      );
+
+      this.filteredOptions = [...priorityMatches, ...otherMatches].slice(0, 5);
+
     },
     selectOption(option) {
       // Set the selected option, update the search query, and hide the dropdown
@@ -84,7 +92,6 @@ export default {
     document.addEventListener("click", this.handleClickOutside);
   },
   beforeUnmount() {
-    // Clean up the event listener on component destruction
     document.removeEventListener("click", this.handleClickOutside);
   }
 };
@@ -93,21 +100,21 @@ export default {
 <style scoped>
 .geo-dropdown {
   display: flex;
-  flex-direction: column; /* Stack input and dropdown vertically */
-  align-items: flex-start; /* Align children to start of column */
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
 .search-input {
-  width: 60%; /* Relative to .geo-dropdown width */
+  width: 60%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.9rem; /* Slightly smaller font size */
+  font-size: 0.9rem;
 }
 
 .dropdown-list {
-  width: 60%; /* Matches input width */
+  width: 60%;
   max-height: 150px;
   overflow-y: auto;
   background-color: white;
@@ -117,7 +124,7 @@ export default {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  font-size: 0.9rem; /* Slightly smaller font size */
+  font-size: 0.9rem;
 }
 
 .dropdown-item {
