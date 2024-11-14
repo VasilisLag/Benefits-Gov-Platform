@@ -129,15 +129,16 @@ export default {
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const yearsInGreece = parseInt(answers[1]) >= 5;
-      const income = parseFloat(answers[2]);
-      const isMarried = answers[3] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
-      const isSingleParent = answers[3] === "Μονογονέας";
-      const dependentChildren = parseInt(answers[4]);
-      const propertyValue = parseFloat(answers[5]);
-      const isBusinessOwner = answers[6] === "Ναι";
-      const businessIncome = isBusinessOwner ? parseFloat(answers[7]) : 0;
-      let areaCoefficient = answers[8]; 
-      
+      const heatingSource = answers[3];
+      const income = parseFloat(answers[4]);
+      const isMarried = answers[5] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
+      const isSingleParent = answers[5] === "Μονογονέας";
+      const dependentChildren = parseInt(answers[6]);
+      const propertyValue = parseFloat(answers[7]);
+      const isBusinessOwner = answers[8] === "Ναι";
+      const businessIncome = isBusinessOwner ? parseFloat(answers[9]) : 0;
+
+      let baseAmount = null;      
       let reasons = [];
 
       // Έλεγχοι για επιλεξιμότητα
@@ -182,9 +183,27 @@ export default {
         };
       }
 
+      switch(heatingSource) {
+        case "Ηλεκτρικό Ρεύμα":
+          baseAmount = 380;
+          break;
+        case "Φυσικό Αέριο":
+          baseAmount = 325;
+          break;
+        case "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο":
+          baseAmount = 300;
+          break;
+        case "Βιομάζα (Πέλετ)":
+          baseAmount = 360;
+          break;
+        case "Τηλεθέρμανση/Καυσόξυλα":
+          baseAmount = 350;
+          break;
+      }
+
+
       // Υπολογισμός επιδόματος βάσει βάσης και συντελεστή
-      const baseAmount = 350;
-      areaCoefficient = 0.5; // Προσωρινός συντελεστής που θα προσαρμοστεί μελλοντικά
+      let areaCoefficient = 0.5; // Προσωρινός συντελεστής που θα προσαρμοστεί μελλοντικά
       
       // Βασικό ποσό επιδόματος βάσει περιοχής
       let allowanceAmount = baseAmount * areaCoefficient;

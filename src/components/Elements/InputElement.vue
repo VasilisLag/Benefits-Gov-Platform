@@ -32,6 +32,10 @@
       :inputValue="input"
       @onAnswerChange="onAnswerChange"
     />
+    <GeoDropdown 
+      v-else-if="isGeoDropdown"
+      @onAnswerChange="onAnswerChange"
+    />
   </div>
 </template>
 
@@ -40,6 +44,7 @@ import MultiplechoiceElement from './Input Elements/MultiplechoiceElement.vue';
 import DropdownElement from './Input Elements/DropdownElement.vue';
 import RadioButtonElement from './Input Elements/RadiobuttonElement.vue';
 import TextboxElement from './Input Elements/TextboxElement.vue';
+import GeoDropdown from './Input Elements/GeoDropdown.vue';
 
 export default {
   name: 'InputElement',
@@ -61,7 +66,8 @@ export default {
     MultiplechoiceElement,
     DropdownElement,
     RadioButtonElement,
-    TextboxElement
+    TextboxElement,
+    GeoDropdown
   },
   computed: {
     isMultipleChoice() {
@@ -75,6 +81,9 @@ export default {
     },
     isTextbox() {
       return this.category === 'textbox';
+    },
+    isGeoDropdown() {
+      return this.category ==='geo-dropdown';
     }
   },
   methods: {
