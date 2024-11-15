@@ -1,30 +1,133 @@
 const questions = [
-    {
-      question: "Do you have children under 18 years old?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
+  {
+    question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+    required: true,
+  },
+  {
+    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
+    placeholder: "π.χ. 7",
+    category: "textbox",
+    required: true,
+  },
+  {
+    question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+    required: true,
+  },
+  {
+    question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε (σε ευρώ);",
+    placeholder: "π.χ. 250",
+    category: "textbox",
+    required: true,
+  },
+  {
+    question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας (σε ευρώ);",
+    placeholder: "π.χ. 15,000",
+    category: "textbox",
+    required: true,
+  },
+  {
+    question: `Πόσα εξαρτώμενα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
+    placeholder: "Αριθμός τέκνων",
+    category: "textbox",
+    note: `
+      <p>Σημείωση:</p>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
+          <ul style="list-style-type: circle; padding-left:20px;">
+            <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
+            <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
+          </ul>
+        </li>
+        <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>
+        <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
+        <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>
+      </ul>
+    `,
+    required: false,
+  },
+  {
+    question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
+    placeholder: "Αριθμός τέκνων",
+    category: "textbox",
+    note: `
+      <p>Σημείωση:</p>
+      <p> 
+          Απροστάτευτα τέκνα: τα ανήλικα μέλη του νοικοκυριού που είναι 
+          ορφανά και από τους δύο γονείς ή που κανείς γονέας δεν μπορεί να ασκήσει 
+          τη γονική τους μέριμνα, λόγω ασθενείας, αναπηρίας, κράτησης ή στρατιωτικής θητείας και 
+          που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.
+      </p>
+    `,
+    required: false,
+  },
+  {
+    question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)`,
+    placeholder: "Αριθμός τέκνων",
+    category: "textbox",
+    note: `
+      <p>Σημείωση:</p>
+      <p> 
+          Απροστάτευτα τέκνα: τα ανήλικα μέλη του νοικοκυριού που είναι 
+          ορφανά και από τους δύο γονείς ή που κανείς γονέας δεν μπορεί να ασκήσει 
+          τη γονική τους μέριμνα, λόγω ασθενείας, αναπηρίας, κράτησης ή στρατιωτικής θητείας και 
+          που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.
+      </p>
+    `,
+    required: false,
+  },
+  {
+    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+    required: true,
+  },
+  {
+    question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας (σε ευρώ);",
+    placeholder: "π.χ. 100,000",
+    category: "textbox",
+    note: `
+      <p>Σημείωση:</p>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Η συνολική φορολογητέα αξία αφορά όλα τα ακίνητα που ανήκουν στα μέλη του νοικοκυριού.</li>
+        <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 120.000€.</li>
+        <li>Προσαυξάνεται κατά 15.000€ για κάθε πρόσθετο μέλος του νοικοκυριού έως τα 180.000€.</li>
+      </ul>
+    `,
+    required: true,
     },
     {
-      question: "Is your household income below $50,000?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
+    question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας (σε ευρώ);",
+    placeholder: "π.χ. 5,000",
+    category: "textbox",
+    note: `
+      <p>Σημείωση:</p>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Συμπεριλαμβάνονται καταθέσεις σε Ελλάδα και εξωτερικό.</li>
+        <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 7.000€.</li>
+        <li>Προσαυξάνεται κατά 3.500€ για κάθε πρόσθετο μέλος του νοικοκυριού.</li>
+      </ul>
+    `,
+    required: true,
     },
     {
-      question: "Select your state of residence:",
-      options: ["State 1", "State 2", "State 3"],
-      category: "dropdown",
+    question: "Διαθέτετε κάποιο από τα παρακάτω στοιχεία που αποκλείουν το επίδομα;",
+    options: [
+      "Αμοιβές πληρωμάτων σκαφών αναψυχής",
+      "Δαπάνες για δίδακτρα άνω των 1.500€ σε ιδιωτικά σχολεία",
+      "Οικιακούς βοηθούς, οδηγούς ή δασκάλους",
+      "Όχι, δεν διαθέτω κάποιο από τα παραπάνω"
+    ],
+    category: "dropdown",
+    required: true,
     },
-    {
-      question: "Select your preferred contact method:",
-      options: ["Email", "Phone", "Mail"],
-      category: "radio",
-    },
-    {
-      question: "Do you have any disabilities?",
-      options: ["Yes", "No", "Prefer not to say"],
-      category: "multiple-choice",
-    },
-  ];
-  
-  export default questions;
-  
+];
+
+export default questions;
+
+
+
+
