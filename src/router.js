@@ -4,6 +4,7 @@ import ChildrenBenefit from './components/Pages/ChildrenBenefit.vue';
 import HousingBenefit from './components/Pages/HousingBenefit.vue';
 import HeatingBenefit from './components/Pages/HeatingBenefit.vue';
 import DisabilityBenefit from './components/Pages/DisabilityBenefit.vue';
+import VulnerableBenefits from './components/Pages/VulnerableBenefits.vue';
 
 const routes = [
   { path: '/', component: HomePage },
@@ -12,6 +13,7 @@ const routes = [
   { path: '/HousingBenefit', component: HousingBenefit },
   { path: '/DisabilityBenefit', component: DisabilityBenefit },
   { path: '/HeatingBenefit', component: HeatingBenefit },
+  { path: '/VulnerableBenefits', component: VulnerableBenefits },
 ];
 
 const router = createRouter({
