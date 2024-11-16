@@ -123,7 +123,6 @@ export default {
     submitAnswers() {
       this.results = this.calculateBenefits(this.answers);
     },
-    
     calculateBenefits(answers) {
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
@@ -131,24 +130,26 @@ export default {
       const activeRent = answers[2] === "Ναι";
       const rent = parseFloat(answers[3]);
       const income = parseFloat(answers[4]);
-      const dependentChildren = parseInt(answers[5]);
-      const unprotectedChildren = parseInt(answers[6]);
-      const hostedPersons = parseInt(answers[7]);
+      const dependentChildren = parseInt(answers[5]) || 0;
+      const unprotectedChildren = parseInt(answers[6]) || 0;
+      const hostedPersons = parseInt(answers[7]) || 0;
       const isSingleParent = answers[8] === "Ναι";
       const propertyValue = parseFloat(answers[9]);
       const savings = parseFloat(answers[10]);
       const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
 
-      let incomeThreshold = 7000;
+      const incomeBase = 7000;
+      const allowanceBase = 70;
+      const allowanceThreshold = 210;
 
-      incomeThreshold += unprotectedChildren > 0? unprotectedChildren * 7000 + hostedPersons * 3500:
-      (isSingleParent && dependentChildren > 0? 7000 + (dependentChildren - 1 + hostedPersons) * 3500:
-      dependentChildren > 0 || hostedPersons > 0? (dependentChildren + hostedPersons) * 3500:0);
-
-      incomeThreshold = Math.Max(incomeThreshold, 21000);
-
-      console.log(income, dependentChildren, hostedPersons, isSingleParent, propertyValue, savings, incomeThreshold, rent);
+      let propertyThreshold = Math.min(120000 + 15000 * (dependentChildren + unprotectedChildren + hostedPersons), 180000);
+      let allowanceAmount;
+      let incomeThreshold = this.calculateThreshold(incomeBase, dependentChildren, unprotectedChildren, hostedPersons, isSingleParent);
+      const savingsThreshold = incomeThreshold;
       let reasons = [];
+
+      incomeThreshold = Math.max(incomeThreshold, 21000);
+
       if(!submittedTaxDeclaration) {
         reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
       }
@@ -161,9 +162,17 @@ export default {
       if(!luxuryBelonging) {
         reasons.push("Αποκλείεστε απο το επίδομα Στέγασης λόγω κατοχής πολυτελών αγαθών.");
       }
-
       if(income > incomeThreshold){
-        reasons.push("Το εισόδημα σας υπερβαίνει το εισοδηματικό όριο που έχει τεθεί με βάση την οικογενειακή σας κατάσταση: {{income}} > {{incomeThreshold}}");
+        console.log(incomeThreshold)
+        reasons.push(`Το εισόδημά σας (${income}) υπερβαίνει το όριο (${incomeThreshold}).`);
+      }
+      if(savings > savingsThreshold) {
+        console.log(savingsThreshold)
+        reasons.push("Οι καταθέσεις σας (${savings}) υπερβαίνουν το όριο ({savingsThreshold})");
+      }
+      if(propertyValue > propertyThreshold) {
+        console.log(propertyThreshold)
+        reasons.push("Η αξία των ακινήτων σας (${propertyValue}) υπερβαίνει το όριο ({propertyThreshold})");
       }
 
       if (reasons.length > 0) {
@@ -174,8 +183,43 @@ export default {
           message: "Δεν είστε δικαιούχος για το επίδομα θέρμανσης."
         };
       }
+      else {
+        allowanceAmount = this.calculateAllowance(allowanceBase, dependentChildren, unprotectedChildren, hostedPersons, isSingleParent);
+        allowanceAmount = Math.min(Math.min(rent,allowanceAmount),allowanceThreshold);
 
-      
+        return {
+          reasons,
+          eligible: true,
+          allowanceAmount: allowanceAmount,
+          message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>€${allowanceAmount}</b> το μήνα.`,
+        };
+      } 
+    },
+    calculateThreshold(base, dependentChildren, unprotectedChildren, hostedPersons, singleParent = false) {
+      const unsupported_increment = 7000;
+      const regular_increment = 3500;
+      let threshold = base;
+      threshold += unprotectedChildren * unsupported_increment;
+      if (singleParent && dependentChildren > 0) {
+        threshold += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
+      } 
+      else {
+          threshold += (dependentChildren + hostedPersons) * regular_increment;
+      }
+      return threshold;
+    },
+    calculateAllowance(base, dependentChildren, unprotectedChildren, hostedPersons, singleParent = false) {
+      const unsupported_increment = 70;
+      const regular_increment = 35;
+      let allowance = base;
+      allowance += unprotectedChildren * unsupported_increment;
+      if (singleParent && dependentChildren > 0) {
+        allowance += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
+      }
+      else {
+        allowance += (dependentChildren + hostedPersons) * 35;
+      }
+      return allowance;
     }
 
   }
