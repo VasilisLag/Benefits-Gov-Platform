@@ -26,12 +26,12 @@ export default {
 
 .govgr-header__container {
   display: flex;
-  flex-wrap: wrap; /* Ensure responsiveness */
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between; /* Space between the logo and title */
+  justify-content: space-between;
   margin: 0 auto;
   width: 100%;
-  max-width: 1200px; /* Default max-width */
+  max-width: 1200px;
 }
 
 .govgr-header__content {
@@ -43,15 +43,15 @@ export default {
 }
 
 .logo-image {
-  width: 100%; /* Default logo size */
-  max-width: 150px; /* Prevent it from being too large */
+  width: 100%;
+  max-width: 150px;
 }
 
 .govgr-header__title {
   flex: 1;
   text-align: center;
   color: white;
-  font-size: 1.5rem; /* Default font size */
+  font-size: 1.5rem;
   text-decoration: none;
 }
 
@@ -62,48 +62,50 @@ export default {
 /* Responsive breakpoints */
 @media (max-width: 768px) {
   .govgr-header__container {
-    flex-direction: column; /* Stack items vertically on small screens */
+    flex-direction: column;
     text-align: center;
   }
 
   .govgr-header__content {
-    margin-bottom: 10px; /* Add spacing between logo and title */
+    margin-bottom: 10px;
   }
 
   .govgr-header__title {
-    font-size: 1.2rem; /* Slightly smaller title */
+    font-size: 1.2rem;
   }
 
   .logo-image {
-    max-width: 120px; /* Smaller logo for small screens */
+    max-width: 120px;
   }
 }
 
 @media (min-width: 1024px) {
   .govgr-header__container {
-    flex-wrap: nowrap; /* Align items horizontally */
+    flex-wrap: nowrap;
+    padding-left:5%;
   }
 
   .govgr-header__title {
-    font-size: 1.75rem; /* Slightly larger title for larger screens */
+    font-size: 1.75rem;
   }
 
   .logo-image {
-    max-width: 180px; /* Slightly larger logo */
+    max-width: 180px;
   }
 }
 
 @media (min-width: 1440px) {
   .govgr-header__container {
-    max-width: 96rem; /* Wider container for larger screens */
+    max-width: 96rem;
+    padding-left:10%;
   }
 
   .govgr-header__title {
-    font-size: 2rem; /* Larger title */
+    font-size: 2rem;
   }
 
   .logo-image {
-    max-width: 200px; /* Even larger logo */
+    max-width: 200px;
   }
 }
 
