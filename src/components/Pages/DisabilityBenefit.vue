@@ -5,7 +5,7 @@
     <main class="p-4">
       <div class="form-container">
         <QuestionForm 
-          title="Επίδομα Αναπηρίας (ΚΕΠΑ))"
+          title="Επίδομα Αναπηρίας (ΚΕΠΑ)"
           :isLastQuestion="isLastQuestion"
           :isFirstQuestion="isFirstQuestion"
           :selectedOption="currentOption"
