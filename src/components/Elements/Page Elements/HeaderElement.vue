@@ -20,7 +20,6 @@ export default {
 <style scoped>
 /* Base styles */
 .govgr-header {
-  background-color: #005b96;
   padding: 10px 15px;
 }
 
