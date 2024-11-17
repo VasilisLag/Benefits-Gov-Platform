@@ -80,7 +80,7 @@ export default {
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -101,5 +101,55 @@ export default {
 button:disabled {
   cursor: not-allowed;
   background-color: gray;
+}
+
+@media (max-width:1023px) {
+  .button-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center
+  }
+
+  .question-form {
+    height: 500px;
+  }
+
+  .nav-button {
+    font-size:10px;
+  }
+}
+
+@media (max-width:767px) {
+
+  .question-form {
+    height: 600px;
+  }
+  
+  .back-skip-container {
+    gap: 0;
+  }
+
+  .nav-button {
+    font-size:8px;
+  }
+
+}
+
+
+@media (max-width:424px) {
+
+  .question-form {
+    height: 700px;
+  }
+  
+  .back-skip-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .nav-button {
+    margin-bottom:8px;
+  }
 }
 </style>
