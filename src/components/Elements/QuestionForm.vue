@@ -67,7 +67,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   background-color: #f9f9f9;
-  height: 400px;
+  height: 450px;
   display: flex;
   flex-direction: column;
 }
@@ -111,7 +111,7 @@ button:disabled {
   }
 
   .question-form {
-    height: 500px;
+    height: 600px;
   }
 
   .nav-button {
@@ -122,7 +122,7 @@ button:disabled {
 @media (max-width:767px) {
 
   .question-form {
-    height: 600px;
+    height: 700px;
   }
   
   .back-skip-container {
@@ -139,7 +139,7 @@ button:disabled {
 @media (max-width:424px) {
 
   .question-form {
-    height: 700px;
+    height: 800px;
   }
   
   .back-skip-container {
