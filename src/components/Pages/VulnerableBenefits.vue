@@ -33,11 +33,18 @@
 
         </QuestionForm>
         <ResultsForm 
-          v-if="results && isFormSummary"
-          :eligible="results.eligible"
-          :benefitAmount="results.benefitAmount"
-          :message="results.message"
-          :reasons="results.reasons"
+          v-if="resultsKEA && isFormSummary"
+          :eligible="resultsKEA.eligible"
+          :benefitAmount="resultsKEA.benefitAmount"
+          :message="resultsKEA.message"
+          :reasons="resultsKEA.reasons"
+        />
+        <ResultsForm 
+          v-if="resultsKOT && isFormSummary"
+          :eligible="resultsKOT.eligible"
+          :benefitAmount="resultsKOT.benefitAmount"
+          :message="resultsKOT.message"
+          :reasons="resultsKOT.reasons"
         />
       </div>
     </main>
@@ -51,12 +58,12 @@ import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
-import questions from '@/questions/housingBenefitQs.js';
+import questions from '@/questions/vulnerableBenefitsQs.js';
 import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 
 export default {
-  name: 'HousingBenefit',
+  name: 'VulnerableBenefits',
   components: {
     HeaderElement,
     NavElement,
@@ -72,7 +79,8 @@ export default {
       questions: questions,
       currentOption: null,
       answers: [], 
-      results: null
+      resultsKEA: null,
+      resultsKOT: null
     };
   },
   computed: {
@@ -98,9 +106,6 @@ export default {
         return false;
       }
     },
-    isResultsVisible() {
-      return this.results;
-    }
   },
   methods: {
     handleAnswerChange(selectedOption) {
@@ -112,7 +117,8 @@ export default {
     },
     goBack() {
       if(this.currentQuestionIndex === this.questions.length){
-        this.results = null;
+        this.resultsKEA = null;
+        this.resultsKOT = null;
       }
       this.currentOption = this.answers[--this.currentQuestionIndex] || null;
     },
@@ -121,58 +127,61 @@ export default {
       this.currentOption = this.answers[this.currentQuestionIndex] || null;
     },
     submitAnswers() {
-      this.results = this.calculateBenefits(this.answers);
+      this.resultsKEA = this.calculateKEABenefits(this.answers);
+      const aCatEligible = this.resultsKEA.eligible;
+      this.resultsKOT = this.calculateKOTBenefits(this.answers, aCatEligible);
     },
-    calculateBenefits(answers) {
-      // Προϋποθέσεις για επιλεξιμότητα
-      const submittedTaxDeclaration = answers[0] === "Ναι";
-      const yearsInGreece = parseInt(answers[1]) >= 5;
-      const activeRent = answers[2] === "Ναι";
-      const rent = parseFloat(answers[3]);
-      const income = parseFloat(answers[4]);
-      const dependentChildren = parseInt(answers[5]) || 0;
-      const unprotectedChildren = parseInt(answers[6]) || 0;
-      const hostedPersons = parseInt(answers[7]) || 0;
-      const isSingleParent = answers[8] === "Ναι";
-      const propertyValue = parseFloat(answers[9]);
+    calculateKEABenefits(answers) {
+      const residesInGreece = answers[0] === "Ναι";
+      let adults = parseInt(answers[1]);
+      let dependentChildren = parseInt(answers[2]);
+      const unsupportedChildren = parseInt(answers[3]);
+      const isSingleParent = answers[4] === "Ναι";
+      const income = parseFloat(answers[7]);
+      const propertyValue = parseFloat(answers[8]);
+      const vehicleValue = parseFloat(answers[9]);
       const savings = parseFloat(answers[10]);
       const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
-
-      const incomeBase = 7000;
-      const allowanceBase = 70;
-      const allowanceThreshold = 210;
-
-      let propertyThreshold = Math.min(120000 + 15000 * (dependentChildren + unprotectedChildren + hostedPersons), 180000);
-      let allowanceAmount;
-      let incomeThreshold = this.calculateThreshold(incomeBase, dependentChildren, unprotectedChildren, hostedPersons, isSingleParent);
-      const savingsThreshold = incomeThreshold;
+      console.log(answers)
       let reasons = [];
+      const vehicleThreshold = 6000;
+      let incomeThreshold = 0;
+      let propertyThreshold = 90000;
+      let baseAmount = 216;
+      let depositThreshold;
 
-      incomeThreshold = Math.max(incomeThreshold, 21000);
+      if (isSingleParent && dependentChildren > 0) {
+        dependentChildren -= 1;
+        adults += 1;
+      }
 
-      if(!submittedTaxDeclaration) {
-        reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
+      const totalAdults = adults + unsupportedChildren;
+      const totalChildren = dependentChildren;
+      const guaranteedIncome = baseAmount + (totalAdults-1) * 108 + (totalChildren * 54);
+
+      incomeThreshold = 6 * Math.min(guaranteedIncome, 972);
+      propertyThreshold += Math.min(150000, propertyThreshold + (totalAdults + dependentChildren - 1) * 15000);
+      depositThreshold = this.calculateDepositThreshold(totalAdults, totalChildren);
+      console.log(incomeThreshold)
+      console.log(income)
+      
+      if(!residesInGreece) {
+        reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα.");
       }
-      if(!yearsInGreece) {
-        reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.");
-      }
-      if(!activeRent) {
-        reasons.push("Πρέπει να έχετε ενεργό μισθωτήριο στο όνομα σας.");
-      }
-      if(!luxuryBelonging) {
-        reasons.push("Αποκλείεστε απο το επίδομα Στέγασης λόγω κατοχής πολυτελών αγαθών.");
-      }
-      if(income > incomeThreshold){
-        console.log(incomeThreshold)
-        reasons.push(`Το εισόδημά σας (${income}) υπερβαίνει το όριο (${incomeThreshold}).`);
-      }
-      if(savings > savingsThreshold) {
-        console.log(savingsThreshold)
-        reasons.push("Οι καταθέσεις σας (${savings}) υπερβαίνουν το όριο ({savingsThreshold})");
+      if(income >= incomeThreshold) {
+        reasons.push("Το εισόδημα σας (" + income + ") υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + ").")
       }
       if(propertyValue > propertyThreshold) {
-        console.log(propertyThreshold)
-        reasons.push("Η αξία των ακινήτων σας (${propertyValue}) υπερβαίνει το όριο ({propertyThreshold})");
+        reasons.push("Η αξία των ακινήτων σας (" + propertyValue + ") υπερβαίνει το όριο (" + propertyThreshold + ").")
+      }
+      if(vehicleValue > vehicleThreshold) {
+        reasons.push("Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (" + vehicleValue + ") υπερβαίνει το όριο (" + vehicleThreshold + ").")
+      }
+      if(savings > depositThreshold) {
+        reasons.push("Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (" + vehicleValue + ") υπερβαίνει το όριο (" + vehicleThreshold + ").")
+      }
+      if(!luxuryBelonging) {
+        reasons.push("Αποκλείεστε λόγω κατοχής πολυτελών αγαθών.")
       }
 
       if (reasons.length > 0) {
@@ -180,55 +189,117 @@ export default {
           reasons,
           eligible: false,
           allowanceAmount: 0,
-          message: "Δεν είστε δικαιούχος για το επίδομα θέρμανσης."
+          message: `Δεν είστε δικαιούχος για το ΚΕΑ.`,
         };
       }
       else {
-        allowanceAmount = this.calculateAllowance(allowanceBase, dependentChildren, unprotectedChildren, hostedPersons, isSingleParent);
-        allowanceAmount = Math.min(Math.min(rent,allowanceAmount),allowanceThreshold);
-
+        const allowanceAmount = parseInt((incomeThreshold - income) / 6);
         return {
           reasons,
           eligible: true,
+          message: `Είστε επιλέξιμος/η για το ΚΕΑ: <b>${allowanceAmount} ευρώ τον μήνα</b>`,
           allowanceAmount: allowanceAmount,
-          message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>€${allowanceAmount}</b> το μήνα.`,
         };
-      } 
-    },
-    calculateThreshold(base, dependentChildren, unprotectedChildren, hostedPersons, singleParent = false) {
-      const unsupported_increment = 7000;
-      const regular_increment = 3500;
-      let threshold = base;
-      threshold += unprotectedChildren * unsupported_increment;
-      if (singleParent && dependentChildren > 0) {
-        threshold += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
-      } 
-      else {
-          threshold += (dependentChildren + hostedPersons) * regular_increment;
       }
+      
+    },
+    calculateKOTBenefits(answers, aCatEligible) {
+      if (aCatEligible) {
+        return {
+          eligible: true,
+          allowanceAmount: 0,
+          message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>.`
+        };
+      }
+
+      const residesInGreece = answers[0] === "Ναι";
+      let adults = parseInt(answers[1]);
+      let dependentChildren = parseInt(answers[2]);
+      const unsupportedChildren = parseInt(answers[3]);
+      const income = parseFloat(answers[5]);
+      const propertyValue = parseFloat(answers[6]);
+      const disabledPerson = answers[9] === "Ναι";
+      const lifesupportedPerson = answers[10] === "Ναι";
+      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+
+      let reasons = [];
+
+      const totalAdults = adults;
+      const totalChildren = dependentChildren + unsupportedChildren;
+
+      let incomeThreshold = Math.min(9000 + (totalAdults - 1) * 4500 + totalChildren * 2250, 31500);
+      incomeThreshold += lifesupportedPerson? 15000: (disabledPerson? 8000 : 0)
+      let propertyThreshold = Math.min(120000 + (totalAdults + totalChildren - 1) * 15000, 180000);
+
+      if(!residesInGreece) {
+        reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα.");
+      }
+      if(income >= incomeThreshold) {
+        reasons.push("Το εισόδημα σας ({income}) υπερβαίνει το εισοδηματικό όριο ({incomeThreshold}).")
+      }
+      if(propertyValue > propertyThreshold) {
+        reasons.push("Η αξία των ακινήτων σας ({propertyValue}) υπερβαίνει το όριο ({propertyThreshold}).")
+      }
+      if(!luxuryBelonging) {
+        reasons.push("Αποκλείεστε λόγω κατοχής πολυτελών αγαθών.")
+      }
+
+      if (reasons.length > 0) {
+        return {
+          reasons,
+          eligible: false,
+          allowanceAmount: 0,
+          message: `Δεν είστε δικαιούχος για το ΚΟΤ.`
+        };
+      }
+      else {
+        return {
+          reasons,
+          eligible: true,
+          message:`Είστε επιλέξιμος/η για το ΚΟΤ: <b>Κατηγορια Β</b>`,
+        };
+      }
+    },
+    calculateDepositThreshold(totalAdults, totalChildren) {
+      let threshold = 0;
+
+      const depositLimits = [
+        { adults: 1, children: 0, limit: 4800 },
+        { adults: 2, children: 0, limit: 7200 },
+        { adults: 1, children: 1, limit: 7200 },
+        { adults: 2, children: 1, limit: 8400 },
+        { adults: 1, children: 2, limit: 8400 },
+        { adults: 3, children: 0, limit: 9600 },
+        { adults: 2, children: 2, limit: 9600 },
+        { adults: 1, children: 3, limit: 9600 },
+        { adults: 3, children: 1, limit: 10800 },
+        { adults: 2, children: 3, limit: 10800 },
+        { adults: 1, children: 4, limit: 10800 },
+        { adults: 4, children: 0, limit: 12000 },
+        { adults: 2, children: 4, limit: 12000 },
+        { adults: 1, children: 5, limit: 12000 },
+        { adults: 4, children: 1, limit: 13200 },
+        { adults: 2, children: 5, limit: 13200 },
+        { adults: 1, children: 6, limit: 13200 },
+        { adults: 5, children: 0, limit: 14400 },
+        { adults: 2, children: 6, limit: 14400 },
+        { adults: 1, children: 7, limit: 14400 },
+      ];
+
+      const matchedLimit = depositLimits.find(
+        (entry) => entry.adults === totalAdults && entry.children === totalChildren
+      );
+
+      threshold = matchedLimit ? matchedLimit.limit : 0;
       return threshold;
     },
-    calculateAllowance(base, dependentChildren, unprotectedChildren, hostedPersons, singleParent = false) {
-      const unsupported_increment = 70;
-      const regular_increment = 35;
-      let allowance = base;
-      allowance += unprotectedChildren * unsupported_increment;
-      if (singleParent && dependentChildren > 0) {
-        allowance += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
-      }
-      else {
-        allowance += (dependentChildren + hostedPersons) * 35;
-      }
-      return allowance;
-    }
-
   }
 };
 </script>
 
 <style scoped>
 .form-container {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
