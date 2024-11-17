@@ -10,8 +10,9 @@
       >
         {{ option }}
       </button>
-      <label v-html="note"> </label>
     </div>
+    <br>
+    <label class="note" v-html="note"> </label>
   </div>
 </template>
 
@@ -91,5 +92,9 @@ export default {
 .option-button:focus {
   outline: none;
   transform: scale(1.03);
+}
+
+.note {
+  margin-top:20px;
 }
 </style>
