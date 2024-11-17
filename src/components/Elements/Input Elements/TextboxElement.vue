@@ -1,8 +1,14 @@
 <template>
   <div>
     <label class="question-label" v-html="question"></label>
-    <input id="input-field" class="govgr-input" type="number" v-model.number="input" @input="onInput(input)" />
-    <label v-html="note"> </label>
+    <input 
+      id="input-field" 
+      class="govgr-input" 
+      type="text" 
+      v-model="formattedInput" 
+      @input="onInput($event.target.value)" 
+    />
+    <label v-html="note"></label>
   </div>
 </template>
 
@@ -18,28 +24,47 @@ export default {
   },
   data() {
     return {
-      input: this.inputValue || ""
+      input: this.inputValue || "",
+      formattedInput: this.formatNumber(this.inputValue || ""),
     };
   },
-watch: {
-  input(newValue) {
-    this.input = newValue;
-    this.$emit('onAnswerChange', this.input);
-  },
-  inputValue(newValue) {
-    if (newValue !== this.input) {
-      this.input = newValue;
+  watch: {
+    input(newValue) {
+      if (newValue < 0) {
+        this.input = 0; // Reset to 0 if the value is negative
+      }
+      this.formattedInput = this.formatNumber(this.input); // Update formatted input
+      this.$emit('onAnswerChange', this.input);
+    },
+    inputValue(newValue) {
+      if (newValue !== this.input) {
+        this.input = newValue;
+        this.formattedInput = this.formatNumber(newValue);
+      }
     }
-  }
-},
+  },
   methods: {
     onInput(value) {
-      this.$emit('onAnswerChange', value);
+      // Remove any formatting to process raw input
+      const rawValue = value.replace(/\./g, "");
+
+      // Ensure only numbers are allowed and no negatives
+      const numericValue = Math.max(Number(rawValue) || 0, 0);
+
+      // Update the input and emit the raw number
+      this.input = numericValue;
+      this.formattedInput = this.formatNumber(numericValue);
+      this.$emit('onAnswerChange', this.input);
+    },
+    formatNumber(value) {
+      if (value === null || value === undefined || value === "") return "";
+      return value
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add thousands separator
     }
   },
   mounted() {
     this.$emit('onAnswerChange', this.input);
-    console.log(this.input);
   }
 };
 </script>
