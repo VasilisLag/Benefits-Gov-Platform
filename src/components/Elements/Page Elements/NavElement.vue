@@ -6,7 +6,11 @@
           <router-link to="/">Σχετικά</router-link>
         </a>
       </li>
-      <li><a href="#" class="govgr-nav__list-item-link">Αξιολόγηση</a></li>
+      <li>
+        <a href="#" class="govgr-nav__list-item-link">
+          <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
+        </a>
+      </li>
       <li class="govgr-nav__list-item govgr-nav__list-item--has-submenu">
         <a href="#" class="govgr-nav__list-item-link">ΟΠΕΚΑ</a>
         <ul class="govgr-nav__submenu">
