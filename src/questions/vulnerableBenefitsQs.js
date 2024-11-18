@@ -72,7 +72,12 @@ const questions = [
       </ul>
     `,
     required: true,
-  },  
+  },
+  {
+    question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού;",
+    category: "textbox",
+    required: true,
+  },
   {
     question: "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
     category: "textbox",

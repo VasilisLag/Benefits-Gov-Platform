@@ -137,11 +137,11 @@ export default {
       let dependentChildren = parseInt(answers[2]);
       const unsupportedChildren = parseInt(answers[3]);
       const isSingleParent = answers[4] === "Ναι";
-      const income = parseFloat(answers[7]);
-      const propertyValue = parseFloat(answers[8]);
-      const vehicleValue = parseFloat(answers[9]);
-      const savings = parseFloat(answers[10]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const income = parseFloat(answers[8]);
+      const propertyValue = parseFloat(answers[9]);
+      const vehicleValue = parseFloat(answers[10]);
+      const savings = parseFloat(answers[11]);
+      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
       console.log(answers)
       let reasons = [];
       const vehicleThreshold = 6000;
@@ -160,7 +160,7 @@ export default {
       const guaranteedIncome = baseAmount + (totalAdults-1) * 108 + (totalChildren * 54);
 
       incomeThreshold = 6 * Math.min(guaranteedIncome, 972);
-      propertyThreshold += Math.min(150000, propertyThreshold + (totalAdults + dependentChildren - 1) * 15000);
+      propertyThreshold = Math.min(150000, propertyThreshold + (totalAdults + dependentChildren - 1) * 15000);
       depositThreshold = this.calculateDepositThreshold(totalAdults, totalChildren);
       console.log(incomeThreshold)
       console.log(income)
@@ -169,16 +169,16 @@ export default {
         reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα.");
       }
       if(income >= incomeThreshold) {
-        reasons.push("Το εισόδημα σας (" + income + ") υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + ").")
+        reasons.push("Το εισόδημα σας (" + income + "€) υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + "€).")
       }
       if(propertyValue > propertyThreshold) {
-        reasons.push("Η αξία των ακινήτων σας (" + propertyValue + ") υπερβαίνει το όριο (" + propertyThreshold + ").")
+        reasons.push("Η αξία των ακινήτων σας (" + propertyValue + "€) υπερβαίνει το όριο (" + propertyThreshold + "€).")
       }
       if(vehicleValue > vehicleThreshold) {
-        reasons.push("Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (" + vehicleValue + ") υπερβαίνει το όριο (" + vehicleThreshold + ").")
+        reasons.push("Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (" + vehicleValue + ") υπερβαίνει το όριο (" + vehicleThreshold + "€).")
       }
       if(savings > depositThreshold) {
-        reasons.push("Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (" + vehicleValue + ") υπερβαίνει το όριο (" + vehicleThreshold + ").")
+        reasons.push("Η αξία των καταθέσεων σας (" + savings + "€) υπερβαίνει το όριο (" + depositThreshold + "€).")
       }
       if(!luxuryBelonging) {
         reasons.push("Αποκλείεστε λόγω κατοχής πολυτελών αγαθών.")
@@ -197,7 +197,7 @@ export default {
         return {
           reasons,
           eligible: true,
-          message: `Είστε επιλέξιμος/η για το ΚΕΑ: <b>${allowanceAmount} ευρώ τον μήνα</b>`,
+          message: `Είστε επιλέξιμος/η για το ΚΕΑ: <b>${allowanceAmount}€ τον μήνα</b>`,
           allowanceAmount: allowanceAmount,
         };
       }
@@ -207,7 +207,7 @@ export default {
       if (aCatEligible) {
         return {
           eligible: true,
-          allowanceAmount: 0,
+          allowanceAmount: 4.5,
           message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>.`
         };
       }
@@ -216,17 +216,17 @@ export default {
       let adults = parseInt(answers[1]);
       let dependentChildren = parseInt(answers[2]);
       const unsupportedChildren = parseInt(answers[3]);
-      const income = parseFloat(answers[5]);
-      const propertyValue = parseFloat(answers[6]);
-      const disabledPerson = answers[9] === "Ναι";
-      const lifesupportedPerson = answers[10] === "Ναι";
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const disabledPerson = answers[5] === "Ναι";
+      const lifesupportedPerson = answers[6] === "Ναι";
+      const income = parseFloat(answers[7]);
+      const propertyValue = parseFloat(answers[9]);
+      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
 
       let reasons = [];
 
       const totalAdults = adults;
       const totalChildren = dependentChildren + unsupportedChildren;
-
+      console.log(income)
       let incomeThreshold = Math.min(9000 + (totalAdults - 1) * 4500 + totalChildren * 2250, 31500);
       incomeThreshold += lifesupportedPerson? 15000: (disabledPerson? 8000 : 0)
       let propertyThreshold = Math.min(120000 + (totalAdults + totalChildren - 1) * 15000, 180000);
@@ -235,10 +235,10 @@ export default {
         reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα.");
       }
       if(income >= incomeThreshold) {
-        reasons.push("Το εισόδημα σας ({income}) υπερβαίνει το εισοδηματικό όριο ({incomeThreshold}).")
+        reasons.push("Το εισόδημα σας (" + income + "€) υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + "€).")
       }
       if(propertyValue > propertyThreshold) {
-        reasons.push("Η αξία των ακινήτων σας ({propertyValue}) υπερβαίνει το όριο ({propertyThreshold}).")
+        reasons.push("Η αξία των ακινήτων σας (" + propertyValue + "€) υπερβαίνει το όριο (" + propertyThreshold + "€).")
       }
       if(!luxuryBelonging) {
         reasons.push("Αποκλείεστε λόγω κατοχής πολυτελών αγαθών.")
