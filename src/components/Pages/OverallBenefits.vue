@@ -105,7 +105,11 @@ export default {
       questions: questions,
       currentOption: null,
       answers: [], 
-      results: null
+      resultsChildren: null,
+      resultsHousing: null,
+      resultsHeating: null,
+      resultsKEA: null,
+      resultsKOT: null
     };
   },
   computed: {

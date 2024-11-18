@@ -155,7 +155,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount}€</b> το μήνα.`,
+      message: `Είστε επιλέξιμος/η για το Επίδομα Στέγασης. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount}€</b> το μήνα.`,
     };
   }
 }
@@ -265,7 +265,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     reasons,
     eligible: true,
     benefitAmount: benefitAmount,
-    message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>${benefitAmount}€</b> το μήνα.`,
+    message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδόματος: <b>${benefitAmount}€</b> το μήνα.`,
   };
 }
 
