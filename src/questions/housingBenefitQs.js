@@ -11,19 +11,25 @@ const questions = [
     required: true,
   },
   {
+    question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
+    category: "textbox",
+    required: true,
+  },
+  {
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
     required: true,
   },
   {
-    question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε (σε ευρώ);",
+    question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
     required: true,
   },
   {
-    question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας (σε ευρώ);",
-    category: "textbox",
+    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
     required: true,
   },
   {
@@ -74,13 +80,7 @@ const questions = [
     required: false,
   },
   {
-    question: "Είναι η οικογένειά σας μονογονεϊκή;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    required: true,
-  },
-  {
-    question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας (σε ευρώ);",
+    question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας σε ευρώ;",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
@@ -93,7 +93,7 @@ const questions = [
     required: true,
     },
     {
-    question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας (σε ευρώ);",
+    question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας σε ευρώ;",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>

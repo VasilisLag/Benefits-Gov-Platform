@@ -127,13 +127,13 @@ export default {
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const yearsInGreece = parseInt(answers[1]) >= 5;
-      const activeRent = answers[2] === "Ναι";
-      const rent = parseFloat(answers[3]);
-      const income = parseFloat(answers[4]);
-      const dependentChildren = parseInt(answers[5]) || 0;
-      const unprotectedChildren = parseInt(answers[6]) || 0;
-      const hostedPersons = parseInt(answers[7]) || 0;
-      const isSingleParent = answers[8] === "Ναι";
+      const income = parseFloat(answers[2]);
+      const activeRent = answers[3] === "Ναι";
+      const rent = parseFloat(answers[4]);
+      const isSingleParent = answers[5] === "Ναι";
+      const dependentChildren = parseInt(answers[6]) || 0;
+      const unprotectedChildren = parseInt(answers[7]) || 0;
+      const hostedPersons = parseInt(answers[8]) || 0;
       const propertyValue = parseFloat(answers[9]);
       const savings = parseFloat(answers[10]);
       const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
@@ -164,15 +164,15 @@ export default {
       }
       if(income > incomeThreshold){
         console.log(incomeThreshold)
-        reasons.push(`Το εισόδημά σας (${income}) υπερβαίνει το όριο (${incomeThreshold}).`);
+        reasons.push(`Το εισόδημά σας(${income}€) υπερβαίνει το όριο (${incomeThreshold}€).`);
       }
       if(savings > savingsThreshold) {
         console.log(savingsThreshold)
-        reasons.push("Οι καταθέσεις σας (${savings}) υπερβαίνουν το όριο ({savingsThreshold})");
+        reasons.push(`Οι καταθέσεις σας(${savings}€) υπερβαίνουν το όριο (${savingsThreshold}€)`);
       }
       if(propertyValue > propertyThreshold) {
         console.log(propertyThreshold)
-        reasons.push("Η αξία των ακινήτων σας (${propertyValue}) υπερβαίνει το όριο ({propertyThreshold})");
+        reasons.push(`Η αξία των ακινήτων σας(${propertyValue}€) υπερβαίνει το όριο (${propertyThreshold}€)`);
       }
 
       if (reasons.length > 0) {
@@ -191,7 +191,7 @@ export default {
           reasons,
           eligible: true,
           allowanceAmount: allowanceAmount,
-          message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>€${allowanceAmount}</b> το μήνα.`,
+          message: `Είστε επιλέξιμος/η για το επίδομα. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount}€</b> το μήνα.`,
         };
       } 
     },
