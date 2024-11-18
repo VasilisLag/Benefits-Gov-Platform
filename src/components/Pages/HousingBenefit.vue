@@ -137,7 +137,7 @@ export default {
       const hostedPersons = parseInt(answers[8]) || 0;
       const propertyValue = parseFloat(answers[9]);
       const savings = parseFloat(answers[10]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       return calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, income, activeRent, rent, isSingleParent, dependentChildren,
                 unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging);

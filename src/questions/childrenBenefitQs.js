@@ -42,18 +42,15 @@ const questions = [
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
     category: "multiple-choice",
-    required: true
-  },
-  {
-    question: "Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    required: true
-  },
-  {
-    question: "Υπήρξε δικαστική απόφαση για την επιμέλεια των τέκνων;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    note: `
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Εφόσον η οικογένειά σας είναι μονογονεϊκή, πρέπει να ισχύουν και οι εξής προϋποθέσεις:
+          <ul style="list-style-type: circle; padding-left:20px;">
+            <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
+            <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
+          </ul>
+        </li>
+      </ul><br>`,
     required: true
   }
 ];

@@ -108,37 +108,14 @@ export default {
       this.currentOption = selectedOption;
     },
     nextQuestion() {
-      if (this.currentOption !== null && this.currentQuestionIndex !=5) {
-        this.answers[this.currentQuestionIndex++] = this.currentOption;
-      }
-      else if (this.currentOption !== null && this.currentQuestionIndex === 5) {
-        if(this.currentOption === "Όχι"){
-          this.answers[5] = this.currentOption;
-          this.answers[6] = this.answers[7] = null;
-          this.currentQuestionIndex = this.questions.length;
-        } 
-        else {
-          this.answers[this.currentQuestionIndex++] = this.currentOption;
-        }
-      }
-
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;
-      
+      this.answers[this.currentQuestionIndex++] = this.currentOption;
+      this.currentOption = this.answers[this.currentQuestionIndex] || null;   
     },
     goBack() {
-      if(this.currentQuestionIndex === this.questions.length) {
-        if(this.answers[5] === "Όχι"){
-          this.currentQuestionIndex = 5;
-          this.currentOption =  this.answers[this.currentQuestionIndex];
-        }
-        else {
-          this.currentOption = this.answers[--this.currentQuestionIndex] || null;
-        }
+      if(this.currentQuestionIndex === this.questions.length){
         this.results = null;
       }
-      else if (this.currentQuestionIndex > 0) {
-        this.currentOption = this.answers[--this.currentQuestionIndex] || null;
-      }
+      this.currentOption = this.answers[--this.currentQuestionIndex] || null;
     },
     skipQuestion() {
       this.answers[this.currentQuestionIndex++] = null;
@@ -157,11 +134,9 @@ export default {
       const residesInGreece = answers[3] === "Ναι";
       const yearsInGreece = parseInt(answers[4]) >= 5;
       const isSingleParent = answers[5] === "Ναι";
-      const custody = answers[6] === "Ναι";
-      const judicialDecision = answers[7] === "Ναι";
 
       return calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece,
-              yearsInGreece, isSingleParent, custody, judicialDecision);
+              yearsInGreece, isSingleParent);
     }
 
   }

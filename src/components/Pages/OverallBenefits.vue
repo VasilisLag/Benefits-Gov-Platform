@@ -161,31 +161,29 @@ export default {
     calcChildren(answers){
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
-      const income = parseFloat(answers[1]);
-      const dependentChildren = parseInt(answers[2]);
-      const residesInGreece = answers[3] === "Ναι";
-      const yearsInGreece = parseInt(answers[4]) >= 5;
-      const isSingleParent = answers[5] === "Ναι";
-      const custody = answers[6] === "Ναι";
-      const judicialDecision = answers[7] === "Ναι";
+      const residesInGreece = answers[1] === "Ναι";
+      const yearsInGreece = parseInt(answers[2]) >= 5;
+      const income = parseFloat(answers[3]);
+      const isSingleParent = answers[6] === "Μονογονέας";
+      const dependentChildren = parseInt(answers[7]) || 0;
 
       return calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece,
-              yearsInGreece, isSingleParent, custody, judicialDecision);
+              yearsInGreece, isSingleParent);
     },
     calcHousing(answers){
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
-      const yearsInGreece = parseInt(answers[1]) >= 5;
-      const income = parseFloat(answers[2]);
-      const activeRent = answers[3] === "Ναι";
-      const rent = parseFloat(answers[4]);
-      const isSingleParent = answers[5] === "Ναι";
-      const dependentChildren = parseInt(answers[6]) || 0;
-      const unprotectedChildren = parseInt(answers[7]) || 0;
-      const hostedPersons = parseInt(answers[8]) || 0;
-      const propertyValue = parseFloat(answers[9]);
-      const savings = parseFloat(answers[10]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const yearsInGreece = parseInt(answers[2]) >= 5;
+      const income = parseFloat(answers[3]);
+      const activeRent = answers[12] === "Ναι";
+      const rent = parseFloat(answers[13]);
+      const isSingleParent = answers[6] === "Μονογονέας";
+      const dependentChildren = parseInt(answers[7]) || 0;
+      const unprotectedChildren = parseInt(answers[8]) || 0;
+      const hostedPersons = parseInt(answers[9]) || 0;
+      const propertyValue = parseFloat(answers[14]);
+      const savings = parseFloat(answers[15]);
+      const luxuryBelonging = answers[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       return calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, income, activeRent, rent, isSingleParent, dependentChildren,
                 unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging);
@@ -193,45 +191,45 @@ export default {
     calcHeating(answers){
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
-      const yearsInGreece = parseInt(answers[1]) >= 5;
-      const income = parseFloat(answers[2]);
-      const isBusinessOwner = answers[3] === "Ναι";
-      const businessIncome = isBusinessOwner ? parseFloat(answers[4]) : 0;
-      const propertyValue = parseFloat(answers[5]);
+      const yearsInGreece = parseInt(answers[2]) >= 5;
+      const income = parseFloat(answers[3]);
+      const isBusinessOwner = answers[4] === "Ναι";
+      const businessIncome = isBusinessOwner ? parseFloat(answers[5]) : 0;
+      const propertyValue = parseFloat(answers[14]);
       const isMarried = answers[6] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
       const isSingleParent = answers[6] === "Μονογονέας";
       const dependentChildren = parseInt(answers[7]);
-      const area = answers[8];
-      const heatingSource = answers[9];
+      const area = answers[10];
+      const heatingSource = answers[11];
 
       return calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, income, isBusinessOwner, businessIncome,
                             propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource);
     },
     calcKEA(answers){
-      const residesInGreece = answers[0] === "Ναι";
-      let adults = parseInt(answers[1]);
-      let dependentChildren = parseInt(answers[2]);
-      const unsupportedChildren = parseInt(answers[3]);
-      const isSingleParent = answers[4] === "Ναι";
-      const income = parseFloat(answers[8]);
-      const propertyValue = parseFloat(answers[9]);
-      const vehicleValue = parseFloat(answers[10]);
-      const savings = parseFloat(answers[11]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const residesInGreece = answers[1] === "Ναι";
+      let adults = parseInt(answers[9] + 1);
+      let dependentChildren = parseInt(answers[7]);
+      const unsupportedChildren = parseInt(answers[8]) || 0;
+      const isSingleParent = answers[6] === "Μονογονέας";
+      const income = parseFloat(answers[3]);
+      const propertyValue = parseFloat(answers[14]);
+      const vehicleValue = parseFloat(answers[16]);
+      const savings = parseFloat(answers[15]);
+      const luxuryBelonging = answers[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
       
       return calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren,
         isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging);
     },
     calcKOT(answers, keaEligible){
-      const residesInGreece = answers[0] === "Ναι";
-      let adults = parseInt(answers[1]);
-      let dependentChildren = parseInt(answers[2]);
-      const unsupportedChildren = parseInt(answers[3]);
-      const disabledPerson = answers[5] === "Ναι";
-      const lifesupportedPerson = answers[6] === "Ναι";
-      const income = parseFloat(answers[7]);
-      const propertyValue = parseFloat(answers[9]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const residesInGreece = answers[1] === "Ναι";
+      let adults = parseInt(answers[9] + 1);
+      let dependentChildren = parseInt(answers[7]);
+      const unsupportedChildren = parseInt(answers[8]) || 0;
+      const disabledPerson = answers[18] === "Ναι";
+      const lifesupportedPerson = answers[19] === "Ναι";
+      const income = parseFloat(answers[3]);
+      const propertyValue = parseFloat(answers[14]);
+      const luxuryBelonging = answers[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       return calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson,
         lifesupportedPerson, income, propertyValue, luxuryBelonging, keaEligible);

@@ -143,7 +143,7 @@ export default {
       const propertyValue = parseFloat(answers[9]);
       const vehicleValue = parseFloat(answers[10]);
       const savings = parseFloat(answers[11]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
       
       return calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren,
         isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging);
@@ -158,7 +158,7 @@ export default {
       const lifesupportedPerson = answers[6] === "Ναι";
       const income = parseFloat(answers[7]);
       const propertyValue = parseFloat(answers[9]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παραπάνω";
+      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       return calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson,
         lifesupportedPerson, income, propertyValue, luxuryBelonging, aCatEligible);
