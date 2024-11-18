@@ -54,7 +54,7 @@ import QuestionForm from '@/components/Elements/QuestionForm.vue';
 import questions from '@/questions/heatingBenefitQs.js';
 import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
-import {getCoefficient} from '@/utils/calcCoefficient.js';
+import {calcHeatingBenefit} from '@/utils/calcBenefits.js';
 
 export default {
   name: 'ChildrenBenefit',
@@ -140,101 +140,8 @@ export default {
       const area = answers[8];
       const heatingSource = answers[9];
 
-      const coefficient = getCoefficient(area);
-
-      let baseAmount = null;      
-      let reasons = [];
-
-      // Έλεγχοι για επιλεξιμότητα
-      if (!submittedTaxDeclaration) {
-        reasons.push("Δεν έχετε υποβάλει φορολογική δήλωση για το προηγούμενο έτος.");
-      }
-      if (!yearsInGreece) {
-        reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.");
-      }
-
-      // Έλεγχος εισοδηματικών κριτηρίων
-      let incomeThreshold = 16000;
-      if (isSingleParent) {
-        incomeThreshold = 29000;
-      } else if (isMarried) {
-        incomeThreshold = 24000;
-      }
-      incomeThreshold += 5000 * dependentChildren;
-      const businessThreshold = 80000;
-
-      if (income > incomeThreshold) {
-        reasons.push("Το εισόδημά σας(" + income + "€) υπερβαίνει τα επιτρεπόμενα όρια(" + incomeThreshold + "€) για το επίδομα θέρμανσης.");
-      }
-
-      // Έλεγχος περιουσιακών κριτηρίων
-      let propertyThreshold = isMarried || isSingleParent ? 260000 : 200000;
-      if (propertyValue > propertyThreshold) {
-        reasons.push("Η αξία της ακίνητης περιουσίας σας(" + propertyValue + "€) υπερβαίνει τα όρια(" + propertyThreshold + "€) για το επίδομα.");
-      }
-
-      // Έλεγχος εισοδήματος από επιχειρηματική δραστηριότητα
-      if (isBusinessOwner && businessIncome > businessThreshold) {
-        reasons.push("Τα έσοδα σας από επιχειρηματική δραστηριότητα(" + businessIncome + "€) υπερβαίνουν το επιτρεπόμενο όριο(" + businessThreshold + "€).");
-      }
-
-      // Έλεγχος αν υπάρχει κάποιος λόγος αποκλεισμού
-      if (reasons.length > 0) {
-        return {
-          reasons,
-          eligible: false,
-          allowanceAmount: 0,
-          message: "Δεν είστε δικαιούχος για το επίδομα θέρμανσης."
-        };
-      }
-
-      switch(heatingSource) {
-        case "Ηλεκτρικό Ρεύμα":
-          baseAmount = 380;
-          break;
-        case "Φυσικό Αέριο":
-          baseAmount = 325;
-          break;
-        case "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο":
-          baseAmount = 300;
-          break;
-        case "Βιομάζα (Πέλετ)":
-          baseAmount = 360;
-          break;
-        case "Τηλεθέρμανση/Καυσόξυλα":
-          baseAmount = 350;
-          break;
-      }
-
-      
-      // Βασικό ποσό επιδόματος βάσει περιοχής
-      let allowanceAmount = baseAmount * coefficient;
-
-      // Προσαύξηση για εξαρτώμενα τέκνα
-      allowanceAmount += allowanceAmount * 0.2 * dependentChildren;
-      let limit = 800;
-      // Έλεγχος για επιπλέον προσαύξηση περιοχών με δυσμενείς συνθήκες (συντελεστής >= 1)
-      if (coefficient >= 1) {
-        allowanceAmount *= 1.25;
-        limit = 1000;
-      }
-
-      if (coefficient >= 1.2) {
-        allowanceAmount *= 1.25;
-        limit = 1200
-      }
-
-      allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit));
-
-      // Εφαρμογή ορίων επιδόματος
-      
-
-      return {
-        reasons,
-        eligible: true,
-        allowanceAmount: allowanceAmount.toFixed(2),
-        message: `Είστε επιλέξιμος/η για το επίδομα θέρμανσης. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount.toFixed(2)}€</b>.`
-      };
+      return calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, income, isBusinessOwner, businessIncome,
+                            propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource);
     }
 
   }
