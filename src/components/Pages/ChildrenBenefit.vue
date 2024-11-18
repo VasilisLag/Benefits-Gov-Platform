@@ -153,7 +153,7 @@ export default {
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const income = parseFloat(answers[1]);
       const dependentChildren = parseInt(answers[2]);
-      const residesInGreece = answers[3] === "Ελλάδα";
+      const residesInGreece = answers[3] === "Ναι";
       const yearsInGreece = parseInt(answers[4]) >= 5;
       const isSingleParent = answers[5] === "Ναι";
       const custody = answers[6] === "Ναι";

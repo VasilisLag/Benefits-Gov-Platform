@@ -28,8 +28,8 @@ const questions = [
     required: true
   },
   {
-    question: "Πού διαμένετε αυτή τη στιγμή;",
-    options: ["Ελλάδα", "Άλλο"],
+    question: "Διαμένετε μόνιμα στην Ελλάδα;",
+    options: ["Ναι", "Όχι"],
     category: "multiple-choice",
     required: true
   },
