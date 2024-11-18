@@ -7,7 +7,6 @@ const questions = [
   },
   {
     question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
-    placeholder: "π.χ. 7",
     category: "textbox",
     required: true,
   },
@@ -19,19 +18,16 @@ const questions = [
   },
   {
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε (σε ευρώ);",
-    placeholder: "π.χ. 250",
     category: "textbox",
     required: true,
   },
   {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας (σε ευρώ);",
-    placeholder: "π.χ. 15,000",
     category: "textbox",
     required: true,
   },
   {
     question: `Πόσα εξαρτώμενα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
-    placeholder: "Αριθμός τέκνων",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
@@ -51,7 +47,6 @@ const questions = [
   },
   {
     question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
-    placeholder: "Αριθμός τέκνων",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
@@ -66,7 +61,6 @@ const questions = [
   },
   {
     question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)`,
-    placeholder: "Αριθμός τέκνων",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
@@ -87,7 +81,6 @@ const questions = [
   },
   {
     question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας (σε ευρώ);",
-    placeholder: "π.χ. 100,000",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
@@ -101,7 +94,6 @@ const questions = [
     },
     {
     question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας (σε ευρώ);",
-    placeholder: "π.χ. 5,000",
     category: "textbox",
     note: `
       <p>Σημείωση:</p>
