@@ -130,19 +130,17 @@ export default {
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
       const yearsInGreece = parseInt(answers[1]) >= 5;
-      const area = answers[2];
-      const heatingSource = answers[3];
-      const income = parseFloat(answers[4]);
-      const isMarried = answers[5] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
-      const isSingleParent = answers[5] === "Μονογονέας";
-      const dependentChildren = parseInt(answers[6]);
-      const propertyValue = parseFloat(answers[7]);
-      const isBusinessOwner = answers[8] === "Ναι";
-      const businessIncome = isBusinessOwner ? parseFloat(answers[9]) : 0;
-      console.log(area);
+      const income = parseFloat(answers[2]);
+      const isBusinessOwner = answers[3] === "Ναι";
+      const businessIncome = isBusinessOwner ? parseFloat(answers[4]) : 0;
+      const propertyValue = parseFloat(answers[5]);
+      const isMarried = answers[6] === "Έγγαμος/η - Σύμφωνο συμβίωσης";
+      const isSingleParent = answers[6] === "Μονογονέας";
+      const dependentChildren = parseInt(answers[7]);
+      const area = answers[8];
+      const heatingSource = answers[9];
+
       const coefficient = getCoefficient(area);
-      console.log(coefficient)
-      console.log(answers);
 
       let baseAmount = null;      
       let reasons = [];
@@ -163,20 +161,21 @@ export default {
         incomeThreshold = 24000;
       }
       incomeThreshold += 5000 * dependentChildren;
+      const businessThreshold = 80000;
 
       if (income > incomeThreshold) {
-        reasons.push("Το εισόδημά σας υπερβαίνει τα επιτρεπόμενα όρια για το επίδομα θέρμανσης.");
+        reasons.push("Το εισόδημά σας(" + income + "€) υπερβαίνει τα επιτρεπόμενα όρια(" + incomeThreshold + "€) για το επίδομα θέρμανσης.");
       }
 
       // Έλεγχος περιουσιακών κριτηρίων
       let propertyThreshold = isMarried || isSingleParent ? 260000 : 200000;
       if (propertyValue > propertyThreshold) {
-        reasons.push("Η αξία της ακίνητης περιουσίας σας υπερβαίνει τα όρια για το επίδομα.");
+        reasons.push("Η αξία της ακίνητης περιουσίας σας(" + propertyValue + "€) υπερβαίνει τα όρια(" + propertyThreshold + "€) για το επίδομα.");
       }
 
       // Έλεγχος εισοδήματος από επιχειρηματική δραστηριότητα
-      if (isBusinessOwner && businessIncome > 80000) {
-        reasons.push("Τα έσοδα από επιχειρηματική δραστηριότητα υπερβαίνουν το επιτρεπόμενο όριο.");
+      if (isBusinessOwner && businessIncome > businessThreshold) {
+        reasons.push("Τα έσοδα σας από επιχειρηματική δραστηριότητα(" + businessIncome + "€) υπερβαίνουν το επιτρεπόμενο όριο(" + businessThreshold + "€).");
       }
 
       // Έλεγχος αν υπάρχει κάποιος λόγος αποκλεισμού
@@ -234,7 +233,7 @@ export default {
         reasons,
         eligible: true,
         allowanceAmount: allowanceAmount.toFixed(2),
-        message: `Είστε επιλέξιμος/η για το επίδομα θέρμανσης. Εκτιμώμενο ποσό επιδόματος: <b>€${allowanceAmount.toFixed(2)}</b>.`
+        message: `Είστε επιλέξιμος/η για το επίδομα θέρμανσης. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount.toFixed(2)}€</b>.`
       };
     }
 
