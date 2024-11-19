@@ -47,7 +47,8 @@ export default {
   },
   computed: {
     linkToBenefit() {
-      return `${this.link}`;
+      console.log(this.link)
+      return this.link;
     }
   },
   methods: {

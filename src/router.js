@@ -18,7 +18,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory('/Benefits-Gov-Platform/'),
+history: createWebHistory(process.env.NODE_ENV === 'production' ? '/Benefits-Gov-Platform/' : '/'),
   routes,
 });
 
