@@ -47,8 +47,7 @@ export default {
   },
   computed: {
     linkToBenefit() {
-      const basePath = process.env.NODE_ENV === 'production' ? '/Benefits-Gov-Platform' : '';
-      return `${basePath}${this.link}`;
+      return `${this.link}`;
     }
   },
   methods: {
