@@ -25,7 +25,7 @@
         <ol class="govgr-list govgr-list--number govgr-!-font-size-16">
           <li> Μεταβείτε στην καρτέλα "Αξιολόγηση" για να κάνετε μια προσομοίωση και να δείτε συνολικά για ποια επιδόματα μπορεί να είστε επιλέξιμοι.</li>
             <button class="govgr-btn govgr-btn-primary govgr-mt-3" >
-              <a href="\OverallBenefits">Αξιολόγηση</a>
+              <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
             </button>
           <li> Αν θέλετε να ελέγξετε ένα συγκεκριμένο επίδομα, μπορείτε να επιλέξετε από τις παρακάτω επιλογές για περισσότερες πληροφορίες και να δείτε τα κριτήρια που ισχύουν:</li>
         </ol>

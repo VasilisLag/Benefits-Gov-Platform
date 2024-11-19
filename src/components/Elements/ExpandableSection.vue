@@ -11,9 +11,11 @@
     <!-- Show more info when expanded -->
     <p v-if="isExpanded" class="more-info"  v-html="moreInformation"></p>
     <p v-if="isExpanded" class="more-info">
-      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3" @click="linkToBenefit">
-        Αξιολόγηση - {{ title }}
-      </button>
+      <router-link :to="linkToBenefit">
+        <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3">
+          Αξιολόγηση - {{ title }}
+        </button>
+      </router-link> 
     </p>
   </div>
 </template>
@@ -43,14 +45,16 @@ export default {
       isExpanded: false 
     };
   },
+  computed: {
+    linkToBenefit() {
+      const basePath = process.env.NODE_ENV === 'production' ? '/Benefits-Gov-Platform' : '';
+      return `${basePath}${this.link}`;
+    }
+  },
   methods: {
     toggleContent() {
       this.isExpanded = !this.isExpanded;
     },
-    linkToBenefit() {
-      const basePath = process.env.NODE_ENV === 'production' ? '/Benefits-Gov-Platform' : '';
-      window.location.href = `${basePath}${this.link}`;
-    }
   }
 };
 </script>
