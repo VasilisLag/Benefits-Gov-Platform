@@ -42,7 +42,7 @@
               Επίδομα Παιδιού - ΜΙΤΟΣ
             </a>
             "
-            link="\ChildrenBenefit"
+            link="/ChildrenBenefit"
         />
         <ExpandableSection
           title = "Επίδομα Στέγασης"
@@ -54,7 +54,7 @@
               Επίδομα Στέγασης - ΜΙΤΟΣ
             </a>
           "
-          link="\HousingBenefit"
+          link="/HousingBenefit"
         />
         <ExpandableSection
           title = "Επίδομα Θέρμανσης"
@@ -70,7 +70,7 @@
           <a class='govgr-link govgr-!-font-size-16' href='https://mitos.gov.gr/index.php/%CE%94%CE%94:%CE%95%CF%80%CE%AF%CE%B4%CE%BF%CE%BC%CE%B1_%CE%9A%CE%B1%CF%84%CE%B1%CE%BD%CE%AC%CE%BB%CF%89%CF%83%CE%B7%CF%82_%CE%A0%CE%B5%CF%84%CF%81%CE%B5%CE%BB%CE%B1%CE%AF%CE%BF%CF%85_%CE%98%CE%AD%CF%81%CE%BC%CE%B1%CE%BD%CF%83%CE%B7%CF%82' rel='noreferrer noopener' target='_blank'>
               Επίδομα Θέρμανσης - ΜΙΤΟΣ
           </a>"
-          link="\HeatingBenefit"
+          link="/HeatingBenefit"
         />
         <ExpandableSection
           title = "Κοινωνικό Οικιακό Τιμολόγιο"
@@ -94,7 +94,7 @@
               Επίδομα KOT - GOV
             </a>
           "
-          link="\VulnerableBenefits"
+          link="/VulnerableBenefits"
         /> 
         <ExpandableSection
           title = "Ελάχιστο Εγγυημένο Εισόδημα"
@@ -120,7 +120,7 @@
               Ελάχιστο Εγγυημένο Εισόδημα - ΜΙΤΟΣ
             </a>
           "
-          link="\VulnerableBenefits"
+          link="/VulnerableBenefits"
         /> 
       </section>
 
