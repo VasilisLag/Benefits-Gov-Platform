@@ -48,8 +48,8 @@ export default {
       this.isExpanded = !this.isExpanded;
     },
     linkToBenefit() {
-      console.log(this.link)
-      window.location.href= this.link;
+      const basePath = process.env.NODE_ENV === 'production' ? '/Benefits-Gov-Platform' : '';
+      window.location.href = `${basePath}${this.link}`;
     }
   }
 };
