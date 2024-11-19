@@ -5,7 +5,7 @@
     <main class="p-4">
       <div class="form-container">
         <QuestionForm 
-          title="Επίδομα ΚΟΤ - ΚΕΑ"
+          title="Κοινωνικό Οικιακό Τιμολόγιο - Ελάχιστο Εγγυημένο Εισόδημα"
           :isLastQuestion="isLastQuestion"
           :isFirstQuestion="isFirstQuestion"
           :selectedOption="currentOption"

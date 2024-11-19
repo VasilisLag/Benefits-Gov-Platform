@@ -33,7 +33,7 @@
       </li>
       <li>
         <a href="#" class="govgr-nav__list-item-link">
-          <router-link to="/VulnerableBenefits">ΚΟΤ-ΚΕΑ</router-link>
+          <router-link to="/VulnerableBenefits">ΚΟΤ- ΕΕΕ</router-link>
         </a>
       </li>
     </ul>

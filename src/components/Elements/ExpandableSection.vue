@@ -11,7 +11,9 @@
     <!-- Show more info when expanded -->
     <p v-if="isExpanded" class="more-info"  v-html="moreInformation"></p>
     <p v-if="isExpanded" class="more-info">
-      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3">Αξιολόγηση - {{ title }}</button>
+      <button id="button-assesment" class="govgr-btn govgr-btn-primary govgr-mt-3" @click="linkToBenefit">
+        Αξιολόγηση - {{ title }}
+      </button>
     </p>
   </div>
 </template>
@@ -30,16 +32,24 @@ export default {
     moreInformation: {
       type: String,
       required: true
+    },
+    link: {
+      type: String,
+      required: true
     }
   },
   data() {
     return {
-      isExpanded: false  // State to track if content is expanded or not
+      isExpanded: false 
     };
   },
   methods: {
     toggleContent() {
       this.isExpanded = !this.isExpanded;
+    },
+    linkToBenefit() {
+      console.log(this.link)
+      window.location.href= this.link;
     }
   }
 };
