@@ -136,14 +136,14 @@ export default {
     calculateKEABenefits(answers) {
       const residesInGreece = answers[0] === "Ναι";
       let adults = parseInt(answers[1]);
-      let dependentChildren = parseInt(answers[2]);
-      const unsupportedChildren = parseInt(answers[3]);
+      let dependentChildren = parseInt(answers[2]) || 0;
+      const unsupportedChildren = parseInt(answers[3]) || 0;
       const isSingleParent = answers[4] === "Ναι";
-      const income = parseFloat(answers[8]);
-      const propertyValue = parseFloat(answers[9]);
-      const vehicleValue = parseFloat(answers[10]);
-      const savings = parseFloat(answers[11]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
+      const income = parseFloat(answers[7]);
+      const propertyValue = parseFloat(answers[8]);
+      const vehicleValue = parseFloat(answers[9]);
+      const savings = parseFloat(answers[10]);
+      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
       
       return calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren,
         isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging);
@@ -154,11 +154,11 @@ export default {
       let adults = parseInt(answers[1]);
       let dependentChildren = parseInt(answers[2]);
       const unsupportedChildren = parseInt(answers[3]);
-      const disabledPerson = answers[5] === "Ναι";
-      const lifesupportedPerson = answers[6] === "Ναι";
-      const income = parseFloat(answers[7]);
-      const propertyValue = parseFloat(answers[9]);
-      const luxuryBelonging = answers[12] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
+      const disabledPerson = answers[5] === "Αναπηρία 67% και άνω";
+      const lifesupportedPerson = answers[5] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
+      const income = parseFloat(answers[6]);
+      const propertyValue = parseFloat(answers[8]);
+      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       return calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson,
         lifesupportedPerson, income, propertyValue, luxuryBelonging, aCatEligible);

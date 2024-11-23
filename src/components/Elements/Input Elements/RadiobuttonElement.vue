@@ -11,7 +11,7 @@
         />
         <label :for="option">{{ option }}</label>
       </div>
-    <label v-html="note"> </label>
+    <label class="note" v-html="note"> </label>
   </div>
 </template>
 
@@ -71,8 +71,12 @@ input[type="radio"] {
 
 label {
   font-size: 1rem;
-  color: #333;
-  text-align: left; /* Ensure text is left-aligned */
+  color: #333333;
+}
+
+.note {
+  margin-top:20px;
+  align-self:center;
 }
 
 </style>

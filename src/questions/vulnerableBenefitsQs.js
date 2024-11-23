@@ -13,7 +13,7 @@ const questions = [
   {
     question: "Πόσα ανήλικα μέλη έχετε ως εξαρτώμενα;",
     category: "textbox",
-    required: true,
+    required: false,
     note: `
     <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
       <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
@@ -39,7 +39,7 @@ const questions = [
           που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.
       </p>
     `,
-    required: true,
+    required: false,
   },
   {
     question: "Είστε μονογονεϊκή οικογένεια;",
@@ -48,31 +48,18 @@ const questions = [
     required: true
   },
   {
-    question: "Στο νοικοκυριό σας υπάρχει μέλος ή μέλη με αναπηρία 67% και άνω;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    note: `
-      <p><strong>Σημείωση:</strong></p>
-      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-        <li>Η αναπηρία πρέπει να είναι πιστοποιημένη με ποσοστό 67% και άνω.</li>
-        <li>Εάν ισχύει, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>8.000 ευρώ</strong>.</li>
-      </ul>
-    `,
+    question: "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
+    category: "radio",
+    options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
     required: true,
-  },
-  {
-    question: "Στο νοικοκυριό σας υπάρχει μέλος ή μέλη που χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
     note: `
-      <p><strong>Σημείωση:</strong></p>
-      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-        <li>Αφορά μέλη που χρειάζονται μηχανική υποστήριξη κατ' οίκον, κρίσιμη για τη ζωή τους.</li>
-        <li>Εάν ισχύει, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>15.000 ευρώ</strong>.</li>
-      </ul>
-    `,
-    required: true,
-  },
+    <p><strong>Σημείωση:</strong></p>
+    <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+      <li>Εάν υπάρχει μέλος με αναπηρία 67% και άνω, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>8.000 ευρώ</strong>.</li>
+      <li>Εάν υπάρχει μέλος που χρήζει μηναχικής υποστήριξης κατ' οίκον, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>15.000 ευρώ</strong>.</li>
+    </ul>
+  `,
+  },  
   {
     question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού;",
     category: "textbox",

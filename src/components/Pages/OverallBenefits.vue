@@ -215,7 +215,7 @@ export default {
       let dependentChildren = parseInt(answers[7]);
       const unsupportedChildren = parseInt(answers[8]) || 0;
       const isSingleParent = answers[6] === "Μονογονέας";
-      const income = parseFloat(answers[3]);
+      const income = parseFloat(answers[19]);
       const propertyValue = parseFloat(answers[14]);
       const vehicleValue = parseFloat(answers[16]);
       const savings = parseFloat(answers[15]);
@@ -229,8 +229,8 @@ export default {
       let adults = parseInt(answers[9] + 1);
       let dependentChildren = parseInt(answers[7]);
       const unsupportedChildren = parseInt(answers[8]) || 0;
-      const disabledPerson = answers[18] === "Ναι";
-      const lifesupportedPerson = answers[19] === "Ναι";
+      const disabledPerson = answers[18] === "Αναπηρία 67% και άνω";
+      const lifesupportedPerson = answers[18] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
       const income = parseFloat(answers[3]);
       const propertyValue = parseFloat(answers[14]);
       const luxuryBelonging = answers[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
