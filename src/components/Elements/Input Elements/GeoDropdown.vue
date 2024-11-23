@@ -1,13 +1,14 @@
 <template>
   <div class="geo-dropdown">
     <label class="question-label" v-html="question"></label>
+    <p class="">Εισάγετε την τοποθεσία σας</p>
 
     <input
       type="text"
       v-model="searchQuery"
       @focus="isDropdownVisible = true"
       @input="filterOptions"
-      placeholder="Search for your location..."
+      placeholder="Αναζητήστε τον τόπο διαμονής σας με τον Τ.Κ. (προτείνεται)"
       class="search-input"
     />
 
@@ -18,7 +19,11 @@
         @click="selectOption(option)"
         class="dropdown-item"
       >
-        {{ option.area }}
+        {{ option.area }} 
+        <!-- Εμφάνιση του ΤΚ μόνο αν το searchQuery έχει 5 χαρακτήρες και είναι αριθμός -->
+        <span v-if="isPostalCodeValid">
+          (ΤΚ: {{ this.searchQuery}})
+        </span>
       </li>
     </ul>
 
@@ -50,6 +55,12 @@ export default {
       priorityAreas: greekCapitals
     };
   },
+  computed: {
+    isPostalCodeValid() {
+      const query = this.searchQuery.trim();
+      return query.length === 5 && !isNaN(query); // Αν το query είναι αριθμός και έχει 5 χαρακτήρες
+    }
+  },
   watch: {
     answer(newAnswer) {
       this.selectedOption = newAnswer;
@@ -59,19 +70,25 @@ export default {
   methods: {
     filterOptions() {
       const query = this.searchQuery.toLowerCase();
+      const isNumeric = !isNaN(query); // Check if query is a number (potential postal code)
 
-      const priorityMatches = this.allOptions.filter(option =>
-        this.priorityAreas.includes(option.area) &&
-        option.area.toLowerCase().startsWith(query)
-      );
+      if (isNumeric) {
+        this.filteredOptions = this.allOptions.filter(option =>
+          option.postal_codes.some(code => code.startsWith(query)) // Check if any postal code matches
+        ).slice(0, 5);
+      } else {
+        const priorityMatches = this.allOptions.filter(option =>
+          this.priorityAreas.includes(option.area) &&
+          option.area.toLowerCase().startsWith(query)
+        );
 
-      const otherMatches = this.allOptions.filter(option =>
-        option.area.toLowerCase().startsWith(query) &&
-        !this.priorityAreas.includes(option.area)
-      );
+        const otherMatches = this.allOptions.filter(option =>
+          option.area.toLowerCase().startsWith(query) &&
+          !this.priorityAreas.includes(option.area)
+        );
 
-      this.filteredOptions = [...priorityMatches, ...otherMatches].slice(0, 5);
-
+        this.filteredOptions = [...priorityMatches, ...otherMatches].slice(0, 5);
+      }
     },
     selectOption(option) {
       // Set the selected option, update the search query, and hide the dropdown
@@ -111,6 +128,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.9rem;
+  margin-top: 20px;
 }
 
 .dropdown-list {
