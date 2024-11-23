@@ -37,7 +37,7 @@ export default {
       type: Boolean,
       required: true
     },
-    benefitAmount: {
+    allowanceAmount: {
       type: Number,
       required: true
     },

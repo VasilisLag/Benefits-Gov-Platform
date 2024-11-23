@@ -7,7 +7,6 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
     let baseAmount = null;      
     let reasons = [];
 
-    // Έλεγχοι για επιλεξιμότητα
     if (!submittedTaxDeclaration) {
       reasons.push("Δεν έχετε υποβάλει φορολογική δήλωση για το προηγούμενο έτος.");
     }
@@ -15,7 +14,6 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.");
     }
 
-    // Έλεγχος εισοδηματικών κριτηρίων
     let incomeThreshold = 16000;
     if (isSingleParent) {
       incomeThreshold = 29000;
@@ -29,18 +27,15 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons.push("Το εισόδημά σας(" + income + "€) υπερβαίνει τα επιτρεπόμενα όρια(" + incomeThreshold + "€) για το επίδομα θέρμανσης.");
     }
 
-    // Έλεγχος περιουσιακών κριτηρίων
     let propertyThreshold = isMarried || isSingleParent ? 260000 : 200000;
     if (propertyValue > propertyThreshold) {
       reasons.push("Η αξία της ακίνητης περιουσίας σας(" + propertyValue + "€) υπερβαίνει τα όρια(" + propertyThreshold + "€) για το επίδομα.");
     }
 
-    // Έλεγχος εισοδήματος από επιχειρηματική δραστηριότητα
     if (isBusinessOwner && businessIncome > businessThreshold) {
       reasons.push("Τα έσοδα σας από επιχειρηματική δραστηριότητα(" + businessIncome + "€) υπερβαίνουν το επιτρεπόμενο όριο(" + businessThreshold + "€).");
     }
 
-    // Έλεγχος αν υπάρχει κάποιος λόγος αποκλεισμού
     if (reasons.length > 0) {
       return {
         reasons,
@@ -69,13 +64,11 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
     }
 
     
-    // Βασικό ποσό επιδόματος βάσει περιοχής
     let allowanceAmount = baseAmount * coefficient;
 
-    // Προσαύξηση για εξαρτώμενα τέκνα
     allowanceAmount += allowanceAmount * 0.2 * dependentChildren;
     let limit = 800;
-    // Έλεγχος για επιπλέον προσαύξηση περιοχών με δυσμενείς συνθήκες (συντελεστής >= 1)
+
     if (coefficient >= 1) {
       allowanceAmount *= 1.25;
       limit = 1000;
@@ -86,16 +79,13 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       limit = 1200
     }
 
-    allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit));
-
-    // Εφαρμογή ορίων επιδόματος
-    
+    allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit)).toFixed(0);
 
     return {
       reasons,
       eligible: true,
-      allowanceAmount: allowanceAmount.toFixed(2),
-      message: `Είστε επιλέξιμος/η για το επίδομα θέρμανσης. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount.toFixed(2)}€</b>.`
+      allowanceAmount: allowanceAmount,
+      message: `Είστε επιλέξιμος/η για το Επίδομα Θέρμανσης. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`
     };
 }
 
@@ -144,7 +134,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons,
       eligible: false,
       allowanceAmount: 0,
-      message: "Δεν είστε δικαιούχος για το επίδομα θέρμανσης."
+      message: "Δεν είστε επιλέξιμος/η για το Επίδομα Στέγασης."
     };
   }
   else {
@@ -155,7 +145,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Είστε επιλέξιμος/η για το Επίδομα Στέγασης. Εκτιμώμενο ποσό επιδόματος: <b>${allowanceAmount}€</b> το μήνα.`,
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
     };
   }
 }
@@ -200,36 +190,32 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.")
   if(dependentChildren === 0)
     reasons.push("Ο αριθμός των εξαρτώμενων μελών είναι 0.")
-  // Έλεγχος επιλεξιμότητας
+
   if (reasons.length > 0) {
     return {
       reasons,
       eligible: false,
-      benefitAmount: 0,
+      allowanceAmount: 0,
       message: "Δεν είστε δικαιούχος.",
     };
   }
 
-  // Υπολογισμός κλίμακας ισοδυναμίας
-  let equivalenceScale = 1; // Πρώτος γονέας
+  let equivalenceScale = 1;
   
   if (!isSingleParent) {
-    equivalenceScale += 1 / 2; // Στάθμιση δεύτερου γονέα για μη μονογονεϊκές οικογένειες
+    equivalenceScale += 1 / 2;
   }
   
-  // Εφαρμογή στάθμισης για τα παιδιά
   for (let i = 0; i < dependentChildren; i++) {
     if (isSingleParent && i === 0) {
-      equivalenceScale += 1 / 2; // Στάθμιση 1/2 για το πρώτο παιδί μονογονεϊκής οικογένειας
+      equivalenceScale += 1 / 2;
     } else {
-      equivalenceScale += 1 / 4; // Στάθμιση 1/4 για τα υπόλοιπα παιδιά
+      equivalenceScale += 1 / 4;
     }
   }
 
-  // Υπολογισμός ισοδύναμου εισοδήματος
   const equivalentIncome = income / equivalenceScale;
 
-  // Κατηγοριοποίηση του ισοδύναμου εισοδήματος
   let incomeCategory;
   if (equivalentIncome <= 6000) {
     incomeCategory = "A";
@@ -242,30 +228,29 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     return {
       reasons,
       eligible: false,
-      benefitAmount: 0,
+      allowanceAmount: 0,
       message: "Δεν είστε δικαιούχος.",
     };
   }
 
-  // Υπολογισμός ποσού επιδόματος βάσει κατηγορίας και αριθμού εξαρτώμενων τέκνων
-  let benefitAmount = 0;
+  let allowanceAmount = 0;
   switch (incomeCategory) {
     case "A":
-      benefitAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
+      allowanceAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
       break;
     case "B":
-      benefitAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
+      allowanceAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
       break;
     case "C":
-      benefitAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
+      allowanceAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
       break;
   }
 
   return {
     reasons,
     eligible: true,
-    benefitAmount: benefitAmount,
-    message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδόματος: <b>${benefitAmount}€</b> το μήνα.`,
+    allowanceAmount: allowanceAmount,
+    message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
   };
 }
 
@@ -316,7 +301,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
       reasons,
       eligible: false,
       allowanceAmount: 0,
-      message: `Δεν είστε δικαιούχος για το ΚΕΑ.`,
+      message: `Δεν είστε δικαιούχος.`,
     };
   }
   else {
@@ -324,7 +309,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
     return {
       reasons,
       eligible: true,
-      message: `Είστε επιλέξιμος/η για το ΚΕΑ: <b>${allowanceAmount}€ τον μήνα</b>`,
+      message: `Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
       allowanceAmount: allowanceAmount,
     };
   }
@@ -334,10 +319,11 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
   income, propertyValue, luxuryBelonging, keaEligible)
 {
   if (keaEligible) {
+    const allowanceAmount = 0.075
     return {
       eligible: true,
-      allowanceAmount: 4.5,
-      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>.`
+      allowanceAmount: 0.075,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`
     };
   }
 
@@ -368,14 +354,16 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
       reasons,
       eligible: false,
       allowanceAmount: 0,
-      message: `Δεν είστε δικαιούχος για το ΚΟΤ.`
+      message: `Δεν είστε δικαιούχος.`
     };
   }
   else {
+    const allowanceAmount = 0.045
     return {
       reasons,
       eligible: true,
-      message:`Είστε επιλέξιμος/η για το ΚΟΤ: <b>Κατηγορια Β</b>`,
+      allowanceAmount:0.045,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`
     };
   }
 }
