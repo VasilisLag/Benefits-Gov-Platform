@@ -67,7 +67,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   background-color: #f9f9f9;
-  height: 450px;
   display: flex;
   flex-direction: column;
 }
