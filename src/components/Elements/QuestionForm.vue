@@ -69,6 +69,7 @@ export default {
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
+  min-height: 350px;
 }
 
 .questions-container {
