@@ -34,6 +34,7 @@
         </QuestionForm>
         <ResultsForm 
           v-if="results && isFormSummary"
+          :title="title"
           :eligible="results.eligible"
           :benefitAmount="results.benefitAmount"
           :message="results.message"
@@ -73,7 +74,8 @@ export default {
       questions: questions,
       currentOption: null,
       answers: [], 
-      results: null
+      results: null,
+      title: "Επίδομα Παιδιού (Α21)"
     };
   },
   computed: {

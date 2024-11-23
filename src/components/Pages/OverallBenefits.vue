@@ -34,6 +34,7 @@
         </QuestionForm>
         <ResultsForm 
           v-if="resultsChildren && isFormSummary"
+          :title="titleChildren"
           :eligible="resultsChildren.eligible"
           :benefitAmount="resultsChildren.benefitAmount"
           :message="resultsChildren.message"
@@ -41,6 +42,7 @@
         />
         <ResultsForm 
           v-if="resultsHousing && isFormSummary"
+          :title="titleHousing"
           :eligible="resultsHousing.eligible"
           :benefitAmount="resultsHousing.allowanceAmount"
           :message="resultsHousing.message"
@@ -48,6 +50,7 @@
         />
         <ResultsForm 
           v-if="resultsHeating && isFormSummary"
+          :title="titleHeating"
           :eligible="resultsHeating.eligible"
           :benefitAmount="resultsHeating.allowanceAmount"
           :message="resultsHeating.message"
@@ -55,6 +58,7 @@
         />
         <ResultsForm 
           v-if="resultsKEA && isFormSummary"
+          :title="titleKEA"
           :eligible="resultsKEA.eligible"
           :benefitAmount="resultsKEA.allowanceAmount"
           :message="resultsKEA.message"
@@ -62,6 +66,7 @@
         />
         <ResultsForm 
           v-if="resultsKOT && isFormSummary"
+          :title="titleKOT"
           :eligible="resultsKOT.eligible"
           :benefitAmount="resultsKOT.allowanceAmount"
           :message="resultsKOT.message"
@@ -109,7 +114,12 @@ export default {
       resultsHousing: null,
       resultsHeating: null,
       resultsKEA: null,
-      resultsKOT: null
+      resultsKOT: null,
+      titleChildren: "Επίδομα Παιδιού (Α21)",
+      titleHeating: "Επίδομα Θέρμανσης",
+      titleHousing: "Επίδομα Στέγασης",
+      titleKEA: "Ελάχιστο Εγγυημένο Εισόδημα",
+      titleKOT: "Κοινωνικό Οικιακό Τιμολόγιο"
     };
   },
   computed: {

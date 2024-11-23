@@ -34,6 +34,7 @@
         </QuestionForm>
         <ResultsForm 
           v-if="resultsKEA && isFormSummary"
+          :title="titleKEA"
           :eligible="resultsKEA.eligible"
           :benefitAmount="resultsKEA.benefitAmount"
           :message="resultsKEA.message"
@@ -41,6 +42,7 @@
         />
         <ResultsForm 
           v-if="resultsKOT && isFormSummary"
+          :title="titleKOT"
           :eligible="resultsKOT.eligible"
           :benefitAmount="resultsKOT.benefitAmount"
           :message="resultsKOT.message"
@@ -82,7 +84,9 @@ export default {
       currentOption: null,
       answers: [], 
       resultsKEA: null,
-      resultsKOT: null
+      resultsKOT: null,
+      titleKEA: "Ελάχιστο Εγγυημένο Εισόδημα",
+      titleKOT: "Κοινωνικό Οικιακό Τιμολόγιο",
     };
   },
   computed: {

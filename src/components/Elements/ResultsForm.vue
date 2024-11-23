@@ -1,7 +1,11 @@
 <template>
   <div class="result-container">
+    <div class="result-title">
+      <h2>{{ title }}</h2>
+    </div>
+
     <div v-if="eligible" class="eligible-message">
-    <span class="status eligible">Επιλέξιμος/η</span>
+      <span class="status eligible">Επιλέξιμος/η</span>
     </div>
     <div v-else class="eligible-message">
       <span class="status not-eligible">Μη Επιλέξιμος/η</span>
@@ -25,6 +29,10 @@
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      required:true
+    },
     eligible: {
       type: Boolean,
       required: true
@@ -64,14 +72,19 @@ export default {
   border: 1px solid #ccc;
 }
 
-.header {
-  margin-bottom: 10px;
+.result-title {
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-h2 {
-  font-size: 20px;
+.result-title h2 {
+  font-size: 24px;
   color: #333;
   margin: 0;
+}
+
+.header {
+  margin-bottom: 10px;
 }
 
 p {
