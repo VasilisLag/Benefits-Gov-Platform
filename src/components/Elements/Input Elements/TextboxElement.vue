@@ -72,7 +72,6 @@ export default {
 <style scoped>
 #input-field {
   display: block;
-  margin: 1rem auto;
   width: 30%;
   max-height: 2rem;
 }
@@ -83,5 +82,9 @@ export default {
   display: block;
   font-size: 1.2rem;
   color: #333;
+}
+
+.govgr-input {
+  margin: 2rem auto 4rem auto;
 }
 </style>
