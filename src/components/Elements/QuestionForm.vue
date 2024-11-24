@@ -1,9 +1,21 @@
 <template>
   <div class="question-form">
     <h2 id="benefit-title">{{ title }}</h2>
+
+    <div class="progress-bar-container">
+      <div
+        class="progress-bar"
+        :style="{ width: progressPercentage + '%' }"
+      ></div>
+    </div>
+    <p class="progress-text" v-if="!isLastQuestion">
+      Ερώτηση {{ questionIndex + 1 }} από {{ numberOfQuestions }}
+    </p>
+    
     <div class="questions-container">
       <slot></slot>
     </div>
+
     <div class="button-container">
       <div class="back-skip-container">
         <button @click="goBack" :disabled="isFirstQuestion" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
@@ -12,7 +24,6 @@
       </div>
       <button @click="submitAnswers" :disabled="!isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
     </div>
-
   </div>
 </template>
 
@@ -24,23 +35,25 @@ export default {
       type: String,
       required: true,
     },
-    isLastQuestion : {
+    isLastQuestion: {
       type: Boolean,
-      required: true
+      required: true,
     },
-    isFirstQuestion : {
+    isFirstQuestion: {
       type: Boolean,
-      required: true
+      required: true,
     },
     isQuestionRequired: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    selectedOption: String
+    selectedOption: String,
+    questionIndex: Number,
+    numberOfQuestions: Number,
   },
   methods: {
     submitAnswers() {
-      this.$emit('submit'); 
+      this.$emit('submit');
     },
     goBack() {
       this.$emit('back');
@@ -52,11 +65,14 @@ export default {
       this.$emit('next');
     },
   },
-   computed: {
+  computed: {
     hasNotChosen() {
       return this.selectedOption === null || this.selectedOption === '';
-    }
-  }
+    },
+    progressPercentage() {
+      return ((this.questionIndex) / this.numberOfQuestions) * 100;
+    },
+  },
 };
 </script>
 
@@ -70,6 +86,27 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 350px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-text {
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  text-align: center;
 }
 
 .questions-container {
@@ -103,11 +140,11 @@ button:disabled {
   background-color: gray;
 }
 
-@media (max-width:1023px) {
+@media (max-width: 1023px) {
   .button-container {
     display: grid;
     grid-template-columns: 1fr;
-    justify-items: center
+    justify-items: center;
   }
 
   .question-form {
@@ -115,33 +152,29 @@ button:disabled {
   }
 
   .nav-button {
-    font-size:10px;
+    font-size: 10px;
   }
 }
 
-@media (max-width:767px) {
-
+@media (max-width: 767px) {
   .question-form {
     height: 700px;
   }
-  
+
   .back-skip-container {
     gap: 0;
   }
 
   .nav-button {
-    font-size:8px;
+    font-size: 8px;
   }
-
 }
 
-
-@media (max-width:424px) {
-
+@media (max-width: 424px) {
   .question-form {
     height: 800px;
   }
-  
+
   .back-skip-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -149,7 +182,7 @@ button:disabled {
   }
 
   .nav-button {
-    margin-bottom:8px;
+    margin-bottom: 8px;
   }
 }
 </style>

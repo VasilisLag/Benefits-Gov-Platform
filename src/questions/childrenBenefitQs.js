@@ -6,8 +6,34 @@ const questions = [
     required: true
   },
   {
+    question: "Διαμένετε μόνιμα στην Ελλάδα;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+    required: true
+  },
+  {
+    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
+    category: "textbox",
+    required: true
+  },
+  {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
+    required: true
+  },
+  {
+    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    options: ["Ναι", "Όχι"],
+    category: "multiple-choice",
+    note: `
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Εφόσον η οικογένειά σας είναι μονογονεϊκή, πρέπει να ισχύουν και οι εξής προϋποθέσεις:
+          <ul style="list-style-type: circle; padding-left:20px;">
+            <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
+            <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
+          </ul>
+        </li>
+      </ul><br>`,
     required: true
   },
   {
@@ -27,32 +53,6 @@ const questions = [
     </ul><br>`,
     required: true
   },
-  {
-    question: "Διαμένετε μόνιμα στην Ελλάδα;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    required: true
-  },
-  {
-    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
-    category: "textbox",
-    required: true
-  },
-  {
-    question: "Είναι η οικογένειά σας μονογονεϊκή;",
-    options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
-    note: `
-      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-        <li>Εφόσον η οικογένειά σας είναι μονογονεϊκή, πρέπει να ισχύουν και οι εξής προϋποθέσεις:
-          <ul style="list-style-type: circle; padding-left:20px;">
-            <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
-            <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
-          </ul>
-        </li>
-      </ul><br>`,
-    required: true
-  }
 ];
 
 export default questions;

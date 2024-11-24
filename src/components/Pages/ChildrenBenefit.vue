@@ -10,6 +10,8 @@
           :isFirstQuestion="isFirstQuestion"
           :selectedOption="currentOption"
           :isQuestionRequired="isQuestionReq"
+          :questionIndex="currentQuestionIndex"
+          :numberOfQuestions="questions.length"
           @back="goBack"
           @skip="skipQuestion"
           @next="nextQuestion"
@@ -131,11 +133,11 @@ export default {
       
       // Προϋποθέσεις για επιλεξιμότητα
       const submittedTaxDeclaration = answers[0] === "Ναι";
-      const income = parseFloat(answers[1]);
-      const dependentChildren = parseInt(answers[2]);
-      const residesInGreece = answers[3] === "Ναι";
-      const yearsInGreece = parseInt(answers[4]) >= 5;
-      const isSingleParent = answers[5] === "Ναι";
+      const residesInGreece = answers[1] === "Ναι";
+      const yearsInGreece = parseInt(answers[2]) >= 5;
+      const income = parseFloat(answers[3]);
+      const isSingleParent = answers[4] === "Ναι";
+      const dependentChildren = parseInt(answers[5]);
 
       return calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece,
               yearsInGreece, isSingleParent);

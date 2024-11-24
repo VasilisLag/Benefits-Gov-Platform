@@ -145,7 +145,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, incom
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
+      message: `Είστε επιλέξιμος/η για το Επίδομα Στέγασης. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
     };
   }
 }
@@ -250,7 +250,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     reasons,
     eligible: true,
     allowanceAmount: allowanceAmount,
-    message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
+    message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
   };
 }
 
@@ -309,7 +309,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
     return {
       reasons,
       eligible: true,
-      message: `Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
+      message: `Είστε επιλέξιμος/η για το Ελάχιστο Εγγυημένο Εισόδημα. Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
       allowanceAmount: allowanceAmount,
     };
   }
@@ -323,7 +323,13 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
     return {
       eligible: true,
       allowanceAmount: 0.075,
-      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`
+      message: `
+        Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€
+        <br><br> Δείτε περισσότερα εδώ: 
+        <a class='govgr-link govgr-!-font-size-16' href='https://deddie.gr/el/upiresies/eidika-timologia/koinwniko-oikiako-timologio/dikaiouxoi/' rel='noreferrer noopener' target='_blank'>
+          Δικαιούχοι - Κοινωνικό Οικιακό Τιμολόγιο
+        </a>
+        `
     };
   }
 
@@ -363,7 +369,12 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
       reasons,
       eligible: true,
       allowanceAmount:0.045,
-      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€
+        <br><br> Δείτε περισσότερα εδώ: 
+        <a class='govgr-link govgr-!-font-size-16' href='https://deddie.gr/el/upiresies/eidika-timologia/koinwniko-oikiako-timologio/dikaiouxoi/' rel='noreferrer noopener' target='_blank'>
+          Δικαιούχοι - Κοινωνικό Οικιακό Τιμολόγιο
+        </a>
+        `
     };
   }
 }

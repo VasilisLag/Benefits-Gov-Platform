@@ -10,6 +10,8 @@
           :isFirstQuestion="isFirstQuestion"
           :selectedOption="currentOption"
           :isQuestionRequired="isQuestionReq"
+          :questionIndex="currentQuestionIndex"
+          :numberOfQuestions="questions.length"
           @back="goBack"
           @skip="skipQuestion"
           @next="nextQuestion"
