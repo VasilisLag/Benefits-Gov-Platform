@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="question-label" v-html="question"></label>
-    <select v-model="selectedOption" @change="onChange(selectedOption)">
+    <select class="govgr-input" v-model="selectedOption" @change="onChange(selectedOption)">
       <option v-for="option in options" :key="option" :value="option">
         {{ option }}
       </option>
@@ -47,10 +47,14 @@ export default {
 
 .question-label {
   font-weight: 600;
-  margin-bottom: 0.75rem;
   display: block;
   font-size: 1.2rem;
   color: #333;
+}
+
+.govgr-input {
+  width:40%;
+  margin:2rem 3rem 6rem 3rem;
 }
 
 </style>
