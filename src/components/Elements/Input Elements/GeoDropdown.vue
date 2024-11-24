@@ -9,7 +9,7 @@
       @focus="isDropdownVisible = true"
       @input="filterOptions"
       placeholder="Αναζητήστε τον τόπο διαμονής σας με τον Τ.Κ. (προτείνεται)"
-      class="search-input"
+      class="search-input govgr-input"
     />
 
     <ul v-if="isDropdownVisible && filteredOptions.length" class="dropdown-list">
@@ -120,14 +120,20 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-bottom: 6rem;
 }
 
 .search-input {
   width: 60%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgba(var(--color-base-content-rgb), var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--color-base-100-rgb), var(--tw-bg-opacity));
+  padding: .5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   border-radius: 4px;
-  font-size: 0.9rem;
   margin-top: 20px;
 }
 
