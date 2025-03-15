@@ -22,3 +22,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# Process
+Work on dev
+Push changes to dev
+Switch to main 
+Merge changes "git merge dev"
+Switch to Prod
+Merge changes "git merge main"
