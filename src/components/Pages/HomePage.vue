@@ -15,19 +15,21 @@
           <li>Κοινωνικό Οικιακό Τιμολόγιο (ΚΟΤ)</li>
           <li>Ελάχιστο Εγγυημένο Εισόδημα (ΕΕΕ)</li>
         </ol>
-        <p>
-          Μπορείτε να πειραματιστείτε απαντώντας σε μερικές ερωτήσεις και να δείτε αν δικαιούστε κάποιο απο τα παραπάνω επιδόματα.
-        </p>
       </section>
 
       <section data-section="benefits">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Πώς Λειτουργεί η Πλατφόρμα</h2>
-        <ol class="govgr-list govgr-list--number govgr-!-font-size-16">
+        <!-- <ol class="govgr-list govgr-list--number govgr-!-font-size-16">
           <li> Μεταβείτε στην καρτέλα "Αξιολόγηση" για να κάνετε μια προσομοίωση και να δείτε συνολικά για ποια επιδόματα μπορεί να είστε επιλέξιμοι.</li>
             <button class="govgr-btn govgr-btn-primary govgr-mt-3" >
               <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
             </button>
           <li> Αν θέλετε να ελέγξετε ένα συγκεκριμένο επίδομα, μπορείτε να επιλέξετε από τις παρακάτω επιλογές για περισσότερες πληροφορίες και να δείτε τα κριτήρια που ισχύουν:</li>
+        </ol> -->
+        <p>Για να ενημερωθείτε για τα επιδόματα, έχετε δύο επιλογές:</p>
+        <ol class="govgr-list govgr-list--bullet govgr-!-font-size-16">
+          <li><strong>Μέσω του Navigation Bar</strong>: Επιλέξτε τον τίτλο του επιδόματος από το <strong>navigation bar</strong> και δείτε άμεσα τις πληροφορίες και τις ενέργειες στην ίδια σελίδα.</li>
+          <li><strong>Μέσω του Expandable Section</strong>: Κάτω από τον τίτλο, πατήστε το <strong>"Μάθετε περισσότερα"</strong> για να ανοίξετε το επεκταθέν τμήμα με αναλυτικές πληροφορίες και επιλέξτε το κουμπί <strong>"Αξιολόγηση"</strong> για να προχωρήσετε σε ενέργειες.</li>
         </ol>
         <ExpandableSection
           title = "Επίδομα Παιδιού Α21"
