@@ -6,7 +6,7 @@
       <section data-section="welcome">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Καλωσορίσατε στην Πλατφόρμα Υπολογισμού Παροχών</h2>
         <p class="govgr-!-font-size-16">
-          Αυτή η πλατφόρμα σας βοηθά να δείτε εύκολα αν δικαιούστε παροχές όπως:
+          Αυτή η πλατφόρμα σας βοηθά να δείτε εύκολα αν δικαιούστε επιδόματα όπως:
         </p>
         <ol class="govgr-list govgr-list--bullet govgr-!-font-size-16">
           <li>Επίδομα Παιδιού (Α21)</li>
