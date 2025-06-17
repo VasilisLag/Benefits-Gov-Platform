@@ -159,7 +159,7 @@ export function calculateThreshold(base, dependentChildren, unprotectedChildren,
     threshold += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
   } 
   else {
-      threshold += (dependentChildren + hostedPersons) * regular_increment;
+      threshold += (dependentChildren + hostedPersons + 1) * regular_increment;
   }
   return threshold;
 }
@@ -281,7 +281,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
     reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα.");
   }
   if(income >= incomeThreshold) {
-    reasons.push("Το εισόδημα σας (" + income + "€) υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + "€).")
+    reasons.push("Το εισόδημα σας κατα τους τελευταίους 6 μήνες (" + income + "€) υπερβαίνει το εισοδηματικό όριο (" + incomeThreshold + "€).")
   }
   if(propertyValue > propertyThreshold) {
     reasons.push("Η αξία των ακινήτων σας (" + propertyValue + "€) υπερβαίνει το όριο (" + propertyThreshold + "€).")

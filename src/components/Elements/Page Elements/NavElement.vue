@@ -36,6 +36,11 @@
           <router-link to="/VulnerableBenefits">ΚΟΤ- ΕΕΕ</router-link>
         </a>
       </li>
+      <li>
+        <a href="#" class="govgr-nav__list-item-link">
+          <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
+        </a>
+      </li>
     </ul>
   </nav>
 </template>

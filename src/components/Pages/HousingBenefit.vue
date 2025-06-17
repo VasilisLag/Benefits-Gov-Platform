@@ -54,7 +54,7 @@ import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import InputElement from '@/components/Elements/InputElement.vue';
 import QuestionForm from '@/components/Elements/QuestionForm.vue';
-import questions from '@/questions/housingBenefitQs.js';
+import questions from '@/questions/housingBenefitQs.js'; // 1st change
 import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import {calcHousingBenefit} from '@/utils/calcBenefits.js';
