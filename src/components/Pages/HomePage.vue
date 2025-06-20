@@ -16,7 +16,7 @@
           <li>Ελάχιστο Εγγυημένο Εισόδημα (ΕΕΕ)</li>
         </ol>
       </section>
-
+      <hr class="govgr-section-break govgr-section-break--visible"/>
       <section data-section="benefits">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Πώς Λειτουργεί η Πλατφόρμα</h2>
         <!-- <ol class="govgr-list govgr-list--number govgr-!-font-size-16">
@@ -125,7 +125,7 @@
           link="/VulnerableBenefits"
         /> 
       </section>
-
+      <hr class="govgr-section-break govgr-section-break--visible"/>
       <section data-section="q-and-a">
         <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Συχνές Ερωτήσεις</h2>
         <QuestionElement
