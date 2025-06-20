@@ -2,8 +2,11 @@
   <nav :class="[{'govgr-nav': isWideScreen}, 'govgr-nav--horizontal']">
     <ul class="govgr-nav__list">
       <li>
-        <a href="/" class="govgr-nav__list-item-link ">
-          <router-link to="/">Σχετικά</router-link>
+        <a href="/" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/"
+            :class="{'govgr-nav__list-item-link--active': isActive('/')}">
+            Σχετικά
+          </router-link>
         </a>
       </li>
       <!-- <li> Συνολική Αξιολόγηση
@@ -12,33 +15,47 @@
         </a>
       </li> -->
       <li class="govgr-nav__list-item govgr-nav__list-item--has-submenu">
-        <a href="#" class="govgr-nav__list-item-link">ΟΠΕΚΑ</a>
+        <a href="#" class="govgr-nav__list-item-link govgr-link"
+          :class="{'govgr-nav__list-item-link--active': isActive('/ChildrenBenefit') || isActive('/HousingBenefit')}"
+        >ΟΠΕΚΑ</a>
         <ul class="govgr-nav__submenu">
           <li>
-            <router-link to="/ChildrenBenefit" class="govgr-nav__submenu-link">
+            <router-link to="/ChildrenBenefit" class="govgr-nav__submenu-link govgr-link"
+              :class="{'govgr-nav__list-item-link--active': isActive('/ChildrenBenefit')}"
+            >
               Επίδομα Παιδιού-Α21
             </router-link>
           </li>
           <li>
-            <router-link to="/HousingBenefit" class="govgr-nav__submenu-link">
+            <router-link to="/HousingBenefit" class="govgr-nav__submenu-link govgr-link"
+              :class="{'govgr-nav__list-item-link--active': isActive('/HousingBenefit')}"
+            >
               Επίδομα Στέγασης
             </router-link>
           </li>
         </ul>
       </li>
       <li>
-        <a href="#" class="govgr-nav__list-item-link">
-          <router-link to="/HeatingBenefit">Επίδομα Θέρμανσης</router-link>
+        <a href="#" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/HeatingBenefit"
+            :class="{'govgr-nav__list-item-link--active': isActive('/HeatingBenefit')}">
+            Επίδομα Θέρμανσης</router-link>
         </a>
       </li>
       <li>
-        <a href="#" class="govgr-nav__list-item-link">
-          <router-link to="/VulnerableBenefits">ΚΟΤ- ΕΕΕ</router-link>
+        <a href="#" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/VulnerableBenefits"
+            :class="{'govgr-nav__list-item-link--active': isActive('/VulnerableBenefits')}">
+            ΚΟΤ- ΕΕΕ
+          </router-link>
         </a>
       </li>
       <li>
-        <a href="#" class="govgr-nav__list-item-link">
-          <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
+        <a href="#" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/OverallBenefits"
+            :class="{'govgr-nav__list-item-link--active': isActive('/OverallBenefits')}">
+            Αξιολόγηση
+          </router-link>
         </a>
       </li>
     </ul>
@@ -58,6 +75,9 @@ export default {
     handleResize() {
       this.isWideScreen = window.innerWidth > 650;
     },
+    isActive(route) {
+      return this.$route.path === route;
+    }
   },
   mounted() {
     this.handleResize();
@@ -90,7 +110,6 @@ export default {
 
 .govgr-nav__list-item-link {
   text-decoration: none;
-  color: #333333;
   padding: 10px 15px;
   display: block;
   transition: background 0.3s ease;
@@ -119,7 +138,6 @@ export default {
   text-align: start;
   padding: 10px 15px;
   text-decoration: none;
-  color: #333333;
   transition: background 0.3s ease;
 }
 
