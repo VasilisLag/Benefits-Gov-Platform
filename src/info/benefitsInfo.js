@@ -8,7 +8,7 @@ export const benefitsInfo = [
             </br>Η ημερομηνία έναρξης υποβολής αίτησης κατ΄ έτος ορίζεται με απόφαση του Διοικητή του ΟΠΕΚΑ (αρχή Μαρτίου) και η καταληκτική ημερομηνία είναι η 15η Ιανουαρίου του επόμενου έτους.
             </br> </br>
             Δείτε πιο αναλυτικά στο Εθνικό Μητρώο Διοικητικών Διαδικασιών: 
-            <a class='govgr-link govgr-!-font-size-16' href='https://mitos.gov.gr/index.php/%CE%94%CE%94:%CE%95%CF%80%CE%AF%CE%B4%CE%BF%CE%BC%CE%B1_%CF%80%CE%B1%CE%B9%CE%B4%CE%B9%CE%BF%CF%8D' rel='noreferrer noopener' target='_blank'>
+            <a class='govgr-link govgr-!-font-size-19' href='https://mitos.gov.gr/index.php/%CE%94%CE%94:%CE%95%CF%80%CE%AF%CE%B4%CE%BF%CE%BC%CE%B1_%CF%80%CE%B1%CE%B9%CE%B4%CE%B9%CE%BF%CF%8D' rel='noreferrer noopener' target='_blank'>
               Επίδομα Παιδιού - ΜΙΤΟΣ
             </a>
             `,
@@ -37,7 +37,7 @@ export const benefitsInfo = [
         ή φωτιστικό πετρέλαιο (μπλε κηροζίνη) και πληρούν τα κριτήρια χορήγησης με βάση την απόφαση ΓΔΟΥ 125/27.10.2023 (ΦΕΚ Β' 6238).
         </li>
       </ol>
-      </br> Δείτε πιο αναλυτικά στο Εθνικό Μητρώο Διοικητικών Διαδικασιών: 
+       Δείτε πιο αναλυτικά στο Εθνικό Μητρώο Διοικητικών Διαδικασιών: 
       <a class='govgr-link' href='https://mitos.gov.gr/index.php/%CE%94%CE%94:%CE%95%CF%80%CE%AF%CE%B4%CE%BF%CE%BC%CE%B1_%CE%9A%CE%B1%CF%84%CE%B1%CE%BD%CE%AC%CE%BB%CF%89%CF%83%CE%B7%CF%82_%CE%A0%CE%B5%CF%84%CF%81%CE%B5%CE%BB%CE%B1%CE%AF%CE%BF%CF%85_%CE%98%CE%AD%CF%81%CE%BC%CE%B1%CE%BD%CF%83%CE%B7%CF%82' rel='noreferrer noopener' target='_blank'>
         Επίδομα Θέρμανσης - ΜΙΤΟΣ
       </a>`,
