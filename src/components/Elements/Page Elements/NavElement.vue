@@ -112,13 +112,8 @@ export default {
   text-decoration: none;
   padding: 10px 15px;
   display: block;
-  transition: background 0.3s ease;
 }
 
-.govgr-nav__list-item-link:hover {
-  background: #f0f0f0;
-  border-radius: 5px;
-}
 
 /* Submenu styles */
 .govgr-nav__submenu {
@@ -138,12 +133,8 @@ export default {
   text-align: start;
   padding: 10px 15px;
   text-decoration: none;
-  transition: background 0.3s ease;
 }
 
-.govgr-nav__submenu-link:hover {
-  background: #f0f0f0;
-}
 
 .govgr-nav__list-item--has-submenu:hover .govgr-nav__submenu {
   display: block;
