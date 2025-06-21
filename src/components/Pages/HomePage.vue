@@ -43,16 +43,10 @@
         <section data-section="q-and-a">
           <h2 class="govgr-body-l govgr-mb-6 govgr-!-font-weight-bold">Συχνές Ερωτήσεις</h2>
           <QuestionElement
-            question = "Πώς μπορώ να μάθω αν δικαιούμαι κάποιο επίδομα;"
-            answer = "Μπορείτε να χρησιμοποιήσετε το εργαλείο προσομοίωσης στην πλατφόρμα για να ελέγξετε αν πληροίτε τα κριτήρια για τα επιδόματα που σας ενδιαφέρουν."
-          />
-          <QuestionElement
-            question = "Είναι οι πληροφορίες που παρέχω ασφαλείς;"
-            answer = "Ναι, η πλατφόρμα δεν αποθηκεύει προσωπικά δεδομένα. Όλες οι πληροφορίες χρησιμοποιούνται μόνο για να γίνει ο υπολογισμός των δικαιωμάτων σας."
-          />
-          <QuestionElement
-            question = "Τι κάνω αν δικαιούμαι ένα επίδομα;"
-            answer = "Αφού μάθετε αν δικαιούστε κάποιο επίδομα, μπορείτε να ακολουθήσετε τις οδηγίες και να υποβάλετε αίτηση μέσω των επίσημων ιστοσελίδων του κράτους."
+            v-for="(question, index) in questions"
+            :key="index"
+            :question="question.prompt"
+            :answer = "question.answer"
           />
         </section>
       </main>
@@ -65,6 +59,7 @@ import ExpandableSection from '@/components/Elements/ExpandableSection.vue';
 import QuestionElement from '@/components/Elements/QuestionElement.vue';
 import MainLayout from '@/components/Elements/Layouts/MainLayout.vue';
 import { benefitsInfo } from '@/info/benefitsInfo.js';
+import {questionsInfo} from '@/info/questionsInfo.js';
 
 export default {
   name: 'HomePage',
@@ -76,6 +71,7 @@ export default {
   data() {
     return {
       benefits: benefitsInfo,
+      questions: questionsInfo,
     };
   },
 };
