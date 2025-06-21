@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <p class="govgr-!-font-weight-bold">{{ question }}</p>
-    <p class="govgr-mb-6">{{ answer }}</p>
+    <p class="govgr-!-font-weight-bold govgr-!-font-size-24">{{ question }}</p>
+    <p class="govgr-mb-6 govgr-!-font-size-19">{{ answer }}</p>
   </div>
 </template>
 
