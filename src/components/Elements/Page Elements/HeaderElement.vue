@@ -6,7 +6,7 @@
           <img class="govgr-header__logo logo-image" src="../../../assets/gov_gr_logo.svg" alt="gov.gr logo" />
         </a>
       </div>
-      <a href="/" class="govgr-header__title service-title govgr-!-font-size-24">Υπολογισμός Παροχών</a>
+      <a href="/" class="govgr-header__title service-title govgr-!-font-size-24 govgr-header-title">Υπολογισμός Παροχών</a>
     </div>
   </header>
 </template>
@@ -49,9 +49,7 @@ export default {
 .govgr-header__title {
   flex: 1;
   text-align: center;
-  color: white;
-  font-size: 1.5rem;
-  text-decoration: none;
+
 }
 
 .no-top-margin {
