@@ -17,7 +17,7 @@
       />
     </div>
 
-    <FooterElement class="footer" />
+    <FooterElement />
   </div>
 </template>
 
@@ -76,8 +76,4 @@ export default {
   margin: 0 auto;
 }
 
-.footer {
-  margin-top: 2rem;
-  align-self: end;
-}
 </style>

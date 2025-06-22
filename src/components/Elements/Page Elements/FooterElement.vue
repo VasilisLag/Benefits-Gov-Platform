@@ -1,5 +1,5 @@
 <template>
-    <footer class="govgr-footer" role="contentinfo">
+    <footer class="govgr-footer footer" role="contentinfo">
         <div class="govgr-width-container">
             <div class="govgr-footer__meta">
                 <div class="govgr-footer__meta-item govgr-footer__meta-item--grow">
@@ -26,5 +26,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+.footer {
+  margin-top: 2rem;
+  align-self: end;
+}
 </style>
