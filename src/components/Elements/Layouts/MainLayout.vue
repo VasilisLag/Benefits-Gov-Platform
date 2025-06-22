@@ -1,6 +1,6 @@
 <template>
     <HeaderElement />
-    <NavElement />
+    <NavElement class = "govgr-mb-9" />
     <div class="govgr-layout-wrapper">
         <div class="govgr-width-container">
                 <main class="govgr-grid-column-two-thirds">
@@ -8,7 +8,7 @@
                 </main>    
         </div>
     </div>
-    <FooterElement />
+    <FooterElement class = "govgr-mt-9"/>
 </template>
 
 <script>

@@ -1,148 +1,68 @@
 <template>
   <div class="page">
-    <HeaderElement />
-    <NavElement />
-    <main class="p-4">
-      <div class="form-container">
-        <QuestionForm 
-          title="Κοινωνικό Οικιακό Τιμολόγιο - Ελάχιστο Εγγυημένο Εισόδημα"
-          :isLastQuestion="isLastQuestion"
-          :isFirstQuestion="isFirstQuestion"
-          :selectedOption="currentOption"
-          :isQuestionRequired="isQuestionReq"
-          :questionIndex="currentQuestionIndex"
-          :numberOfQuestions="questions.length"
-          @back="goBack"
-          @skip="skipQuestion"
-          @next="nextQuestion"
-          @submit="submitAnswers"
-        >
-          <InputElement
-            v-if="currentQuestion"
-            :question="currentQuestion.question"
-            :key="currentQuestionIndex"
-            :options="currentQuestion.options"
-            :category="currentQuestion.category"
-            :note="currentQuestion.note"
-            :input="answer"
-            :answer="answer"
-            @onAnswerChange="handleAnswerChange"
-          />
-          <SummaryTable v-if="isFormSummary"
-            :questions="questions.map(q => q.question)"
-            :answers="answers"
-          />
+    <BenefitFormLayout
+      title="Κοινωνικό Οικιακό Τιμολόγιο - Ελάχιστο Εγγυημένο Εισόδημα"
+      :questions="questions"
+      @submit-answers="handleAnswers"
+      @clear-results="clearResults"
+    />
 
-        </QuestionForm>
-        <ResultsForm 
-          v-if="resultsKEA && isFormSummary"
-          :title="titleKEA"
-          :eligible="resultsKEA.eligible"
-          :benefitAmount="resultsKEA.benefitAmount"
-          :message="resultsKEA.message"
-          :reasons="resultsKEA.reasons"
-        />
-        <ResultsForm 
-          v-if="resultsKOT && isFormSummary"
-          :title="titleKOT"
-          :eligible="resultsKOT.eligible"
-          :benefitAmount="resultsKOT.benefitAmount"
-          :message="resultsKOT.message"
-          :reasons="resultsKOT.reasons"
-        />
-      </div>
-    </main>
+    <div
+      v-for="(res, index) in allResults"
+      :key="index"
+      class="form-container govgr-mb-12"
+    >
+      <ResultsForm
+        :title="res.title"
+        :eligible="res.result.eligible"
+        :benefitAmount="res.result.benefitAmount"
+        :message="res.result.message"
+        :reasons="res.result.reasons"
+      />
+    </div>
+
     <FooterElement class="footer" />
   </div>
 </template>
 
 <script>
-import HeaderElement from '@/components/Elements/Page Elements/HeaderElement.vue';
-import NavElement from '@/components/Elements/Page Elements/NavElement.vue';
-import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
-import InputElement from '@/components/Elements/InputElement.vue';
-import QuestionForm from '@/components/Elements/QuestionForm.vue';
-import questions from '@/questions/vulnerableBenefitsQs.js';
-import SummaryTable from '@/components/Elements/SummaryTable.vue';
+import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
-import {calcKEABenefit} from '@/utils/calcBenefits.js';
-import {calcKOTBenefit} from '@/utils/calcBenefits.js';
+import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
+import questions from '@/questions/vulnerableBenefitsQs.js';
+import { calcKEABenefit, calcKOTBenefit } from '@/utils/calcBenefits.js';
 
 export default {
   name: 'VulnerableBenefits',
   components: {
-    HeaderElement,
-    NavElement,
-    InputElement,
-    QuestionForm,
-    FooterElement,
-    SummaryTable,
-    ResultsForm
+    BenefitFormLayout,
+    ResultsForm,
+    FooterElement
   },
   data() {
     return {
-      currentQuestionIndex: 0,
-      questions: questions,
-      currentOption: null,
-      answers: [], 
-      resultsKEA: null,
-      resultsKOT: null,
-      titleKEA: "Ελάχιστο Εγγυημένο Εισόδημα",
-      titleKOT: "Κοινωνικό Οικιακό Τιμολόγιο",
+      questions,
+      allResults: []
     };
   },
-  computed: {
-    currentQuestion() {
-      return this.questions[this.currentQuestionIndex];
-    },
-    isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length;
-    },
-    isFirstQuestion() {
-      return this.currentQuestionIndex === 0;
-    },
-    answer() {
-      return this.answers[this.currentQuestionIndex];
-    },
-    isFormSummary() {
-      return this.currentQuestionIndex === this.questions.length;
-    },
-    isQuestionReq() {
-      if (this.currentQuestion != null){
-        return this.currentQuestion.required
-      }else {
-        return false;
-      }
-    },
-  },
   methods: {
-    handleAnswerChange(selectedOption) {
-      this.currentOption = selectedOption;
+    handleAnswers(answers) {
+      const kea = this.calculateKEABenefits(answers);
+      const aCatEligible = kea.eligible;
+      const kot = this.calculateKOTBenefits(answers, aCatEligible);
+
+      this.allResults = [
+        { title: 'Ελάχιστο Εγγυημένο Εισόδημα', result: kea },
+        { title: 'Κοινωνικό Οικιακό Τιμολόγιο', result: kot }
+      ];
     },
-    nextQuestion() {
-      this.answers[this.currentQuestionIndex++] = this.currentOption;
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;   
-    },
-    goBack() {
-      if(this.currentQuestionIndex === this.questions.length){
-        this.resultsKEA = null;
-        this.resultsKOT = null;
-      }
-      this.currentOption = this.answers[--this.currentQuestionIndex] || null;
-    },
-    skipQuestion() {
-      this.answers[this.currentQuestionIndex++] = null;
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;
-    },
-    submitAnswers() {
-      this.resultsKEA = this.calculateKEABenefits(this.answers);
-      const aCatEligible = this.resultsKEA.eligible;
-      this.resultsKOT = this.calculateKOTBenefits(this.answers, aCatEligible);
+    clearResults() {
+      this.allResults = [];
     },
     calculateKEABenefits(answers) {
       const residesInGreece = answers[0] === "Ναι";
-      let adults = parseInt(answers[1]);
-      let dependentChildren = parseInt(answers[2]) || 0;
+      const adults = parseInt(answers[1]);
+      const dependentChildren = parseInt(answers[2]) || 0;
       const unsupportedChildren = parseInt(answers[3]) || 0;
       const isSingleParent = answers[4] === "Ναι";
       const income = parseFloat(answers[7]);
@@ -150,47 +70,62 @@ export default {
       const vehicleValue = parseFloat(answers[9]);
       const savings = parseFloat(answers[10]);
       const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-      
-      return calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren,
-        isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging);
+
+      return calcKEABenefit(
+        residesInGreece,
+        adults,
+        dependentChildren,
+        unsupportedChildren,
+        isSingleParent,
+        income,
+        propertyValue,
+        vehicleValue,
+        savings,
+        luxuryBelonging
+      );
     },
     calculateKOTBenefits(answers, aCatEligible) {
-
       const residesInGreece = answers[0] === "Ναι";
-      let adults = parseInt(answers[1]);
-      let dependentChildren = parseInt(answers[2]);
-      const unsupportedChildren = parseInt(answers[3]);
+      const adults = parseInt(answers[1]);
+      const dependentChildren = parseInt(answers[2]) || 0;
+      const unsupportedChildren = parseInt(answers[3]) || 0;
       const disabledPerson = answers[5] === "Αναπηρία 67% και άνω";
       const lifesupportedPerson = answers[5] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
       const income = parseFloat(answers[6]);
       const propertyValue = parseFloat(answers[8]);
       const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
-      return calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson,
-        lifesupportedPerson, income, propertyValue, luxuryBelonging, aCatEligible);
-    },
+      return calcKOTBenefit(
+        residesInGreece,
+        adults,
+        dependentChildren,
+        unsupportedChildren,
+        disabledPerson,
+        lifesupportedPerson,
+        income,
+        propertyValue,
+        luxuryBelonging,
+        aCatEligible
+      );
+    }
   }
 };
 </script>
 
 <style scoped>
-.form-container {
-  width: 80%;
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-main {
-  flex:1;
-}
-
 .page {
-  display:flex;
+  display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+.form-container {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .footer {
-  align-self:end;
+  margin-top: 2rem;
+  align-self: end;
 }
 </style>
