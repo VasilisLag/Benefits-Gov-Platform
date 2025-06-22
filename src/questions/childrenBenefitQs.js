@@ -2,13 +2,13 @@ const questions = [
   {
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
@@ -24,7 +24,7 @@ const questions = [
   {
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     note: `
       <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
         <li>Εφόσον η οικογένειά σας είναι μονογονεϊκή, πρέπει να ισχύουν και οι εξής προϋποθέσεις:

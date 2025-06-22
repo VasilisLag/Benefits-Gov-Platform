@@ -2,7 +2,7 @@ const questions = [
   {
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true,
   },
   {
@@ -18,7 +18,7 @@ const questions = [
   {
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true,
   },
   {
@@ -29,7 +29,7 @@ const questions = [
   {
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true,
   },
   {

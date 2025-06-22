@@ -3,14 +3,14 @@ const questions = [
     id:0,
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
     id:1,
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
@@ -29,7 +29,7 @@ const questions = [
     id:4,
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
@@ -111,7 +111,7 @@ const questions = [
     id:12,
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true,
   },
   {

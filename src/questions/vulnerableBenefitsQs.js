@@ -2,7 +2,7 @@ const questions = [
   {
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
@@ -44,7 +44,7 @@ const questions = [
   {
     question: "Είστε μονογονεϊκή οικογένεια;",
     options: ["Ναι", "Όχι"],
-    category: "multiple-choice",
+    category: "radio",
     required: true
   },
   {
