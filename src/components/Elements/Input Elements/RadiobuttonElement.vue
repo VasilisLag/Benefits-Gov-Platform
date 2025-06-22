@@ -1,17 +1,26 @@
 <template>
-  <div class="options-radio">
-    <label class="question-label" v-html="question"></label>
-      <div v-for="option in options" :key="option">
-        <input 
-          type="radio" 
-          v-model="selectedOption" 
-          :value="option" 
-          @change="onChange(selectedOption)" 
-          :id="option"
-        />
-        <label :for="option">{{ option }}</label>
+  <div class="govgr-field">
+    <fieldset class="govgr-fieldset" aria-describedby="radio-country">
+      <legend role="heading" aria-level="1" class="govgr-fieldset__legend govgr-heading-lg">
+        {{ question }}
+      </legend>
+      <div class="govgr-radios govgr-mt-9">
+        <div class="govgr-radios__item" v-for="(option, index) in options" :key="index">
+          <label class="govgr-label govgr-radios__label">
+            {{ option }}
+            <input
+              class="govgr-radios__input"
+              type="radio"
+              :value="option"
+              v-model="selectedOption"
+              :id="option"
+              @change="onChange(selectedOption)"
+            />
+          </label>
+        </div>
       </div>
-    <label class="note" v-html="note"> </label>
+    </fieldset>
+    <label class="govgr-note" v-html="note"></label>
   </div>
 </template>
 
@@ -50,33 +59,38 @@ export default {
 
 <style scoped>
 
-.question-label {
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  display: block;
-  font-size: 1.2rem;
-  color: #333;
+.govgr-field {
+  margin-bottom: 1.5rem;
 }
 
-.options-radio {
+
+.govgr-fieldset__legend {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.govgr-radios__item {
+  margin-bottom: 1rem;
+  margin-left: 2rem;
   display: flex;
-  flex-direction:column;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
-input[type="radio"] {
-  margin-right: 0.5rem; /* Space between the radio button and its label */
+.govgr-radios__input {
+  margin-right: 0.25rem;
 }
 
-label {
-  font-size: 1rem;
-  color: #333333;
+.govgr-label {
+  display: inline-flex;
+  align-items: center;
 }
 
-.note {
-  margin-top:20px;
-  align-self:center;
+.govgr-note {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #666;
 }
 
 </style>
