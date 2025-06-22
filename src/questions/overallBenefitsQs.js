@@ -4,47 +4,54 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"demography"
   },
   {
     id:1,
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"demography"
   },
   {
     id:2,
     question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
     category: "textbox",
-    required: true
+    required: true,
+    tag:"demography",
   },
   {
     id:3,
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
-    required: true
+    required: true,
+    tag:"income"
   },
   {
     id:4,
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"income"
   },
   {
     id:5,
     question: "Εάν ασκείτε επιχειρηματική δραστηριότητα, ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
     category: "textbox",
     note: `Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.`,
-    required: false
+    required: false,
+    tag:"income"
   },
   {
     id:6,
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
-    required: true
+    required: true,
+    tag:"household"
   },
   {
     id:7,
@@ -62,7 +69,8 @@ const questions = [
       <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
       <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια (όταν έχει επέλθει θάνατος και των δύο γονέων</li>
     </ul><br>`,
-    required: true
+    required: true,
+    tag:"household"
   },
   {
     id:8,
@@ -78,6 +86,7 @@ const questions = [
       </p>
     `,
     required: false,
+    tag:"household"
   },
   {
     id:9,
@@ -93,19 +102,22 @@ const questions = [
       </p>
     `,
     required: false,
+    tag:"household"
   },
   {
     id:10,
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
-    required: true
+    required: true,
+    tag:"residence"
   },  
   {
     id:11,
     question: "Ποιός είναι η πηγή θέρμανσης που χρησιμοποιείτε;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
-    required: true
+    required: true,
+    tag:"household"
   },  
   {
     id:12,
@@ -113,19 +125,22 @@ const questions = [
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
+    tag:"household"
   },
   {
     id:13,
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
     required: true,
+    tag: "household",
   },
   {
     id:14,
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
     note: `Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.`,
-    required: true
+    required: true,
+    tag:"assets"
   },
   {
     id:15,
@@ -138,6 +153,7 @@ const questions = [
       </ul>
     `,
     required: true,
+    tag:"assets"
   },
   {
     id:16,
@@ -154,7 +170,8 @@ const questions = [
         </li>
         <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>
       </ul><br>`,
-    required: true
+    required: true,
+    tag:"assets"
   },
   {
     id:17,
@@ -167,13 +184,15 @@ const questions = [
     ],
     category: "radio",
     required: true,
+    tag:"assets"
   },
   {
     id:18,
     question: "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
     category: "radio",
     options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
-    required: true
+    required: true,
+    tag:"vulnerable"
   },  
   {
     id:19,
@@ -181,6 +200,7 @@ const questions = [
     category: "textbox",
     required: true,
     note: "Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα."
+    , tag:"income"
   },
 
 ];
