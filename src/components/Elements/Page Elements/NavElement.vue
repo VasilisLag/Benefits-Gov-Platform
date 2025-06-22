@@ -9,11 +9,14 @@
           </router-link>
         </a>
       </li>
-      <!-- <li> Συνολική Αξιολόγηση
-        <a href="#" class="govgr-nav__list-item-link">
-          <router-link to="/OverallBenefits">Αξιολόγηση</router-link>
+      <li>
+        <a href="#" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/OverallBenefits"
+            :class="{'govgr-nav__list-item-link--active': isActive('/OverallBenefits')}">
+            Αξιολόγηση
+          </router-link>
         </a>
-      </li> -->
+      </li>
       <li class="govgr-nav__list-item govgr-nav__list-item--has-submenu">
         <a href="#" class="govgr-nav__list-item-link govgr-link"
           :class="{'govgr-nav__list-item-link--active': isActive('/ChildrenBenefit') || isActive('/HousingBenefit')}"
@@ -47,14 +50,6 @@
           <router-link to="/VulnerableBenefits"
             :class="{'govgr-nav__list-item-link--active': isActive('/VulnerableBenefits')}">
             ΚΟΤ- ΕΕΕ
-          </router-link>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="govgr-nav__list-item-link govgr-link">
-          <router-link to="/OverallBenefits"
-            :class="{'govgr-nav__list-item-link--active': isActive('/OverallBenefits')}">
-            Αξιολόγηση
           </router-link>
         </a>
       </li>
