@@ -4,7 +4,7 @@
       <legend role="heading" aria-level="1" class="govgr-fieldset__legend govgr-heading-lg">
         {{ question }}
       </legend>
-      <div class="govgr-radios govgr-mt-9">
+      <div class="govgr-radios govgr-mt-3">
         <div class="govgr-radios__item" v-for="(option, index) in options" :key="index">
           <label class="govgr-label govgr-radios__label">
             {{ option }}
