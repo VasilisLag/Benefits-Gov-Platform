@@ -1,16 +1,6 @@
 <template>
   <div class="question-form">
-    <h2 id="benefit-title">{{ title }}</h2>
-
-    <div class="progress-bar-container">
-      <div
-        class="progress-bar"
-        :style="{ width: progressPercentage + '%' }"
-      ></div>
-    </div>
-    <p class="progress-text" v-if="!isLastQuestion">
-      Ερώτηση {{ questionIndex + 1 }} από {{ numberOfQuestions }}
-    </p>
+    <h2 class = "govgr-heading-l">{{ title }}</h2>
     
     <div class="questions-container">
       <slot></slot>
@@ -80,34 +70,12 @@ export default {
 .question-form {
   margin: 2rem 0;
   padding: 1.5rem;
-  border: 1px solid #ccc;
   border-radius: 0.25rem;
-  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   min-height: 350px;
 }
 
-.progress-bar-container {
-  width: 100%;
-  background-color: #e0e0e0;
-  height: 10px;
-  border-radius: 5px;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease-in-out;
-}
-
-.progress-text {
-  font-size: 14px;
-  margin: 0 0 10px 0;
-  text-align: center;
-}
 
 .questions-container {
   margin: 1.5rem 0;
@@ -130,10 +98,6 @@ export default {
   font-size: 12px;
 }
 
-#benefit-title {
-  font-size: 22px;
-  font-weight: bold;
-}
 
 button:disabled {
   cursor: not-allowed;
