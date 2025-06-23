@@ -72,7 +72,7 @@ export default {
 <style scoped>
 #input-field {
   display: block;
-  width: 30%;
+  width: 50%;
   max-height: 2rem;
 }
 
