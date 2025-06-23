@@ -1,6 +1,6 @@
 import {getCoefficient} from '@/utils/calcCoefficient.js';
 
-export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, income, isBusinessOwner, businessIncome,
+export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, income, isBusinessOwner, businessIncome,
   propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource) {
 
     const coefficient = getCoefficient(area);
@@ -10,7 +10,7 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
     if (!submittedTaxDeclaration) {
       reasons.push("Δεν έχετε υποβάλει φορολογική δήλωση για το προηγούμενο έτος.");
     }
-    if (!yearsInGreece) {
+    if (!residesInGreece) {
       reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.");
     }
 

@@ -100,16 +100,16 @@ export default {
     calcHeating(ans) {
       return calcHeatingBenefit(
         ans[0] === "Ναι",
-        parseInt(ans[2]) >= 5,
-        parseFloat(ans[3]),
-        ans[4] === "Ναι",
-        ans[4] === "Ναι" ? parseFloat(ans[5]) : 0,
-        parseFloat(ans[14]),
-        ans[6] === "Έγγαμος/η - Σύμφωνο συμβίωσης",
-        ans[6] === "Μονογονέας",
-        parseInt(ans[7]),
-        ans[10],
-        ans[11]
+        ans[1] === "Ναι",
+        parseFloat(ans[2]),
+        ans[3] === "Ναι",
+        ans[3] === "Ναι" ? parseFloat(ans[4]) : 0,
+        parseFloat(ans[13]),
+        ans[5] === "Έγγαμος/η - Σύμφωνο συμβίωσης",
+        ans[5] === "Μονογονέας",
+        parseInt(ans[6]),
+        ans[9],
+        ans[10]
       );
     },
 

@@ -3,68 +3,113 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"demography"
   },
   {
-    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
-    category: "textbox",
-    required: true
+    question: "Διαμένετε μόνιμα στην Ελλάδα;",
+    options: ["Ναι", "Όχι"],
+    category: "radio",
+    required: true,
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Διαμονή στην Ελλάδα</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;>
+            Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.
+          </p>
+        </div>
+      </details>
+    `,
+    tag:"demography"
   },
   {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
-    required: true
+    required: true,
+    tag:"income"
   },
   {
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"income"
   },
   {
     question: "Εάν ασκείτε επιχειρηματική δραστηριότητα, ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
     category: "textbox",
-    note: `Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.`,
-    required: false
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Έσοδα απο Επιχειρηματική Δραστηριότητα</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;> 
+            Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.
+          </p>
+        </div>
+      </details>
+    `,
+    required: false,
+    tag:"income"  
   },
   {
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
-    note: `Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.`,
-    required: true
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Αντικειμενική Αξία Ακίνητης Περιουσίας</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;> 
+            Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.
+          </p>
+        </div>
+      </details>
+    `,
+    required: true,
+    tag:"assets"
   },
   {
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
-    required: true
+    required: true,
+    tag:"household"
   },
   {
     question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
     category: "textbox",
     note: `
-    <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-      <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
-        <ul style="list-style-type: circle; padding-left:20px;">
-          <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
-          <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
-        </ul>
-      </li>
-      <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση, έως το 24ο έτος</li>
-      <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
-    </ul><br>`,
-    required: true
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Εξαρτώμενα Τέκνα</summary>
+        <div class="govgr-details__content">
+            <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+              <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
+                <ul style="list-style-type: circle; padding-left:20px;">
+                  <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
+                  <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
+                </ul>
+              </li>
+              <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>
+              <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
+              <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>
+            </ul>
+        </div>
+      </details>`,
+    required: true,
+    tag:"household"
   },
   {
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
-    required: true
+    required: true,
+    tag:"household"
   },
   {
     question: "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
-    required: true
+    required: true,
+    tag: "household"
   },
 ];
 

@@ -45,7 +45,7 @@ export default {
   methods: {
     handleAnswers(answers) {
       const submittedTaxDeclaration = answers[0] === 'Ναι';
-      const yearsInGreece = parseInt(answers[1]) >= 5;
+      const residesInGreece =  answers[1] === 'Ναι';
       const income = parseFloat(answers[2]);
       const isBusinessOwner = answers[3] === 'Ναι';
       const businessIncome = isBusinessOwner ? parseFloat(answers[4]) : 0;
@@ -58,7 +58,7 @@ export default {
 
       this.results = calcHeatingBenefit(
         submittedTaxDeclaration,
-        yearsInGreece,
+        residesInGreece,
         income,
         isBusinessOwner,
         businessIncome,

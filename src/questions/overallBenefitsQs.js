@@ -34,8 +34,17 @@ const questions = [
     id:4,
     question: "Εάν ασκείτε επιχειρηματική δραστηριότητα, ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
     category: "textbox",
-    note: `Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.`,
-    required: false,
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Έσοδα απο Επιχειρηματική Δραστηριότητα</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;> 
+            Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.
+          </p>
+        </div>
+      </details>
+    `,
+     required: false,
     tag:"income"
   },
   {
@@ -143,7 +152,16 @@ const questions = [
     id:13,
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
-    note: `Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.`,
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Αντικειμενική Αξία Ακίνητης Περιουσίας</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;> 
+            Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.
+          </p>
+        </div>
+      </details>
+    `,
     required: true,
     tag:"assets"
   },
@@ -156,9 +174,13 @@ const questions = [
         <summary class="govgr-details__summary"> Όριο Καταθέσεων</summary>
         <div class="govgr-details__content">
           <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Συμπεριλαμβάνονται καταθέσεις, μετοχές και ομόλογα σε Ελλάδα και εξωτερικό.</li>
-            <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 7.000€.</li>
-            <li>Προσαυξάνεται κατά 3.500€ για κάθε πρόσθετο μέλος του νοικοκυριού.</li>
+            <li>Οι πληροφορίες αντλούνται από την τελευταία πράξη προσδιορισμού φόρου.</li>
+            <li>Η συνολική αξία περιλαμβάνει:
+              <ul style="list-style-type: circle; padding-left:20px;">
+                <li>Τόκους καταθέσεων των μελών του νοικοκυριού.</li>
+                <li>Αξία μετοχών, ομολόγων και άλλων χρηματοοικονομικών προϊόντων.</li>
+              </ul>
+            </li>
           </ul>
         </div>
       </details>
@@ -170,17 +192,21 @@ const questions = [
     id:15,
     question: "Ποια είναι η συνολική αντικειμενική δαπάνη των επιβατικών αυτοκινήτων σας (Ι.Χ./Μ.Χ.) σε ευρώ;",
     category: "textbox",
-    note: `
-      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-        <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>
-        <li>Η αντικειμενική δαπάνη αφορά:
-          <ul style="list-style-type: circle; padding-left:20px;">
-            <li>Επιβατικά αυτοκίνητα Ιδιωτικής Χρήσης (Ι.Χ.).</li>
-            <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>
+    note:`
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Όριο Καταθέσεων</summary>
+        <div class="govgr-details__content">
+          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+            <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>
+            <li>Η αντικειμενική δαπάνη αφορά:
+              <ul style="list-style-type: circle; padding-left:20px;">
+                <li>Επιβατικά αυτοκίνητα Ιδιωτικής Χρήσης (Ι.Χ.).</li>
+                <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>
+              </ul>
+            </li>
           </ul>
-        </li>
-        <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>
-      </ul><br>`,
+        </div>
+      </details>`,
     required: true,
     tag:"assets"
   },
@@ -210,8 +236,17 @@ const questions = [
     question: "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
     category: "textbox",
     required: true,
-    note: "Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα."
-    , tag:"income"
+    note:`
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Σημείωση</summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;> 
+            Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα.
+          </p>
+        </div>
+      </details>
+    `,
+    tag:"income"
   },
 
 ];
