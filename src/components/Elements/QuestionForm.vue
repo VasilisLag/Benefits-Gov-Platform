@@ -1,18 +1,39 @@
 <template>
   <div class="question-form">
-    <h2 class = "govgr-heading-l">{{ title }}</h2>
-    
-    <div class="questions-container">
+    <a v-if="!isFirstQuestion" @click.prevent="goBack" class="govgr-back-link">
+      <svg class="govgr-svg-icon govgr-svg-icon--caret govgr-svg-icon--left" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18,22V2L6,12L18,22z" />
+      </svg>
+      Πίσω
+    </a>
+
+    <h1 class="govgr-heading-l govgr-mt-6" id="title">{{ title }}</h1>
+
+    <p v-if="currentTag" class="govgr-caption govgr-!-margin-bottom-2 govgr-!-margin-top-2 govgr-!-font-size-24" id="question-category">
+      Κατηγορία: <strong>{{ formatTag(currentTag) }}</strong>
+    </p>
+
+    <div class="questions-container govgr-mt-6">
       <slot></slot>
     </div>
 
-    <div class="button-container">
-      <div class="back-skip-container">
-        <button @click="goBack" :disabled="isFirstQuestion" class="govgr-btn govgr-btn-warning nav-button back-button">Πίσω</button>
-        <button @click="skipQuestion" :disabled="isLastQuestion || isQuestionRequired" class="govgr-btn govgr-btn-primary nav-button">Παράλειψη</button>
-        <button @click="nextQuestion" :disabled="isLastQuestion || hasNotChosen" class="govgr-btn govgr-btn-primary nav-button">Επόμενο</button>
-      </div>
-      <button @click="submitAnswers" :disabled="!isLastQuestion" class="govgr-btn govgr-btn-primary nav-button">Υποβολή Απαντήσεων</button>
+    <div class="govgr-mt-8">
+      <button
+        v-if="!isLastQuestion"
+        @click="nextQuestion"
+        :disabled="hasNotChosen"
+        class="govgr-btn govgr-btn-primary"
+      >
+        Συνέχεια
+      </button>
+
+      <button
+        v-if="isLastQuestion"
+        @click="submitAnswers"
+        class="govgr-btn govgr-btn-primary"
+      >
+        Αξιολόγηση
+      </button>
     </div>
   </div>
 </template>
@@ -21,25 +42,19 @@
 export default {
   name: 'QuestionForm',
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    isLastQuestion: {
-      type: Boolean,
-      required: true,
-    },
-    isFirstQuestion: {
-      type: Boolean,
-      required: true,
-    },
-    isQuestionRequired: {
-      type: Boolean,
-      default: false,
-    },
+    title: String,
+    isLastQuestion: Boolean,
+    isFirstQuestion: Boolean,
+    isQuestionRequired: Boolean,
     selectedOption: String,
     questionIndex: Number,
     numberOfQuestions: Number,
+    currentTag: String, // ✅ νέο prop
+  },
+  computed: {
+    hasNotChosen() {
+      return this.selectedOption === null || this.selectedOption === '';
+    }
   },
   methods: {
     submitAnswers() {
@@ -48,105 +63,30 @@ export default {
     goBack() {
       this.$emit('back');
     },
-    skipQuestion() {
-      this.$emit('skip');
-    },
     nextQuestion() {
       this.$emit('next');
     },
-  },
-  computed: {
-    hasNotChosen() {
-      return this.selectedOption === null || this.selectedOption === '';
-    },
-    progressPercentage() {
-      return ((this.questionIndex) / this.numberOfQuestions) * 100;
-    },
-  },
+    formatTag(tag) {
+      const map = {
+        demography: 'Δημογραφικά',
+        income: 'Εισόδημα',
+        household: 'Οικογενειακή Κατάσταση',
+        assets: 'Ακίνητα / Περιουσιακά Στοιχεία',
+        vulnerable: 'Ευάλωτες Ομάδες',
+        residence: 'Κατοικία'
+      };
+      return map[tag] || tag;
+    }
+  }
 };
 </script>
 
 <style scoped>
-.question-form {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  border-radius: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  min-height: 350px;
+#question-category {
+  text-align: left;
 }
 
-
-.questions-container {
-  margin: 1.5rem 0;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-}
-
-.back-skip-container {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-button {
-  font-size: 12px;
-}
-
-
-button:disabled {
-  cursor: not-allowed;
-  background-color: gray;
-}
-
-@media (max-width: 1023px) {
-  .button-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .question-form {
-    height: 600px;
-  }
-
-  .nav-button {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 767px) {
-  .question-form {
-    height: 700px;
-  }
-
-  .back-skip-container {
-    gap: 0;
-  }
-
-  .nav-button {
-    font-size: 8px;
-  }
-}
-
-@media (max-width: 424px) {
-  .question-form {
-    height: 800px;
-  }
-
-  .back-skip-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .nav-button {
-    margin-bottom: 8px;
-  }
+#title{
+  text-align: left;
 }
 </style>

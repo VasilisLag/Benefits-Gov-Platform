@@ -8,7 +8,7 @@
         <div class="govgr-main-wrapper">
 
           <!-- 2/3 Ενότητα ερωτήσεων -->
-          <main class="">
+          <main class="govgr-grid-column-two-thirds">
             <QuestionForm 
               :title="title"
               :isLastQuestion="isLastQuestion"
@@ -17,6 +17,7 @@
               :isQuestionRequired="isQuestionReq"
               :questionIndex="currentQuestionIndex"
               :numberOfQuestions="questions.length"
+              :currentTag="currentTag"
               @back="goBack"
               @skip="skipQuestion"
               @next="nextQuestion"
@@ -39,22 +40,6 @@
               />
             </QuestionForm>
           </main>
-
-          <!-- 1/3 Sidebar με πληροφορία κατηγορίας -->
-          <aside class="govgr-aside">
-            <h2 class="govgr-heading-m">Κατηγορίες</h2>
-            <dl class="govgr-summary-list">
-              <div
-                v-for="(tag, index) in uniqueTags"
-                :key="index"
-                class="govgr-summary-list__row"
-                :class="{ 'gov-active-color': tag === currentTag }"
-              >
-                <dd class="govgr-summary-list__value">{{ formatTag(tag) }}</dd>
-              </div>
-            </dl>
-          </aside>
-
         </div>
       </div>
     </div>
@@ -162,39 +147,17 @@ export default {
 }
 
 .govgr-main-wrapper{
-  display: grid;
-  grid-template-columns: 2fr 1fr; 
+  display: block;
 }
 
-.govgr-aside {
-  margin-top: 4rem;
-  align-self: start;
-}
 
 .govgr-summary-list {
  
   margin-bottom:0;
 }
 
-.govgr-aside ul {
-  padding-left: 1rem;
-}
-
-.govgr-aside li {
-  text-align: left;
-  padding: 0.4rem 0;
-}
-.gov-active-color{
-  color: #003375;
-  font-weight: bold;
-}
 main {
   flex: 1;
-}
-
-#layout-wrapper {
-  margin-left: 15%;
-  max-width: 80%;
 }
 
 </style>
