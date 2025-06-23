@@ -74,11 +74,10 @@ export default {
     calcChildren(ans) {
       return calcChildrenBenefit(
         ans[0] === "Ναι",
-        parseFloat(ans[3]),
-        parseInt(ans[7]) || 0,
+        parseFloat(ans[2]),
+        parseInt(ans[6]) || 0,
         ans[1] === "Ναι",
-        parseInt(ans[2]) >= 5,
-        ans[6] === "Μονογονέας"
+        ans[5] === "Μονογονέας"
       );
     },
 
