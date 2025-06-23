@@ -1,7 +1,7 @@
 <template>
   <div class="govgr-field">
     <fieldset class="govgr-fieldset" aria-describedby="radio-country">
-      <legend role="heading" aria-level="1" class="govgr-fieldset__legend govgr-heading-lg">
+      <legend role="heading" aria-level="1" class="govgr-fieldset__legend govgr-heading-xl">
         {{ question }}
       </legend>
       <div class="govgr-radios govgr-mt-3">
@@ -65,10 +65,9 @@ export default {
 
 
 .govgr-fieldset__legend {
-  font-size: 1.5rem;
-  font-weight: bold;
   margin-bottom: 1rem;
   text-align: left;
+  font-weight: bold;
 }
 
 .govgr-radios__item {

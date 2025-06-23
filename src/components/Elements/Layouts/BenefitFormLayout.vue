@@ -9,6 +9,16 @@
 
           <!-- 2/3 Ενότητα ερωτήσεων -->
           <main class="govgr-grid-column-two-thirds">
+            <div class="govgr-breadcrumbs govgr-mb-12">
+              <ol class="govgr-breadcrumbs__list">
+                <li class="govgr-breadcrumbs__list-item">
+                  <router-link class="govgr-breadcrumbs__link" to="/">Σχετικά</router-link>
+                </li>
+                <li class="govgr-breadcrumbs__list-item">
+                  <span class="govgr-breadcrumbs__link" aria-current="page">{{ title }}</span>
+                </li>
+              </ol>
+            </div>
             <QuestionForm 
               :title="title"
               :isLastQuestion="isLastQuestion"

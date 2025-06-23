@@ -7,8 +7,6 @@
       Πίσω
     </a>
 
-    <h1 class="govgr-heading-l govgr-mt-6" id="title">{{ title }}</h1>
-
     <p v-if="currentTag" class="govgr-caption govgr-!-margin-bottom-2 govgr-!-margin-top-2 govgr-!-font-size-24" id="question-category">
       Κατηγορία: <strong>{{ formatTag(currentTag) }}</strong>
     </p>
@@ -86,7 +84,4 @@ export default {
   text-align: left;
 }
 
-#title{
-  text-align: left;
-}
 </style>
