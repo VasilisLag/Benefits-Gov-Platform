@@ -46,17 +46,15 @@ export default {
     handleAnswers(answers) {
       const submittedTaxDeclaration = answers[0] === 'Ναι';
       const residesInGreece = answers[1] === 'Ναι';
-      const yearsInGreece = parseInt(answers[2]) >= 5;
-      const income = parseFloat(answers[3]);
-      const isSingleParent = answers[4] === 'Ναι';
-      const dependentChildren = parseInt(answers[5]);
+      const income = parseFloat(answers[2]);
+      const isSingleParent = answers[3] === 'Ναι';
+      const dependentChildren = parseInt(answers[4]);
 
       this.results = calcChildrenBenefit(
         submittedTaxDeclaration,
         income,
         dependentChildren,
         residesInGreece,
-        yearsInGreece,
         isSingleParent
       );
     }

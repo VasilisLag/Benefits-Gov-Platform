@@ -178,7 +178,7 @@ export function calculateAllowance(base, dependentChildren, unprotectedChildren,
   return allowance;
 }
 
-export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece, yearsInGreece,
+export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece,
   isSingleParent)
 {
   let reasons = [];
@@ -186,8 +186,6 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
   if(!residesInGreece)
     reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα παιδιού.")
-  if(!yearsInGreece)
-    reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.")
   if(dependentChildren === 0)
     reasons.push("Ο αριθμός των εξαρτώμενων μελών είναι 0.")
 
