@@ -88,8 +88,6 @@ export default {
 
 .govgr-note {
   margin-top: 1rem;
-  font-size: 0.875rem;
-  color: #666;
 }
 
 </style>

@@ -39,7 +39,6 @@ const questions = [
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Εξαρτώμενα Τέκνα</summary>
         <div class="govgr-details__content">
-          <p class="govgr-body">
             <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
               <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
                 <ul style="list-style-type: circle; padding-left:20px;">
@@ -51,7 +50,6 @@ const questions = [
               <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
               <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>
             </ul>
-          </p>
         </div>
       </details>
     `,
