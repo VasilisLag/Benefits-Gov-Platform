@@ -41,7 +41,7 @@ export default {
 }
 
 .summary-table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
 }
 
