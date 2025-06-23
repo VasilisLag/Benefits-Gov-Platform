@@ -3,23 +3,21 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
+    required: true,
+    tag:"demography"
   },
   {
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true
-  },
-  {
-    question: "Πόσα χρόνια διαμένετε μόνιμα στην Ελλάδα;",
-    category: "textbox",
-    required: true
+    required: true,
+    tag:"demography"
   },
   {
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
-    required: true
+    required: true,
+    tag:"income"
   },
   {
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
@@ -34,7 +32,8 @@ const questions = [
           </ul>
         </li>
       </ul><br>`,
-    required: true
+    required: true,
+    tag: "household"
   },
   {
     question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
@@ -51,7 +50,8 @@ const questions = [
       <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
       <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια (όταν έχει επέλθει θάνατος και των δύο γονέων</li>
     </ul><br>`,
-    required: true
+    required: true,
+    tag:"household"
   },
 ];
 
