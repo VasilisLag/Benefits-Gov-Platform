@@ -84,17 +84,16 @@ export default {
     calcHousing(ans) {
       return calcHousingBenefit(
         ans[0] === "Ναι",
-        parseInt(ans[2]) >= 5,
-        parseFloat(ans[3]),
-        ans[12] === "Ναι",
-        parseFloat(ans[13]),
-        ans[6] === "Μονογονέας",
+        parseFloat(ans[2]),
+        ans[11] === "Ναι",
+        parseFloat(ans[12]),
+        ans[5] === "Μονογονέας",
+        parseInt(ans[6]) || 0,
         parseInt(ans[7]) || 0,
         parseInt(ans[8]) || 0,
-        parseInt(ans[9]) || 0,
+        parseFloat(ans[13]),
         parseFloat(ans[14]),
-        parseFloat(ans[15]),
-        ans[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
+        ans[16] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
       );
     },
 

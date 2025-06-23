@@ -45,21 +45,19 @@ export default {
   methods: {
     handleAnswers(answers) {
       const submittedTaxDeclaration = answers[0] === "Ναι";
-      const yearsInGreece = parseInt(answers[1]) >= 5;
-      const income = parseFloat(answers[2]);
-      const activeRent = answers[3] === "Ναι";
-      const rent = parseFloat(answers[4]);
-      const isSingleParent = answers[5] === "Ναι";
-      const dependentChildren = parseInt(answers[6]) || 0;
-      const unprotectedChildren = parseInt(answers[7]) || 0;
-      const hostedPersons = parseInt(answers[8]) || 0;
-      const propertyValue = parseFloat(answers[9]);
-      const savings = parseFloat(answers[10]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
+      const income = parseFloat(answers[1]);
+      const activeRent = answers[2] === "Ναι";
+      const rent = parseFloat(answers[3]);
+      const isSingleParent = answers[4] === "Ναι";
+      const dependentChildren = parseInt(answers[5]) || 0;
+      const unprotectedChildren = parseInt(answers[6]) || 0;
+      const hostedPersons = parseInt(answers[7]) || 0;
+      const propertyValue = parseFloat(answers[8]);
+      const savings = parseFloat(answers[9]);
+      const luxuryBelonging = answers[10] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
 
       this.results = calcHousingBenefit(
         submittedTaxDeclaration,
-        yearsInGreece,
         income,
         activeRent,
         rent,

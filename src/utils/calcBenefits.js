@@ -89,7 +89,7 @@ export function calcHeatingBenefit(submittedTaxDeclaration, yearsInGreece, incom
     };
 }
 
-export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, income, activeRent, rent, isSingleParent, 
+export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, rent, isSingleParent, 
   dependentChildren, unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging) 
 {
   const incomeBase = 7000;
@@ -106,9 +106,6 @@ export function calcHousingBenefit(submittedTaxDeclaration, yearsInGreece, incom
 
   if(!submittedTaxDeclaration) {
     reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
-  }
-  if(!yearsInGreece) {
-    reasons.push("Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.");
   }
   if(!activeRent) {
     reasons.push("Πρέπει να έχετε ενεργό μισθωτήριο στο όνομα σας.");

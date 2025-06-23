@@ -75,7 +75,6 @@ export default {
   margin-bottom: 1rem;
   margin-left: 2rem;
   display: flex;
-  align-items: center;
 }
 
 .govgr-radios__input {
