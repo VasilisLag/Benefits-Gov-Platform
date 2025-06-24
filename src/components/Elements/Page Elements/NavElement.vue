@@ -121,6 +121,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: none; /* Hidden by default */
   min-width: 200px;
+  z-index:1000;
 }
 
 .govgr-nav__submenu-link {
