@@ -1,9 +1,12 @@
 <template>
   <div>
-    <label class="question-label" v-html="question"></label>
+    <label class="question-label govgr-heading-xl" v-html="question"></label>
+    <p class="govgr-error-message" style="text-align: left; margin-bottom: 0.75rem;">
+      <span class="govgr-visually-hidden">Λάθος:</span> Πρέπει να συμπληρώσετε το πεδίο. 
+    </p>
     <input 
       id="input-field" 
-      class="govgr-input" 
+      class="govgr-input govgr-mt-9 govgr-mb-9" 
       type="text" 
       v-model="formattedInput" 
       @input="onInput($event.target.value)" 
@@ -77,14 +80,10 @@ export default {
 }
 
 .question-label {
-  font-weight: 600;
+  text-align: left;
   margin-bottom: 0.75rem;
   display: block;
-  font-size: 1.2rem;
   color: #333;
 }
 
-.govgr-input {
-  margin: 2rem auto 4rem auto;
-}
 </style>

@@ -1,9 +1,16 @@
 <template>
-  <div class="govgr-field">
+  <div class="govgr-field govgr-field--error">
     <fieldset class="govgr-fieldset" aria-describedby="radio-country">
-      <legend role="heading" aria-level="1" class="govgr-fieldset__legend govgr-heading-xl">
-        {{ question }}
+      <legend role="heading" aria-level="1" class="govgr-fieldset__legend">
+        <span class="govgr-heading-xl">
+          {{ question }}
+        </span>
       </legend>
+      <p class="govgr-hint govgr-mt-3 hints">Μπορείτε να επιλέξετε μόνο μία επιλογή.</p>
+      <p class="govgr-error-message hints govgr-mb-6">
+        <span class="govgr-visually-hidden">Λάθος:</span>
+        Πρέπει να επιλέξετε μια απάντηση
+      </p>
       <div class="govgr-radios govgr-mt-3">
         <div class="govgr-radios__item" v-for="(option, index) in options" :key="index">
           <label class="govgr-label govgr-radios__label">
@@ -14,6 +21,7 @@
               :value="option"
               v-model="selectedOption"
               :id="option"
+              :name="question"
               @change="onChange(selectedOption)"
             />
           </label>
@@ -87,6 +95,10 @@ export default {
 
 .govgr-note {
   margin-top: 1rem;
+}
+
+.hints {
+  text-align: left;
 }
 
 </style>
