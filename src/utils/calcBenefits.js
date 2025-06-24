@@ -404,6 +404,6 @@ export function calculateDepositThreshold(totalAdults, totalChildren) {
     (entry) => entry.adults === totalAdults && entry.children === totalChildren
   );
 
-  threshold = matchedLimit ? matchedLimit.limit : 0;
+  threshold = matchedLimit ? matchedLimit.limit : 4800 + (totalAdults - 1) * 2400 + totalChildren * 1200;
   return threshold;
 }
