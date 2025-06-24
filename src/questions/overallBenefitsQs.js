@@ -104,16 +104,6 @@ const questions = [
     question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)`,
     category: "textbox",
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Όριο Φορολογητέας Αξίας</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Η συνολική φορολογητέα αξία αφορά όλα τα ακίνητα που ανήκουν στα μέλη του νοικοκυριού.</li>
-            <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 120.000€.</li>
-            <li>Προσαυξάνεται κατά 15.000€ για κάθε πρόσθετο μέλος του νοικοκυριού έως τα 180.000€.</li>
-          </ul>
-        </div>
-      </details>
     `,
     required: false,
     tag:"household"

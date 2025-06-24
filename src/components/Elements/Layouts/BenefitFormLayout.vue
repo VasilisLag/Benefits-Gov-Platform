@@ -44,9 +44,11 @@
                 :answer="answer"
                 @onAnswerChange="handleAnswerChange"
               />
-              <SummaryTable v-if="isFormSummary"
+              <SummaryTable
+                v-if="isFormSummary"
                 :questions="questions.map(q => q.question)"
                 :answers="answers"
+                @edit="goToQuestion"
               />
             </QuestionForm>
           </main>
@@ -143,7 +145,11 @@ export default {
         residence: 'Κατοικία'
       };
       return map[tag] || tag;
-    }
+    },
+    goToQuestion(index) {
+      this.currentQuestionIndex = index;
+      this.currentOption = this.answers[index] || null;
+  }
   }
 };
 </script>
