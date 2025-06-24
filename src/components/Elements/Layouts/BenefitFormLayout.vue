@@ -147,6 +147,7 @@ export default {
       return map[tag] || tag;
     },
     goToQuestion(index) {
+      this.$emit('clear-results');
       this.currentQuestionIndex = index;
       this.currentOption = this.answers[index] || null;
   }
