@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <label class="question-label" v-html="question"></label>
+  <div class="dropdown-element govgr-mb-12">
+    <label class="question-label govgr-heading-xl" v-html="question"></label>
     <select class="govgr-input" v-model="selectedOption" @change="onChange(selectedOption)">
       <option v-for="option in options" :key="option" :value="option">
         {{ option }}
@@ -45,16 +45,17 @@ export default {
 
 <style scoped>
 
+.dropdown-element {
+  text-align: left;
+}
+
 .question-label {
-  font-weight: 600;
   display: block;
-  font-size: 1.2rem;
-  color: #333;
 }
 
 .govgr-input {
   width:40%;
-  margin:2rem 3rem 6rem 3rem;
+  text-align: left;
 }
 
 </style>

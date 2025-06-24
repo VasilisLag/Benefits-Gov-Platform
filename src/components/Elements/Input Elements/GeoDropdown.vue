@@ -1,14 +1,17 @@
 <template>
   <div class="geo-dropdown">
     <label class="question-label" v-html="question"></label>
-    <p class="">Εισάγετε την τοποθεσία σας</p>
-
+    <p class="govgr-heading-xl">Εισάγετε την τοποθεσία σας</p>
+    <p class="govgr-hint govgr-mb-6">
+      Αναζητήστε τον τόπο διαμονής 
+      σας με τον Τ.Κ. (προτείνεται)
+    </p>
     <input
       type="text"
       v-model="searchQuery"
       @focus="isDropdownVisible = true"
       @input="filterOptions"
-      placeholder="Αναζητήστε τον τόπο διαμονής σας με τον Τ.Κ. (προτείνεται)"
+      placeholder=""
       class="search-input govgr-input"
     />
 
@@ -116,9 +119,10 @@ export default {
 
 <style scoped>
 .geo-dropdown {
+  position: relative; /* για απόλυτη θέση στο dropdown */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   width: 100%;
   margin-bottom: 6rem;
 }
@@ -126,7 +130,7 @@ export default {
 .search-input {
   width: 60%;
   border-width: 2px;
-  --tw-border-opacity: 1;
+  /* --tw-border-opacity: 1;
   border-color: rgba(var(--color-base-content-rgb), var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgba(var(--color-base-100-rgb), var(--tw-bg-opacity));
@@ -134,26 +138,35 @@ export default {
   font-size: 1rem;
   line-height: 1.5rem;
   border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 20px; */
 }
 
 .dropdown-list {
+  position: absolute;
+  top: calc(100% + 0.5rem); /* λίγο κάτω από το input */
+  left: 0;
   width: 60%;
   max-height: 150px;
   overflow-y: auto;
   background-color: white;
   border: 1px solid #ccc;
-  border-top: none;
   border-radius: 0 0 4px 4px;
   list-style-type: none;
   padding: 0;
   margin: 0;
   font-size: 0.9rem;
+  z-index: 1000; /* υψηλή προτεραιότητα */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-item {
   padding: 0.5rem;
   cursor: pointer;
+}
+
+.search-input {
+  position: relative;
+  z-index: 2;
 }
 
 .dropdown-item:hover {
