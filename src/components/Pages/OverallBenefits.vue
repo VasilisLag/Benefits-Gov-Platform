@@ -8,7 +8,7 @@
     />
 
     <div class="form-container govgr-mb-12" v-if="allResults.length">
-      <ResultsForm :results="allResults" />
+      <ResultsForm :results="allResults" class = "govgr-mb-9"/>
       <ResultsAccordion
         :items="allResults.map(r => ({
           title: r.title,

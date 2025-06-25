@@ -1,4 +1,5 @@
 <template>
+  <caption class="govgr-table__caption govgr-table__caption--m">Πληροφορίες</caption>
   <div class="govgr-accordion govgr-mb-6" v-if="items.length">
     <details
       v-for="(item, index) in items"
