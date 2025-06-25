@@ -337,6 +337,7 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
   if (keaEligible) {
     const allowanceAmount = 0.075
     return {
+      title,
       eligible: true,
       allowanceAmount: 0.075,
       message: `

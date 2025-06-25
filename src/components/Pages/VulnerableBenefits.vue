@@ -52,24 +52,20 @@ export default {
       this.keaResults = this.calculateKEABenefits(answers);
       const aCatEligible = this.keaResults.eligible;
       this.kotResults = this.calculateKOTBenefits(answers, aCatEligible);
+      
+      const benefits = [this.keaResults, this.kotResults]
 
-      this.allResults = [
-        {
-          title: this.keaResults.title,
-          eligible: this.keaResults.eligible,
-          allowanceAmount: this.keaResults.allowanceAmount || 0,
-          reasons: this.keaResults.reasons || [],
-          message: this.keaResults.message || '',
-        },
-        {
-          title: this.kotResults.title,
-          eligible: this.kotResults.eligible,
-          allowanceAmount: this.kotResults.allowanceAmount || 0,
-          reasons: this.kotResults.reasons || [],
-          message: this.kotResults.message || '',
-        }
-      ];
-      console.log(this.allResults);
+      this.allResults = benefits.map(benefit => {
+
+        return {
+          title: benefit.title,
+          eligible: benefit.eligible,
+          allowanceAmount: benefit.allowanceAmount || 0,
+          reasons: benefit.reasons || [],
+          message: benefit.message || '',
+        };
+      });
+
     },
     clearResults() {
       this.allResults = [];
