@@ -7,17 +7,13 @@
       @clear-results="clearResults"
     />
 
-    <div
-      v-for="(res, index) in allResults"
-      :key="index"
-      class="form-container govgr-mb-12"
-    >
-      <ResultsForm
-        :title="res.title"
-        :eligible="res.result.eligible"
-        :benefitAmount="res.result.benefitAmount || res.result.allowanceAmount"
-        :message="res.result.message"
-        :reasons="res.result.reasons"
+    <div class="form-container govgr-mb-12" v-if="allResults.length">
+      <ResultsForm :results="allResults" />
+      <ResultsAccordion
+        :items="allResults.map(r => ({
+          title: r.title,
+          content: r.eligible ? r.message : r.reasons
+        }))"
       />
     </div>
 
@@ -29,6 +25,7 @@
 import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
+import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import questions from '@/questions/overallBenefitsQs.js';
 import {
   calcChildrenBenefit,
@@ -43,11 +40,17 @@ export default {
   components: {
     BenefitFormLayout,
     ResultsForm,
-    FooterElement
+    FooterElement,
+    ResultsAccordion
   },
   data() {
     return {
       questions,
+      resChildren: null,
+      resHousing: null,
+      resHeating: null,
+      resKEA: null,
+      resKot: null,
       allResults: []
     };
   },
@@ -56,19 +59,30 @@ export default {
       this.allResults = [];
     },
     handleAnswers(answers) {
-      const resChildren = this.calcChildren(answers);
-      const resHousing = this.calcHousing(answers);
-      const resHeating = this.calcHeating(answers);
-      const resKEA = this.calcKEA(answers);
-      const resKOT = this.calcKOT(answers, resKEA.eligible);
+      this.resChildren = this.calcChildren(answers);
+      this.resHousing = this.calcHousing(answers);
+      this.resHeating = this.calcHeating(answers);
+      this.resKEA = this.calcKEA(answers);
+      this.resKOT = this.calcKOT(answers, this.resKEA.eligible);
 
-      this.allResults = [
-        { title: 'Επίδομα Παιδιού (Α21)', result: resChildren },
-        { title: 'Επίδομα Στέγασης', result: resHousing },
-        { title: 'Επίδομα Θέρμανσης', result: resHeating },
-        { title: 'Ελάχιστο Εγγυημένο Εισόδημα', result: resKEA },
-        { title: 'Κοινωνικό Οικιακό Τιμολόγιο', result: resKOT }
-      ];
+      const benefits = [
+        this.resChildren,
+        this.resHousing,
+        this.resHeating,
+        this.resKEA,
+        this.resKOT
+      ]
+
+      this.allResults = benefits.map(benefit => {
+
+        return {
+          title: benefit.title,
+          eligible: benefit.eligible,
+          allowanceAmount: benefit.allowanceAmount || 0,
+          reasons: benefit.reasons || [],
+          message: benefit.message || '',
+        };
+      });
     },
 
     calcChildren(ans) {

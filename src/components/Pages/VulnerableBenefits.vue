@@ -42,8 +42,6 @@ export default {
       questions,
       keaResults: null,
       kotResults: null,
-      keaTitle: "Ελάχιστο Εγγυημένο Εισόδημα",
-      kotTitle: "Κοινωνικό Οικιακό Τιμολόγιο",
       allResults: []
     };
   },
