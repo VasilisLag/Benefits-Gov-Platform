@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="input-container">
     <label class="question-label govgr-heading-xl" v-html="question"></label>
-    <p class="govgr-error-message" style="text-align: left; margin-bottom: 0.75rem;">
+    <p class="govgr-error-message govgr-mt-6">
       <span class="govgr-visually-hidden">Λάθος:</span> Πρέπει να συμπληρώσετε το πεδίο. 
     </p>
     <input 
@@ -79,10 +79,11 @@ export default {
   max-height: 2rem;
 }
 
-.question-label {
+.input-container{
   text-align: left;
-  margin-bottom: 0.75rem;
-  display: block;
+}
+
+.question-label {
   color: #333;
 }
 
