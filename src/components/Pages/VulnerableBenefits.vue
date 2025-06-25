@@ -7,17 +7,13 @@
       @clear-results="clearResults"
     />
 
-    <div
-      v-for="(res, index) in allResults"
-      :key="index"
-      class="form-container govgr-mb-12"
-    >
-      <ResultsForm
-        :title="res.title"
-        :eligible="res.result.eligible"
-        :benefitAmount="res.result.benefitAmount"
-        :message="res.result.message"
-        :reasons="res.result.reasons"
+    <div class="form-container govgr-mb-12" v-if="allResults.length">
+      <ResultsForm :results="allResults" />
+      <ResultsAccordion
+        :items="allResults.map(r => ({
+          title: r.title,
+          content: r.eligible ? r.message : r.reasons
+        }))"
       />
     </div>
 
@@ -29,6 +25,7 @@
 import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
+import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import questions from '@/questions/vulnerableBenefitsQs.js';
 import { calcKEABenefit, calcKOTBenefit } from '@/utils/calcBenefits.js';
 
@@ -37,24 +34,42 @@ export default {
   components: {
     BenefitFormLayout,
     ResultsForm,
-    FooterElement
+    FooterElement,
+    ResultsAccordion
   },
   data() {
     return {
       questions,
+      keaResults: null,
+      kotResults: null,
+      keaTitle: "Ελάχιστο Εγγυημένο Εισόδημα",
+      kotTitle: "Κοινωνικό Οικιακό Τιμολόγιο",
       allResults: []
     };
   },
   methods: {
     handleAnswers(answers) {
-      const kea = this.calculateKEABenefits(answers);
-      const aCatEligible = kea.eligible;
-      const kot = this.calculateKOTBenefits(answers, aCatEligible);
+      this.keaResults = this.calculateKEABenefits(answers);
+      const aCatEligible = this.keaResults.eligible;
+      this.kotResults = this.calculateKOTBenefits(answers, aCatEligible);
 
       this.allResults = [
-        { title: 'Ελάχιστο Εγγυημένο Εισόδημα', result: kea },
-        { title: 'Κοινωνικό Οικιακό Τιμολόγιο', result: kot }
+        {
+          title: this.keaResults.title,
+          eligible: this.keaResults.eligible,
+          allowanceAmount: this.keaResults.allowanceAmount || 0,
+          reasons: this.keaResults.reasons || [],
+          message: this.keaResults.message || '',
+        },
+        {
+          title: this.kotResults.title,
+          eligible: this.kotResults.eligible,
+          allowanceAmount: this.kotResults.allowanceAmount || 0,
+          reasons: this.kotResults.reasons || [],
+          message: this.kotResults.message || '',
+        }
       ];
+      console.log(this.allResults);
     },
     clearResults() {
       this.allResults = [];
@@ -123,5 +138,4 @@ export default {
   width: 70%;
   margin: 0 auto;
 }
-
 </style>

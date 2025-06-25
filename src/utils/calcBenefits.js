@@ -3,6 +3,8 @@ import {getCoefficient} from '@/utils/calcCoefficient.js';
 export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, income, isBusinessOwner, businessIncome,
   propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource) {
 
+    const title = "Επίδομα Θέρμανσης"
+
     const coefficient = getCoefficient(area);
     let baseAmount = null;      
     let reasons = [];
@@ -38,6 +40,7 @@ export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, inc
 
     if (reasons.length > 0) {
       return {
+        title,
         reasons,
         eligible: false,
         allowanceAmount: 0,
@@ -82,6 +85,7 @@ export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, inc
     allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit)).toFixed(0);
 
     return {
+      title,
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
@@ -92,6 +96,8 @@ export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, inc
 export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, rent, isSingleParent, 
   dependentChildren, unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging) 
 {
+  const title = "Επίδομα Στέγασης"
+
   const incomeBase = 7000;
   const allowanceBase = 70;
   const allowanceThreshold = 210;
@@ -128,6 +134,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, 
 
   if (reasons.length > 0) {
     return {
+      title,
       reasons,
       eligible: false,
       allowanceAmount: 0,
@@ -139,6 +146,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, 
     allowanceAmount = Math.min(Math.min(rent,allowanceAmount),allowanceThreshold);
 
     return {
+      title,
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
@@ -178,6 +186,9 @@ export function calculateAllowance(base, dependentChildren, unprotectedChildren,
 export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece,
   isSingleParent)
 {
+
+  const title = "Επίδομα Παιδιού - Α21"
+
   let reasons = [];
   if(!submittedTaxDeclaration)
     reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
@@ -188,6 +199,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
 
   if (reasons.length > 0) {
     return {
+      title,
       reasons,
       eligible: false,
       allowanceAmount: 0,
@@ -242,6 +254,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
   }
 
   return {
+    title,
     reasons,
     eligible: true,
     allowanceAmount: allowanceAmount,
@@ -252,6 +265,9 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
 export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, isSingleParent, income,
   propertyValue, vehicleValue, savings, luxuryBelonging)
 {
+
+  const title = "Ελάχιστο Εγγυημένο Εισόδημα"
+
   let reasons = [];
   const vehicleThreshold = 6000;
   let incomeThreshold = 0;
@@ -293,6 +309,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
 
   if (reasons.length > 0) {
     return {
+      title,
       reasons,
       eligible: false,
       allowanceAmount: 0,
@@ -302,6 +319,7 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
   else {
     const allowanceAmount = parseInt((incomeThreshold - income) / 6);
     return {
+      title,
       reasons,
       eligible: true,
       message: `Είστε επιλέξιμος/η για το Ελάχιστο Εγγυημένο Εισόδημα. Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
@@ -313,6 +331,9 @@ export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsup
 export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson, lifesupportedPerson,
   income, propertyValue, luxuryBelonging, keaEligible)
 {
+
+  const title = "Κοινωνικό Οικιακό Τιμολόγιο"
+
   if (keaEligible) {
     const allowanceAmount = 0.075
     return {
@@ -352,6 +373,7 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
 
   if (reasons.length > 0) {
     return {
+      title,
       reasons,
       eligible: false,
       allowanceAmount: 0,
@@ -361,6 +383,7 @@ export function calcKOTBenefit(residesInGreece, adults, dependentChildren, unsup
   else {
     const allowanceAmount = 0.045
     return {
+      title,
       reasons,
       eligible: true,
       allowanceAmount:0.045,

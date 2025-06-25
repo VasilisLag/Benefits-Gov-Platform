@@ -60,17 +60,17 @@ export default {
         residesInGreece,
         isSingleParent
       )
-      console.log('Results:', this.results);
+
       this.summaryResults = [
         {
-          title: this.title,
+          title: this.results.title,
           eligible: this.results.eligible,
           allowanceAmount: this.results.allowanceAmount || 0,
           reasons: this.results.reasons || [],
           message: this.results.message || '',
         }
       ];
-      console.log('Summary Results:', this.summaryResults);
+
     }
   }
 };
