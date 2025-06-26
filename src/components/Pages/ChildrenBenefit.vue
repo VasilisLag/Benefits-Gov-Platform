@@ -25,7 +25,7 @@
 import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
-import questions from '@/questions/childrenBenefitQs.js';
+import allQuestions from '@/questions/childrenBenefitQs.js';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import { calcChildrenBenefit } from '@/utils/calcBenefits.js';
 
@@ -38,9 +38,16 @@ export default {
     ResultsAccordion
   },
   data() {
+    const questionOrder = [
+      'submittedTaxDeclaration',
+      'residesInGreece',
+      'income',
+      'isSingleParent',
+      'dependentChildren'
+    ];
     return {
       title: 'Επίδομα Παιδιού (Α21)',
-      questions,
+      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       results: null,
       summaryResults: []
     };
