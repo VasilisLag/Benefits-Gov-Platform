@@ -26,7 +26,7 @@ import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.v
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
-import questions from '@/questions/overallBenefitsQs.js';
+import allQuestions from '@/questions/overallBenefitsQs.js';
 import {
   calcChildrenBenefit,
   calcHeatingBenefit,
@@ -44,13 +44,36 @@ export default {
     ResultsAccordion
   },
   data() {
+    // Explicit order of questions as in allQuestions
+    const questionOrder = [
+      'submittedTaxDeclaration',
+      'residesInGreece',
+      'income',
+      'income6m',
+      'isBusinessOwner',
+      'businessIncome',
+      'maritalStatus',
+      'dependentChildren',
+      'unprotectedChildren',
+      'hostedPersons',
+      'area',
+      'heatingSource',
+      'activeRent',
+      'rent',
+      'propertyValue',
+      'savings',
+      'vehicleValue',
+      'luxuryBelonging',
+      'vulnerableCategory',
+    ];
+    const questions = questionOrder.map(key => allQuestions.find(q => q.key === key));
     return {
       questions,
       resChildren: null,
       resHousing: null,
       resHeating: null,
       resKEA: null,
-      resKot: null,
+      resKOT: null,
       allResults: []
     };
   },
@@ -63,96 +86,92 @@ export default {
       this.resHousing = this.calcHousing(answers);
       this.resHeating = this.calcHeating(answers);
       this.resKEA = this.calcKEA(answers);
+      console.log(this.resKea)
       this.resKOT = this.calcKOT(answers, this.resKEA.eligible);
-
       const benefits = [
         this.resChildren,
         this.resHousing,
         this.resHeating,
         this.resKEA,
         this.resKOT
-      ]
-
-      this.allResults = benefits.map(benefit => {
-
-        return {
-          title: benefit.title,
-          eligible: benefit.eligible,
-          allowanceAmount: benefit.allowanceAmount || 0,
-          reasons: benefit.reasons || [],
-          message: benefit.message || '',
-        };
-      });
+      ];
+      this.allResults = benefits.map(benefit => ({
+        title: benefit.title,
+        eligible: benefit.eligible,
+        allowanceAmount: benefit.allowanceAmount || 0,
+        reasons: benefit.reasons || [],
+        message: benefit.message || '',
+      }));
     },
-
     calcChildren(ans) {
+      // calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece, isSingleParent)
       return calcChildrenBenefit(
-        ans[0] === "Ναι",
-        parseFloat(ans[2]),
-        parseInt(ans[6]) || 0,
-        ans[1] === "Ναι",
-        ans[5] === "Μονογονέας"
+        ans['submittedTaxDeclaration'] === "Ναι",
+        parseFloat(ans['income']),
+        parseInt(ans['dependentChildren']) || 0,
+        ans['residesInGreece'] === "Ναι",
+        ans['maritalStatus'] === "Μονογονέας"
       );
     },
-
     calcHousing(ans) {
+      // calcHousingBenefit(submittedTaxDeclaration, income, activeRent, rent, isSingleParent, dependentChildren, unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging)
       return calcHousingBenefit(
-        ans[0] === "Ναι",
-        parseFloat(ans[2]),
-        ans[11] === "Ναι",
-        parseFloat(ans[12]),
-        ans[5] === "Μονογονέας",
-        parseInt(ans[6]) || 0,
-        parseInt(ans[7]) || 0,
-        parseInt(ans[8]) || 0,
-        parseFloat(ans[13]),
-        parseFloat(ans[14]),
-        ans[16] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
+        ans['submittedTaxDeclaration'] === "Ναι",
+        parseFloat(ans['income']),
+        ans['activeRent'] === "Ναι",
+        parseFloat(ans['rent']),
+        ans['maritalStatus'] === "Μονογονέας",
+        parseInt(ans['dependentChildren']) || 0,
+        parseInt(ans['unprotectedChildren']) || 0,
+        parseInt(ans['hostedPersons']) || 0,
+        parseFloat(ans['propertyValue']),
+        parseFloat(ans['savings']),
+        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
       );
     },
-
     calcHeating(ans) {
+      // calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, income, isBusinessOwner, businessIncome, propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource)
       return calcHeatingBenefit(
-        ans[0] === "Ναι",
-        ans[1] === "Ναι",
-        parseFloat(ans[2]),
-        ans[3] === "Ναι",
-        ans[3] === "Ναι" ? parseFloat(ans[4]) : 0,
-        parseFloat(ans[13]),
-        ans[5] === "Έγγαμος/η - Σύμφωνο συμβίωσης",
-        ans[5] === "Μονογονέας",
-        parseInt(ans[6]),
-        ans[9],
-        ans[10]
+        ans['submittedTaxDeclaration'] === "Ναι",
+        ans['residesInGreece'] === "Ναι",
+        parseFloat(ans['income']),
+        ans['isBusinessOwner'] === "Ναι",
+        parseFloat(ans['businessIncome']),
+        parseFloat(ans['propertyValue']),
+        ans['maritalStatus'] === "Έγγαμος/η - Σύμφωνο συμβίωσης",
+        ans['maritalStatus'] === "Μονογονέας",
+        parseInt(ans['dependentChildren']) || 0,
+        ans['area'],
+        ans['heatingSource']
       );
     },
-
     calcKEA(ans) {
+      // calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging)
       return calcKEABenefit(
-        ans[1] === "Ναι",
-        parseInt(ans[9]) + 1,
-        parseInt(ans[7]),
-        parseInt(ans[8]) || 0,
-        ans[6] === "Μονογονέας",
-        parseFloat(ans[19]),
-        parseFloat(ans[14]),
-        parseFloat(ans[16]),
-        parseFloat(ans[15]),
-        ans[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
+        ans['residesInGreece'] === "Ναι",
+        (parseInt(ans['hostedPersons']) ? parseInt(ans['hostedPersons']) + 1 : 1),
+        parseInt(ans['dependentChildren']) || 0,
+        parseInt(ans['unsupportedChildren']) || 0,
+        ans['maritalStatus'] === "Μονογονέας",
+        parseFloat(ans['income6m']),
+        parseFloat(ans['propertyValue']),
+        parseFloat(ans['vehicleValue']),
+        parseFloat(ans['savings']),
+        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
       );
     },
-
     calcKOT(ans, keaEligible) {
+      // calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson, lifesupportedPerson, income, propertyValue, luxuryBelonging, keaEligible)
       return calcKOTBenefit(
-        ans[1] === "Ναι",
-        parseInt(ans[9]) + 1,
-        parseInt(ans[7]),
-        parseInt(ans[8]) || 0,
-        ans[18] === "Αναπηρία 67% και άνω",
-        ans[18] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές",
-        parseFloat(ans[3]),
-        parseFloat(ans[14]),
-        ans[17] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+        ans['residesInGreece'] === "Ναι",
+        (parseInt(ans['hostedPersons']) ? parseInt(ans['hostedPersons']) + 1 : 1),
+        parseInt(ans['dependentChildren']),
+        parseInt(ans['unsupportedChildren']),
+        ans['vulnerableCategory'] === "Αναπηρία 67% και άνω",
+        ans['vulnerableCategory'] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές",
+        parseFloat(ans['income']),
+        parseFloat(ans['propertyValue']),
+        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
         keaEligible
       );
     }

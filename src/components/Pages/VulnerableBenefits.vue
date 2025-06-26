@@ -26,7 +26,7 @@ import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.v
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
-import questions from '@/questions/vulnerableBenefitsQs.js';
+import allQuestions from '@/questions/vulnerableBenefitsQs.js';
 import { calcKEABenefit, calcKOTBenefit } from '@/utils/calcBenefits.js';
 
 export default {
@@ -38,6 +38,23 @@ export default {
     ResultsAccordion
   },
   data() {
+    // Define the order of questions by key
+    const questionOrder = [
+      'residesInGreece',
+      'adults',
+      'dependentChildren',
+      'unsupportedChildren',
+      'isSingleParent',
+      'vulnerableCategory',
+      'income',
+      'income6m',
+      'propertyValue',
+      'vehicleValue',
+      'savings',
+      'luxuryBelonging'
+    ];
+    // Build the questions array in the desired order
+    const questions = questionOrder.map(key => allQuestions.find(q => q.key === key));
     return {
       questions,
       keaResults: null,
@@ -50,36 +67,30 @@ export default {
       this.keaResults = this.calculateKEABenefits(answers);
       const aCatEligible = this.keaResults.eligible;
       this.kotResults = this.calculateKOTBenefits(answers, aCatEligible);
-      
-      const benefits = [this.keaResults, this.kotResults]
-
-      this.allResults = benefits.map(benefit => {
-
-        return {
-          title: benefit.title,
-          eligible: benefit.eligible,
-          allowanceAmount: benefit.allowanceAmount || 0,
-          reasons: benefit.reasons || [],
-          message: benefit.message || '',
-        };
-      });
-
+      const benefits = [this.keaResults, this.kotResults];
+      console.log(this.keaResults)
+      this.allResults = benefits.map(benefit => ({
+        title: benefit.title,
+        eligible: benefit.eligible,
+        allowanceAmount: benefit.allowanceAmount || 0,
+        reasons: benefit.reasons || [],
+        message: benefit.message || '',
+      }));
     },
     clearResults() {
       this.allResults = [];
     },
     calculateKEABenefits(answers) {
-      const residesInGreece = answers[0] === "Ναι";
-      const adults = parseInt(answers[1]);
-      const dependentChildren = parseInt(answers[2]) || 0;
-      const unsupportedChildren = parseInt(answers[3]) || 0;
-      const isSingleParent = answers[4] === "Ναι";
-      const income = parseFloat(answers[7]);
-      const propertyValue = parseFloat(answers[8]);
-      const vehicleValue = parseFloat(answers[9]);
-      const savings = parseFloat(answers[10]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-
+      const residesInGreece = answers['residesInGreece'] === "Ναι";
+      const adults = parseInt(answers['adults']);
+      const dependentChildren = parseInt(answers['dependentChildren']) || 0;
+      const unsupportedChildren = parseInt(answers['unsupportedChildren']) || 0;
+      const isSingleParent = answers['isSingleParent'] === "Ναι";
+      const income = parseFloat(answers['income6m']);
+      const propertyValue = parseFloat(answers['propertyValue']);
+      const vehicleValue = parseFloat(answers['vehicleValue']);
+      const savings = parseFloat(answers['savings']);
+      const luxuryBelonging = answers['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
       return calcKEABenefit(
         residesInGreece,
         adults,
@@ -94,16 +105,15 @@ export default {
       );
     },
     calculateKOTBenefits(answers, aCatEligible) {
-      const residesInGreece = answers[0] === "Ναι";
-      const adults = parseInt(answers[1]);
-      const dependentChildren = parseInt(answers[2]) || 0;
-      const unsupportedChildren = parseInt(answers[3]) || 0;
-      const disabledPerson = answers[5] === "Αναπηρία 67% και άνω";
-      const lifesupportedPerson = answers[5] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
-      const income = parseFloat(answers[6]);
-      const propertyValue = parseFloat(answers[8]);
-      const luxuryBelonging = answers[11] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-
+      const residesInGreece = answers['residesInGreece'] === "Ναι";
+      const adults = parseInt(answers['adults']);
+      const dependentChildren = parseInt(answers['dependentChildren']) || 0;
+      const unsupportedChildren = parseInt(answers['unsupportedChildren']) || 0;
+      const disabledPerson = answers['vulnerableCategory'] === "Αναπηρία 67% και άνω";
+      const lifesupportedPerson = answers['vulnerableCategory'] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
+      const income = parseFloat(answers['income']);
+      const propertyValue = parseFloat(answers['propertyValue']);
+      const luxuryBelonging = answers['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
       return calcKOTBenefit(
         residesInGreece,
         adults,

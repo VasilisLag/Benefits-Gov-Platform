@@ -25,7 +25,7 @@
 import BenefitFormLayout from '@/components/Elements/Layouts/BenefitFormLayout.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import FooterElement from '@/components/Elements/Page Elements/FooterElement.vue';
-import questions from '@/questions/heatingBenefitQs.js';
+import allQuestions from '@/questions/heatingBenefitQs.js';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import { calcHeatingBenefit } from '@/utils/calcBenefits.js';
 
@@ -38,26 +38,38 @@ export default {
     ResultsAccordion
   },
   data() {
+    const questionOrder = [
+      'submittedTaxDeclaration',
+      'residesInGreece',
+      'income',
+      'isBusinessOwner',
+      'businessIncome',
+      'propertyValue',
+      'maritalStatus',
+      'dependentChildren',
+      'area',
+      'heatingSource'
+    ];
     return {
       title: 'Επίδομα Θέρμανσης',
-      questions,
+      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       results: null,
       summaryResults: []
     };
   },
   methods: {
     handleAnswers(answers) {
-      const submittedTaxDeclaration = answers[0] === 'Ναι';
-      const residesInGreece =  answers[1] === 'Ναι';
-      const income = parseFloat(answers[2]);
-      const isBusinessOwner = answers[3] === 'Ναι';
-      const businessIncome = isBusinessOwner ? parseFloat(answers[4]) : 0;
-      const propertyValue = parseFloat(answers[5]);
-      const isMarried = answers[6] === 'Έγγαμος/η - Σύμφωνο συμβίωσης';
-      const isSingleParent = answers[6] === 'Μονογονέας';
-      const dependentChildren = parseInt(answers[7]);
-      const area = answers[8];
-      const heatingSource = answers[9];
+      const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === 'Ναι';
+      const residesInGreece =  answers['residesInGreece'] === 'Ναι';
+      const income = parseFloat(answers['income']);
+      const isBusinessOwner = answers['isBusinessOwner'] === 'Ναι';
+      const businessIncome = isBusinessOwner ? parseFloat(answers['businessIncome']) : 0;
+      const propertyValue = parseFloat(answers['propertyValue']);
+      const isMarried = answers['maritalStatus'] === 'Έγγαμος/η - Σύμφωνο συμβίωσης';
+      const isSingleParent = answers['maritalStatus'] === 'Μονογονέας';
+      const dependentChildren = parseInt(answers['dependentChildren']);
+      const area = answers['area'];
+      const heatingSource = answers['heatingSource'];
 
       this.results = calcHeatingBenefit(
         submittedTaxDeclaration,
