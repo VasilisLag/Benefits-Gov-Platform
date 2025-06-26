@@ -1,37 +1,45 @@
 const questions = [
   {
-    id:0,
+    key: "submittedTaxDeclaration",
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit"]
   },
   {
-    id:1,
+    key: "residesInGreece",
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["childrenBenefit", "heatingBenefit", "vulnerableBenefits"]
   },
   {
-    id:2,
+    key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
     required: true,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:3,
+    key: "isBusinessOwner",
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
-    id:4,
+    key: "businessIncome",
     question: "Εάν ασκείτε επιχειρηματική δραστηριότητα, ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
     category: "textbox",
     note: `
@@ -44,19 +52,23 @@ const questions = [
         </div>
       </details>
     `,
-     required: false,
-    tag:"income"
+    required: false,
+    tag: "income",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
-    id:5,
+    key: "maritalStatus",
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
-    id:6,
+    key: "dependentChildren",
     question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
     category: "textbox",
     note: `  
@@ -77,10 +89,12 @@ const questions = [
         </div>
       </details>`,
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:7,
+    key: "unprotectedChildren",
     question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
     category: "textbox",
     note: `
@@ -97,49 +111,60 @@ const questions = [
       </details>
     `,
     required: false,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:8,
+    key: "hostedPersons",
     question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)`,
     category: "textbox",
-    note: `
-    `,
+    note: ``,
     required: false,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
-    id:9,
+    key: "area",
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
     required: true,
-    tag:"residence"
-  },  
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
+  },
   {
-    id:10,
+    key: "heatingSource",
     question: "Ποιός είναι η πηγή θέρμανσης που χρησιμοποιείτε;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
     required: true,
-    tag:"household"
-  },  
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
+  },
   {
-    id:11,
+    key: "activeRent",
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
-    id:12,
+    key: "rent",
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
     required: true,
     tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
-    id:13,
+    key: "propertyValue",
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
     note: `
@@ -153,10 +178,12 @@ const questions = [
       </details>
     `,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["heatingBenefit", "housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:14,
+    key: "savings",
     question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας σε ευρώ;",
     category: "textbox",
     note: `
@@ -176,10 +203,12 @@ const questions = [
       </details>
     `,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:15,
+    key: "vehicleValue",
     question: "Ποια είναι η συνολική αντικειμενική δαπάνη των επιβατικών αυτοκινήτων σας (Ι.Χ./Μ.Χ.) σε ευρώ;",
     category: "textbox",
     note:`
@@ -194,14 +223,17 @@ const questions = [
                 <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>
               </ul>
             </li>
+            <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>
           </ul>
         </div>
       </details>`,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
-    id:16,
+    key: "luxuryBelonging",
     question: "Διαθέτετε κάποιο από τα παρακάτω στοιχεία πολυτελούς διαβίωσης;",
     options: [
       "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
@@ -211,18 +243,22 @@ const questions = [
     ],
     category: "radio",
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["housingBenefit", "vulnerableBenefits"]
   },
   {
-    id:17,
+    key: "vulnerableCategory",
     question: "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
     category: "radio",
     options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
     required: true,
-    tag:"vulnerable"
-  },  
+    tag: "vulnerable",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
+  },
   {
-    id:18,
+    key: "income6m",
     question: "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
     category: "textbox",
     required: true,
@@ -236,9 +272,10 @@ const questions = [
         </div>
       </details>
     `,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
-
 ];
 
-  export default questions;
+export default questions;

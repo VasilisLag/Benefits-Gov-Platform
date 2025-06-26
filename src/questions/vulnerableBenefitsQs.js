@@ -1,18 +1,25 @@
 const questions = [
   {
+    key: "residesInGreece",
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "adults",
     question: "Πόσοι ενήλικες μένετε στο νοικοκυριό σας;",
     category: "textbox",
     required: true,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "dependentChildren",
     question: "Πόσα ανήλικα μέλη έχετε ως εξαρτώμενα;",
     category: "textbox",
     required: false,
@@ -33,9 +40,12 @@ const questions = [
             </ul>
         </div>
       </details>`,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "unsupportedChildren",
     question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;`,
     placeholder: "Αριθμός τέκνων",
     category: "textbox",
@@ -53,16 +63,22 @@ const questions = [
       </details>
     `,
     required: false,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "isSingleParent",
     question: "Είστε μονογονεϊκή οικογένεια;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "vulnerableCategory",
     question: "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
     category: "radio",
     options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
@@ -78,15 +94,21 @@ const questions = [
         </div>
       </details>
     `,
-    tag:"vulnerable"
-  },  
+    tag: "vulnerable",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
+  },
   {
+    key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού;",
     category: "textbox",
     required: true,
     tag: "income",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "income6m",
     question: "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
     category: "textbox",
     required: true,
@@ -100,9 +122,12 @@ const questions = [
         </div>
       </details>
     `,
-    tag: "income"
+    tag: "income",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "propertyValue",
     question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας σε ευρώ;",
     category: "textbox",
     note: `
@@ -128,9 +153,12 @@ const questions = [
         </div>
       </details>`,
     required: true,
-    tag: "assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "vehicleValue",
     question: "Ποια είναι η συνολική αντικειμενική δαπάνη των επιβατικών αυτοκινήτων σας (Ι.Χ./Μ.Χ.) σε ευρώ;",
     category: "textbox",
     note: `
@@ -150,9 +178,12 @@ const questions = [
         </div>
       </details>`,
     required: true,
-    tag: "assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "savings",
     question: "Ποια είναι η συνολική αξία των καταθέσεων, μετοχών, ομολόγων κ.τ.λ. του νοικοκυριού σας σε ευρώ;",
     category: "textbox",
     note: `
@@ -171,9 +202,12 @@ const questions = [
         </div>
       </details>`,
     required: true,
-    tag: "assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
   {
+    key: "luxuryBelonging",
     question: "Διαθέτετε κάποιο από τα παρακάτω στοιχεία που αποκλείουν το επίδομα;",
     options: [
       "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
@@ -183,7 +217,9 @@ const questions = [
     ],
     category: "radio",
     required: true,
-    tag: "assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["vulnerableBenefits"]
   },
 ];
 

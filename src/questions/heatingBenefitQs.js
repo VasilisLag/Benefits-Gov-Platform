@@ -1,12 +1,16 @@
 const questions = [
   {
+    key: "submittedTaxDeclaration",
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "residesInGreece",
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
@@ -21,22 +25,31 @@ const questions = [
         </div>
       </details>
     `,
-    tag:"demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
     required: true,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "isBusinessOwner",
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "businessIncome",
     question: "Εάν ασκείτε επιχειρηματική δραστηριότητα, ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
     category: "textbox",
     note: `
@@ -50,9 +63,12 @@ const questions = [
       </details>
     `,
     required: false,
-    tag:"income"  
+    tag: "income",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "propertyValue",
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
     note: `
@@ -66,16 +82,22 @@ const questions = [
       </details>
     `,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "maritalStatus",
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "dependentChildren",
     question: `Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;`,
     category: "textbox",
     note: `
@@ -96,20 +118,28 @@ const questions = [
         </div>
       </details>`,
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "area",
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
   {
+    key: "heatingSource",
     question: "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
     required: true,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["heatingBenefit"]
   },
 ];
 

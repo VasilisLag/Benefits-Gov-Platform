@@ -1,38 +1,54 @@
 const questions = [
   {
+    key: "submittedTaxDeclaration",
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"demography"
+    tag: "demography",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
     required: true,
-    tag:"income"
+    tag: "income",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "activeRent",
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag:"household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "rent",
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
     required: true,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "isSingleParent",
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "dependentChildren",
     question: `Πόσα εξαρτώμενα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
     category: "textbox",
     note: `
@@ -54,10 +70,13 @@ const questions = [
       </details>
     `,
     required: false,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
-    question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)`,
+    key: "unprotectedChildren",
+    question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)` ,
     category: "textbox",
     note: `
       <details class="govgr-details">
@@ -73,15 +92,21 @@ const questions = [
       </details>
     `,
     required: false,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
-    question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)`,
+    key: "hostedPersons",
+    question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)` ,
     category: "textbox",
     required: false,
-    tag: "household"
+    tag: "household",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "propertyValue",
     question: "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει ΕΝ.Φ.Ι.Α. 2024) σε ευρώ;",
     category: "textbox",
     note: `
@@ -97,9 +122,12 @@ const questions = [
       </details>
     `,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "savings",
     question: "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας σε ευρώ;",
     category: "textbox",
     note: `
@@ -115,9 +143,12 @@ const questions = [
       </details>
     `,
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
   {
+    key: "luxuryBelonging",
     question: "Διαθέτετε κάποιο από τα παρακάτω στοιχεία που αποκλείουν το επίδομα;",
     options: [
       "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
@@ -127,7 +158,9 @@ const questions = [
     ],
     category: "radio",
     required: true,
-    tag:"assets"
+    tag: "assets",
+    answer: null,
+    benefits: ["housingBenefit"]
   },
 ];
 

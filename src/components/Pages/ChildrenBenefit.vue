@@ -47,11 +47,11 @@ export default {
   },
   methods: {
     handleAnswers(answers) {
-      const submittedTaxDeclaration = answers[0] === 'Ναι';
-      const residesInGreece = answers[1] === 'Ναι';
-      const income = parseFloat(answers[2]);
-      const isSingleParent = answers[3] === 'Ναι';
-      const dependentChildren = parseInt(answers[4]);
+      const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === 'Ναι';
+      const residesInGreece = answers['residesInGreece'] === 'Ναι';
+      const income = parseFloat(answers['income']);
+      const isSingleParent = answers['isSingleParent'] === 'Ναι';
+      const dependentChildren = parseInt(answers['dependentChildren']);
 
       this.results = calcChildrenBenefit(
         submittedTaxDeclaration,
@@ -60,7 +60,7 @@ export default {
         residesInGreece,
         isSingleParent
       )
-
+      console.log(this.results)
       this.summaryResults = [
         {
           title: this.results.title,
@@ -70,6 +70,7 @@ export default {
           message: this.results.message || '',
         }
       ];
+
 
     }
   }

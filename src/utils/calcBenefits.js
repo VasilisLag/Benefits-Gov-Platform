@@ -190,11 +190,11 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
   const title = "Επίδομα Παιδιού - Α21"
 
   let reasons = [];
-  if(!submittedTaxDeclaration)
+  if(submittedTaxDeclaration !== undefined && submittedTaxDeclaration !== null && !submittedTaxDeclaration)
     reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")
-  if(!residesInGreece)
+  if(residesInGreece !== undefined && residesInGreece !== null && !residesInGreece)
     reasons.push("Πρέπει να διαμένετε στην Ελλάδα για να δικαιούστε το επίδομα παιδιού.")
-  if(dependentChildren === 0)
+  if(dependentChildren !== undefined && dependentChildren !== null && dependentChildren === 0)
     reasons.push("Ο αριθμός των εξαρτώμενων μελών είναι 0.")
 
   if (reasons.length > 0) {
@@ -206,60 +206,66 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
       message: "Δεν είστε δικαιούχος.",
     };
   }
-
-  let equivalenceScale = 1;
+  if (
+    income !== undefined && income !== null &&
+    isSingleParent !== undefined && isSingleParent !== null &&
+    dependentChildren !== undefined && dependentChildren !== null
+  ) {
+    let equivalenceScale = 1;
   
-  if (!isSingleParent) {
-    equivalenceScale += 1 / 2;
-  }
-  
-  for (let i = 0; i < dependentChildren; i++) {
-    if (isSingleParent && i === 0) {
+    if (!isSingleParent) {
       equivalenceScale += 1 / 2;
-    } else {
-      equivalenceScale += 1 / 4;
     }
-  }
+    
+    for (let i = 0; i < dependentChildren; i++) {
+      if (isSingleParent && i === 0) {
+        equivalenceScale += 1 / 2;
+      } else {
+        equivalenceScale += 1 / 4;
+      }
+    }
 
-  const equivalentIncome = income / equivalenceScale;
+    const equivalentIncome = income / equivalenceScale;
 
-  let incomeCategory;
-  if (equivalentIncome <= 6000) {
-    incomeCategory = "A";
-  } else if (equivalentIncome <= 10000) {
-    incomeCategory = "B";
-  } else if (equivalentIncome <= 15000) {
-    incomeCategory = "C";
-  } else {
-    reasons.push(`Το ισοδύναμο εισόδημά σας(${equivalentIncome}€) υπερβαίνει τα όρια για το επίδομα(15000€).`)
+    let incomeCategory;
+    if (equivalentIncome <= 6000) {
+      incomeCategory = "A";
+    } else if (equivalentIncome <= 10000) {
+      incomeCategory = "B";
+    } else if (equivalentIncome <= 15000) {
+      incomeCategory = "C";
+    } else {
+      reasons.push(`Το ισοδύναμο εισόδημά σας(${equivalentIncome}€) υπερβαίνει τα όρια για το επίδομα(15000€).`)
+      return {
+        reasons,
+        eligible: false,
+        allowanceAmount: 0,
+        message: "Δεν είστε δικαιούχος.",
+      };
+    }
+
+    let allowanceAmount = 0;
+    switch (incomeCategory) {
+      case "A":
+        allowanceAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
+        break;
+      case "B":
+        allowanceAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
+        break;
+      case "C":
+        allowanceAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
+        break;
+    }
+
     return {
+      title,
       reasons,
-      eligible: false,
-      allowanceAmount: 0,
-      message: "Δεν είστε δικαιούχος.",
+      eligible: true,
+      allowanceAmount: allowanceAmount,
+      message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
     };
   }
 
-  let allowanceAmount = 0;
-  switch (incomeCategory) {
-    case "A":
-      allowanceAmount = 70 * Math.min(dependentChildren, 2) + 140 * Math.max(dependentChildren - 2, 0);
-      break;
-    case "B":
-      allowanceAmount = 42 * Math.min(dependentChildren, 2) + 84 * Math.max(dependentChildren - 2, 0);
-      break;
-    case "C":
-      allowanceAmount = 28 * Math.min(dependentChildren, 2) + 56 * Math.max(dependentChildren - 2, 0);
-      break;
-  }
-
-  return {
-    title,
-    reasons,
-    eligible: true,
-    allowanceAmount: allowanceAmount,
-    message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
-  };
 }
 
 export function calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, isSingleParent, income,

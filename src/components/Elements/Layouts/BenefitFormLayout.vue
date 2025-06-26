@@ -47,7 +47,7 @@
               <SummaryTable
                 v-if="isFormSummary"
                 :questions="questions.map(q => q.question)"
-                :answers="answers"
+                :answers="questions.map(q => q.answer)"
                 @edit="goToQuestion"
               />
             </QuestionForm>
@@ -83,8 +83,7 @@ export default {
   data() {
     return {
       currentQuestionIndex: 0,
-      currentOption: null,
-      answers: []
+      currentOption: null
     };
   },
   computed: {
@@ -98,7 +97,7 @@ export default {
       return this.currentQuestionIndex === 0;
     },
     answer() {
-      return this.answers[this.currentQuestionIndex];
+      return this.questions[this.currentQuestionIndex]?.answer || null;
     },
     isFormSummary() {
       return this.currentQuestionIndex === this.questions.length;
@@ -107,33 +106,46 @@ export default {
       return this.currentQuestion?.required ?? false;
     },
     uniqueTags() {
-    const tags = this.questions.map(q => q.tag);
-    return [...new Set(tags)];
-  },
+      const tags = this.questions.map(q => q.tag);
+      return [...new Set(tags)];
+    },
     currentTag() {
       return this.questions[this.currentQuestionIndex]?.tag;
-  }
+    }
   },
   methods: {
     handleAnswerChange(option) {
       this.currentOption = option;
     },
     nextQuestion() {
-      this.answers[this.currentQuestionIndex++] = this.currentOption;
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;
+      if (this.currentQuestion) {
+        this.currentQuestion.answer = this.currentOption;
+      }
+      this.currentQuestionIndex++;
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     goBack() {
       if (this.currentQuestionIndex === this.questions.length) {
         this.$emit('clear-results');
       }
-      this.currentOption = this.answers[--this.currentQuestionIndex] || null;
+      this.currentQuestionIndex--;
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     skipQuestion() {
-      this.answers[this.currentQuestionIndex++] = null;
-      this.currentOption = this.answers[this.currentQuestionIndex] || null;
+      if (this.currentQuestion) {
+        this.currentQuestion.answer = null;
+      }
+      this.currentQuestionIndex++;
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     submitAnswers() {
-      this.$emit('submit-answers', this.answers);
+      if (this.currentQuestion) {
+        this.currentQuestion.answer = this.currentOption;
+      }
+      // Δημιουργία object απαντήσεων για το parent component
+      const answers = {};
+      this.questions.forEach(q => { answers[q.key] = q.answer; });
+      this.$emit('submit-answers', answers);
     },
     formatTag(tag) {
       const map = {
@@ -149,8 +161,8 @@ export default {
     goToQuestion(index) {
       this.$emit('clear-results');
       this.currentQuestionIndex = index;
-      this.currentOption = this.answers[index] || null;
-  }
+      this.currentOption = this.questions[index]?.answer || null;
+    }
   }
 };
 </script>

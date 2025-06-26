@@ -35,6 +35,7 @@ export default {
     answers: {
       type: Array,
       required: true,
+      default: () => []
     },
   },
 };
