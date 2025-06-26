@@ -237,6 +237,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
     } else {
       reasons.push(`Το ισοδύναμο εισόδημά σας(${equivalentIncome}€) υπερβαίνει τα όρια για το επίδομα(15000€).`)
       return {
+        title,
         reasons,
         eligible: false,
         allowanceAmount: 0,
