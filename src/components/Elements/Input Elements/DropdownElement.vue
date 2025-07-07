@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown-element govgr-mb-12">
-    <label class="question-label govgr-heading-xl" v-html="question"></label>
+    <label class="question-label govgr-heading-l" v-html="question"></label>
     <select class="govgr-input" v-model="selectedOption" @change="onChange(selectedOption)">
       <option v-for="option in options" :key="option" :value="option">
         {{ option }}

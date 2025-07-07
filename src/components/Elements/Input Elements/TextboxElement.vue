@@ -1,6 +1,6 @@
 <template>
   <div class="input-container">
-    <label class="question-label govgr-heading-xl" v-html="question"></label>
+    <label class="question-label govgr-heading-l" v-html="question"></label>
     <p class="govgr-error-message govgr-mt-6">
       <span class="govgr-visually-hidden">Λάθος:</span> Πρέπει να συμπληρώσετε το πεδίο. 
     </p>

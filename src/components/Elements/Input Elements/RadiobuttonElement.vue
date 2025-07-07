@@ -2,7 +2,7 @@
   <div class="govgr-field govgr-field--error">
     <fieldset class="govgr-fieldset" aria-describedby="radio-country">
       <legend role="heading" aria-level="1" class="govgr-fieldset__legend">
-        <span class="govgr-heading-xl">
+        <span class="govgr-heading-l">
           {{ question }}
         </span>
       </legend>

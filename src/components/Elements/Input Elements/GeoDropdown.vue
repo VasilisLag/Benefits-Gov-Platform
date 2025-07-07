@@ -1,7 +1,7 @@
 <template>
   <div class="geo-dropdown">
     <label class="question-label" v-html="question"></label>
-    <p class="govgr-heading-xl">Εισάγετε την τοποθεσία σας</p>
+    <p class="govgr-heading-l">Εισάγετε την τοποθεσία σας</p>
     <p class="govgr-hint govgr-mb-6">
       Αναζητήστε τον τόπο διαμονής 
       σας με τον Τ.Κ. (προτείνεται)
