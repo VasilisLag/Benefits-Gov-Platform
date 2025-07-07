@@ -4,13 +4,17 @@
     <p class="govgr-error-message govgr-mt-6">
       <span class="govgr-visually-hidden">Λάθος:</span> Πρέπει να συμπληρώσετε το πεδίο. 
     </p>
-    <input 
-      id="input-field" 
-      class="govgr-input govgr-mt-9 govgr-mb-9" 
-      type="text" 
-      v-model="formattedInput" 
-      @input="onInput($event.target.value)" 
-    />
+    <div class="govgr-field">
+      <label class="govgr-label">
+        <input 
+          id="input-field" 
+          class="govgr-input" 
+          type="text" 
+          v-model="formattedInput" 
+          @input="onInput($event.target.value)" 
+        />
+      </label>
+    </div>
     <label v-html="note"></label>
   </div>
 </template>
@@ -76,7 +80,6 @@ export default {
 #input-field {
   display: block;
   width: 50%;
-  max-height: 2rem;
 }
 
 .input-container{
