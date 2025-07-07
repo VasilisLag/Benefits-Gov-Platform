@@ -7,9 +7,9 @@
       Πίσω
     </a>
 
-    <p v-if="currentTag" class="govgr-caption govgr-!-margin-bottom-2 govgr-!-margin-top-2 govgr-!-font-size-24" id="question-category">
+    <!-- <p v-if="currentTag" class="govgr-caption govgr-!-margin-bottom-2 govgr-!-margin-top-2 govgr-!-font-size-24" id="question-category">
       Κατηγορία: <strong>{{ formatTag(currentTag) }}</strong>
-    </p>
+    </p> -->
 
     <div class="questions-container govgr-mt-6">
       <slot></slot>
