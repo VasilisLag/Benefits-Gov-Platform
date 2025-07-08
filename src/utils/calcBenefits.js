@@ -263,7 +263,7 @@ export function calcChildrenBenefit(submittedTaxDeclaration, income, dependentCh
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Είστε επιλέξιμος/η για το Επίδομα Παιδιού. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
     };
   }
 

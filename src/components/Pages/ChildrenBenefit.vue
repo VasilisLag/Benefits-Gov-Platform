@@ -44,7 +44,8 @@
               <ResultsAccordion
                 :items="summaryResults.map(r => ({
                   title: r.title,
-                  content: r.eligible ? r.message : r.reasons
+                  content: r.eligible ? r.message : r.reasons,
+                  eligible: r.eligible
                 }))"
               />
             </div>
