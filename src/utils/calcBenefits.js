@@ -89,7 +89,7 @@ export function calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, inc
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Είστε επιλέξιμος/η για το Επίδομα Θέρμανσης. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`
     };
 }
 
@@ -121,15 +121,15 @@ export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, 
   }
   if(income > incomeThreshold){
     console.log(incomeThreshold)
-    reasons.push(`Το εισόδημά σας(${income}€) υπερβαίνει το όριο (${incomeThreshold}€).`);
+    reasons.push(`Το εισόδημά σας (${income}€) υπερβαίνει το όριο (${incomeThreshold}€).`);
   }
   if(savings > savingsThreshold) {
     console.log(savingsThreshold)
-    reasons.push(`Οι καταθέσεις σας(${savings}€) υπερβαίνουν το όριο (${savingsThreshold}€)`);
+    reasons.push(`Οι καταθέσεις σας (${savings}€) υπερβαίνουν το όριο (${savingsThreshold}€)`);
   }
   if(propertyValue > propertyThreshold) {
     console.log(propertyThreshold)
-    reasons.push(`Η αξία των ακινήτων σας(${propertyValue}€) υπερβαίνει το όριο (${propertyThreshold}€)`);
+    reasons.push(`Η αξία των ακινήτων σας (${propertyValue}€) υπερβαίνει το όριο (${propertyThreshold}€)`);
   }
 
   if (reasons.length > 0) {
@@ -150,7 +150,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, 
       reasons,
       eligible: true,
       allowanceAmount: allowanceAmount,
-      message: `Είστε επιλέξιμος/η για το Επίδομα Στέγασης. Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
     };
   }
 }

@@ -107,83 +107,83 @@ export default {
       summaryResults: [],
       questionsInfo
     };
-  },
-  computed: {
-    currentQuestion() {
-      return this.questions[this.currentQuestionIndex];
     },
-    isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length;
-    },
-    isFirstQuestion() {
-      return this.currentQuestionIndex === 0;
-    },
-    answer() {
-      return this.questions[this.currentQuestionIndex]?.answer || null;
-    },
-    isFormSummary() {
-      return this.currentQuestionIndex === this.questions.length;
-    },
-    isQuestionReq() {
-      return this.currentQuestion?.required ?? false;
-    },
-    currentTag() {
-      return this.questions[this.currentQuestionIndex]?.tag;
-    }
-  },
-  methods: {
-    handleAnswerChange(option) {
-      this.currentOption = option;
-    },
-    nextQuestion() {
-      if (this.currentQuestion) {
-        this.currentQuestion.answer = this.currentOption;
+    computed: {
+      currentQuestion() {
+        return this.questions[this.currentQuestionIndex];
+      },
+      isLastQuestion() {
+        return this.currentQuestionIndex === this.questions.length;
+      },
+      isFirstQuestion() {
+        return this.currentQuestionIndex === 0;
+      },
+      answer() {
+        return this.questions[this.currentQuestionIndex]?.answer || null;
+      },
+      isFormSummary() {
+        return this.currentQuestionIndex === this.questions.length;
+      },
+      isQuestionReq() {
+        return this.currentQuestion?.required ?? false;
+      },
+      currentTag() {
+        return this.questions[this.currentQuestionIndex]?.tag;
       }
-      this.currentQuestionIndex++;
-      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
-    goBack() {
-      if (this.currentQuestionIndex === this.questions.length) {
-        this.results = null;
-      }
-      this.currentQuestionIndex--;
-      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
-    },
-    submitAnswers() {
-      if (this.currentQuestion) {
-        this.currentQuestion.answer = this.currentOption;
-      }
-      const answers = {};
-      this.questions.forEach(q => { answers[q.key] = q.answer; });
-      const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === 'Ναι';
-      const residesInGreece = answers['residesInGreece'] === 'Ναι';
-      const income = parseFloat(answers['income']);
-      const isSingleParent = answers['isSingleParent'] === 'Ναι';
-      const dependentChildren = parseInt(answers['dependentChildren']);
-      this.results = calcChildrenBenefit(
-        submittedTaxDeclaration,
-        income,
-        dependentChildren,
-        residesInGreece,
-        isSingleParent
-      );
-      this.summaryResults = [
-        {
-          title: this.results.title,
-          eligible: this.results.eligible,
-          allowanceAmount: this.results.allowanceAmount || 0,
-          reasons: this.results.reasons || [],
-          message: this.results.message || '',
+    methods: {
+      handleAnswerChange(option) {
+        this.currentOption = option;
+      },
+      nextQuestion() {
+        if (this.currentQuestion) {
+          this.currentQuestion.answer = this.currentOption;
         }
-      ];
-    },
-    goToQuestion(index) {
-      this.results = null;
-      this.currentQuestionIndex = index;
-      this.currentOption = this.questions[index]?.answer || null;
+        this.currentQuestionIndex++;
+        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+      },
+      goBack() {
+        if (this.currentQuestionIndex === this.questions.length) {
+          this.results = null;
+        }
+        this.currentQuestionIndex--;
+        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+      },
+      submitAnswers() {
+        if (this.currentQuestion) {
+          this.currentQuestion.answer = this.currentOption;
+        }
+        const answers = {};
+        this.questions.forEach(q => { answers[q.key] = q.answer; });
+        const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === 'Ναι';
+        const residesInGreece = answers['residesInGreece'] === 'Ναι';
+        const income = parseFloat(answers['income']);
+        const isSingleParent = answers['isSingleParent'] === 'Ναι';
+        const dependentChildren = parseInt(answers['dependentChildren']);
+        this.results = calcChildrenBenefit(
+          submittedTaxDeclaration,
+          income,
+          dependentChildren,
+          residesInGreece,
+          isSingleParent
+        );
+        this.summaryResults = [
+          {
+            title: this.results.title,
+            eligible: this.results.eligible,
+            allowanceAmount: this.results.allowanceAmount || 0,
+            reasons: this.results.reasons || [],
+            message: this.results.message || '',
+          }
+        ];
+      },
+      goToQuestion(index) {
+        this.results = null;
+        this.currentQuestionIndex = index;
+        this.currentOption = this.questions[index]?.answer || null;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
