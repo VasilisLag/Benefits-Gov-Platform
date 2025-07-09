@@ -13,7 +13,7 @@
         <a href="#" class="govgr-nav__list-item-link govgr-link">
           <router-link to="/OverallBenefits"
             :class="{'govgr-nav__list-item-link--active': isActive('/OverallBenefits')}">
-            Αξιολόγηση
+            Προσομοίωση
           </router-link>
         </a>
       </li>
