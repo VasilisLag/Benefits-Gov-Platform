@@ -168,7 +168,7 @@ export default {
       }
       const answers = {};
       this.questions.forEach(q => { answers[q.key] = q.answer; });
-      console.log(answers)
+
       this.keaResults = this.calculateKEABenefits(answers);
       const aCatEligible = this.keaResults.eligible;
       this.kotResults = this.calculateKOTBenefits(answers, aCatEligible);
@@ -181,7 +181,6 @@ export default {
         reasons: benefit.reasons || [],
         message: benefit.message || '',
       }));
-      console.log(this.allResults)
     },
     calculateKEABenefits(answers) {
       const residesInGreece = answers['residesInGreece'] === "Ναι";
