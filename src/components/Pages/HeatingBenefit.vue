@@ -202,21 +202,21 @@ export default {
       this.results = null;
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer || null;
+    },
+    beforeRouteLeave(to, from, next) {
+      this.questions.forEach(q => { q.answer = null; });
+      this.currentQuestionIndex = 0;
+      this.currentOption = null;
+      this.results = null;
+      this.allResults = [];
+      next();
     }
   }
 };
 </script>
 
 <style scoped>
-.page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+section {
+  text-align:left;
 }
-
-.form-container {
-  width: 70%;
-  margin: 0 auto;
-}
-
 </style>

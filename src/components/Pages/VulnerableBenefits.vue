@@ -229,6 +229,15 @@ export default {
         aCatEligible
       );
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    // Καθάρισε τις απαντήσεις όταν ο χρήστης αλλάζει tab/route
+    this.questions.forEach(q => { q.answer = null; });
+    this.currentQuestionIndex = 0;
+    this.currentOption = null;
+    this.results = null;
+    this.allResults = [];
+    next();
   }
 };
 </script>

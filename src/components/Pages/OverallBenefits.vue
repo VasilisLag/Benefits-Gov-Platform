@@ -275,6 +275,14 @@ export default {
         ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
         keaEligible
       );
+    },
+    beforeRouteLeave(to, from, next) {
+      this.questions.forEach(q => { q.answer = null; });
+      this.currentQuestionIndex = 0;
+      this.currentOption = null;
+      this.results = null;
+      this.allResults = [];
+      next();
     }
   }
 };
