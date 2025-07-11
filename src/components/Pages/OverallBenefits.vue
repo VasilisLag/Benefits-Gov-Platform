@@ -126,7 +126,7 @@ export default {
       currentOption: null,
       results: null,
       allResults: null,
-      questionsInfo
+      questionsInfo:  questionsInfo.filter(q => q.tag === "all").map(q => q)
     };
   },
   computed: {

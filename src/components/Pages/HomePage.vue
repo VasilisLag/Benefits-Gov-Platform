@@ -19,10 +19,10 @@
         <section data-section="benefits">
           <h2 class="govgr-heading-l govgr-!-font-weight-bold">Πώς Λειτουργεί η Πλατφόρμα</h2>
           <ol class="govgr-list govgr-list--number govgr-!-font-size-19 govgr-mb-6">
-            <li class = "govgr-mt-9 govgr-mb-6"> Μεταβείτε στην καρτέλα "Αξιολόγηση" για να κάνετε μια προσομοίωση και να δείτε συνολικά για ποιές παροχές μπορεί να είστε επιλέξιμοι.</li>
+            <li class = "govgr-mt-9 govgr-mb-6"> Μεταβείτε στην καρτέλα "Προσομοίωση" για να κάνετε μια προσομοίωση και να δείτε συνολικά για ποιές παροχές μπορεί να είστε επιλέξιμοι.</li>
               <router-link :to="assessmentLink">
                 <button class="govgr-btn govgr-btn-primary govgr-btn-cta govgr-mb-12">
-                    Αξιολόγηση
+                    Προσομοίωση
                   <svg viewBox="0 0 24 24" 
                     class="govgr-svg-icon--arrow--right govgr-svg-icon"
                     focusable="false"
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       benefits: benefitsInfo,
-      questions: questionsInfo,
+      questions:  questionsInfo.filter(q => q.tag === "all").map(q => q),
       assessmentLink: '/OverallBenefits',
     };
   },

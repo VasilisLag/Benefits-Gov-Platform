@@ -113,7 +113,7 @@ export default {
       results: null,
       summaryResults: [],
       allResults: null,
-      questionsInfo
+      questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q)
     };
   },
   computed: {
@@ -231,7 +231,6 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    // Καθάρισε τις απαντήσεις όταν ο χρήστης αλλάζει tab/route
     this.questions.forEach(q => { q.answer = null; });
     this.currentQuestionIndex = 0;
     this.currentOption = null;

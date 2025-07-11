@@ -7,7 +7,7 @@
           </h2>
         </summary>
         <div class="govgr-accordion__section-content">
-          <p class="govgr-body govgr-!-font-size-19">{{ answer }}</p>
+          <p class="govgr-body govgr-!-font-size-19" v-html="answer"></p>
         </div>
       </details>
     </div>

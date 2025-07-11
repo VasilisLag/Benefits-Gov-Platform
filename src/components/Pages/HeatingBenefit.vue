@@ -110,7 +110,7 @@ export default {
       currentOption: null,
       results: null,
       summaryResults: [],
-      questionsInfo
+      questionsInfo: questionsInfo.filter(q => q.tag === "heatingBenefit").map(q => q)
     };
   },
   computed: {
@@ -203,15 +203,15 @@ export default {
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer || null;
     },
-    beforeRouteLeave(to, from, next) {
-      this.questions.forEach(q => { q.answer = null; });
-      this.currentQuestionIndex = 0;
-      this.currentOption = null;
-      this.results = null;
-      this.allResults = [];
-      next();
-    }
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.questions.forEach(q => { q.answer = null; });
+    this.currentQuestionIndex = 0;
+    this.currentOption = null;
+    this.results = null;
+    this.allResults = [];
+    next();
+  },
 };
 </script>
 

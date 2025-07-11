@@ -105,7 +105,7 @@ export default {
       currentOption: null,
       results: null,
       summaryResults: [],
-      questionsInfo
+      questionsInfo: questionsInfo.filter(q => q.tag === "childBenefit").map(q => q)
     };
     },
     computed: {

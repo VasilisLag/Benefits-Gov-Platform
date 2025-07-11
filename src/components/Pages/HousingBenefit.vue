@@ -111,7 +111,7 @@ export default {
       currentOption: null,
       results: null,
       summaryResults: [],
-      questionsInfo
+      questionsInfo: questionsInfo.filter(q => q.tag === "housingBenefit").map(q => q)
     };
   },
   computed: {
