@@ -17,7 +17,7 @@ const questions = [
     required: true,
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Διαμονή στην Ελλάδα</summary>
+        <summary class="govgr-details__summary"> Βοήθεια </summary>
         <div class="govgr-details__content">
           <p class="govgr-body" style = text-align:left;>
             Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.
@@ -54,7 +54,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Έσοδα απο Επιχειρηματική Δραστηριότητα</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body" style = text-align:left;> 
             Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.
@@ -73,7 +73,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Αντικειμενική Αξία Ακίνητης Περιουσίας</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body" style = text-align:left;> 
             Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.
@@ -102,7 +102,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Εξαρτώμενα Τέκνα</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
             <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
               <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:

@@ -32,7 +32,7 @@ const questions = [
     category: "radio",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Προϋποθέσεις για Μονογονεϊκή οικογένεια</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body">
             <ul style="list-style-type: disc; padding-left:20px; text-align:left;">

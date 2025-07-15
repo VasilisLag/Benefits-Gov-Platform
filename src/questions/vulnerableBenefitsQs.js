@@ -25,7 +25,7 @@ const questions = [
     required: false,
     note: `  
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Εξαρτώμενα Τέκνα</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
             <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
               <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
@@ -51,7 +51,7 @@ const questions = [
     category: "textbox",
     note:`
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Απροστάτευτα Τέκνα</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body" style = text-align:left;> 
             Τα ανήλικα μέλη του νοικοκυριού που είναι 
@@ -85,7 +85,7 @@ const questions = [
     required: true,
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Σημείωση</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
             <li>Εάν υπάρχει μέλος με αναπηρία 67% και άνω, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>8.000 ευρώ</strong>.</li>
@@ -114,7 +114,7 @@ const questions = [
     required: true,
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Σημείωση</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body" style = text-align:left;> 
             Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα.
@@ -132,7 +132,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Όριο Καταθέσεων</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
             <li>Η συνολική φορολογητέα αξία αφορά:
@@ -163,7 +163,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Όριο Καταθέσεων</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
             <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>
@@ -188,7 +188,7 @@ const questions = [
     category: "textbox",
     note: `
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Όριο Καταθέσεων</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
             <li>Οι πληροφορίες αντλούνται από την τελευταία πράξη προσδιορισμού φόρου.</li>
