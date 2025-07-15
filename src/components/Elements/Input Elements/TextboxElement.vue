@@ -15,7 +15,7 @@
         />
       </label>
     </div>
-    <label v-html="note"></label>
+    <!-- <label v-html="note"></label> -->
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default {
 <style scoped>
 #input-field {
   display: block;
-  width: 50%;
+  width: 80%;
 }
 
 .input-container{

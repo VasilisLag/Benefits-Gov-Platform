@@ -28,7 +28,7 @@
         </div>
       </div>
     </fieldset>
-    <label class="govgr-note" v-html="note"></label>
+    <!-- <label class="govgr-note" v-html="note"></label> -->
   </div>
 </template>
 

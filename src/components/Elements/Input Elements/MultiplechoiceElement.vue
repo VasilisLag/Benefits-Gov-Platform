@@ -12,7 +12,7 @@
       </button>
     </div>
     <br>
-    <label class="note" v-html="note"> </label>
+    <!-- <label class="note" v-html="note"> </label> -->
   </div>
 </template>
 

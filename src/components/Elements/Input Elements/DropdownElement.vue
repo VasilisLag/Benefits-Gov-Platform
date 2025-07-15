@@ -6,7 +6,7 @@
         {{ option }}
       </option>
     </select>
-    <label v-html="note"> </label>
+    <!-- <label v-html="note"> </label> -->
   </div>
 </template>
 
