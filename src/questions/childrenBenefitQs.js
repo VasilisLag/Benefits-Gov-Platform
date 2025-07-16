@@ -52,7 +52,7 @@ const questions = [
     category: "textbox",
     note: `  
       <details class="govgr-details">
-        <summary class="govgr-details__summary"> Εξαρτώμενα Μέλη</summary>
+        <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
           <p class="govgr-body">
             <ul style="list-style-type: disc; padding-left:30px; text-align:left;">

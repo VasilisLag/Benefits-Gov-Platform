@@ -3,33 +3,44 @@
     <template #form>
       <div class="govgr-layout-wrapper govgr-mt-6">
         <main>
-          <div v-if="!isFormSummary">
-            <QuestionForm
-              :title="title"
-              :isLastQuestion="isLastQuestion"
-              :isFirstQuestion="isFirstQuestion"
-              :selectedOption="currentOption"
-              :isQuestionRequired="isQuestionReq"
-              :questionIndex="currentQuestionIndex"
-              :numberOfQuestions="questions.length"
-              :currentTag="currentTag"
-              @back="goBack"
-              @next="nextQuestion"
-              @submit="submitAnswers"
-            >
-              <InputElement
-                v-if="currentQuestion"
-                :question="currentQuestion.question"
-                :key="currentQuestionIndex"
-                :options="currentQuestion.options"
-                :category="currentQuestion.category"
-                :note="currentQuestion.note"
-                :input="answer"
-                :answer="answer"
-                @onAnswerChange="handleAnswerChange"
-              />
-            </QuestionForm>
+          <div v-if="!isFormSummary" class="question-layout">
+            <!-- Φόρμα ερωτήσεων -->
+            <div class="question-column-left">
+              <QuestionForm
+                :title="title"
+                :isLastQuestion="isLastQuestion"
+                :isFirstQuestion="isFirstQuestion"
+                :selectedOption="currentOption"
+                :isQuestionRequired="isQuestionReq"
+                :questionIndex="currentQuestionIndex"
+                :numberOfQuestions="questions.length"
+                :currentTag="currentTag"
+                @back="goBack"
+                @next="nextQuestion"
+                @submit="submitAnswers"
+              >
+                <InputElement
+                  v-if="currentQuestion"
+                  :question="currentQuestion.question"
+                  :key="currentQuestionIndex"
+                  :options="currentQuestion.options"
+                  :category="currentQuestion.category"
+                  :note="currentQuestion.note"
+                  :input="answer"
+                  :answer="answer"
+                  @onAnswerChange="handleAnswerChange"
+                />
+              </QuestionForm>
+            </div>
+
+            <!-- Note (βοήθεια) -->
+            <div class="question-column-right">
+              <div class="note-box">
+                <p v-if="currentQuestion?.note" v-html="currentQuestion.note" />
+              </div>
+            </div>
           </div>
+
           <div v-if="isFormSummary">
             <SummaryTable
               :questions="questions.map(q => q.question)"
@@ -291,5 +302,26 @@ export default {
 <style scoped>
 section {
   text-align:left;
+}
+
+.question-layout {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.question-column-left {
+  width: 66.66%;
+}
+
+.question-column-right {
+  width: 33.33%;
+  /* border-left: 1px solid #ccc; */
+  padding: 1.5rem;
+}
+
+.note-box {
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 </style>
