@@ -128,7 +128,7 @@ export default {
 }
 
 .search-input {
-  width: 60%;
+  width: 80%;
   border-width: 2px;
   /* --tw-border-opacity: 1;
   border-color: rgba(var(--color-base-content-rgb), var(--tw-border-opacity));

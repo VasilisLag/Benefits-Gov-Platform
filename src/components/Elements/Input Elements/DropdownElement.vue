@@ -54,7 +54,7 @@ export default {
 }
 
 .govgr-input {
-  width:40%;
+  width:80%;
   text-align: left;
 }
 
