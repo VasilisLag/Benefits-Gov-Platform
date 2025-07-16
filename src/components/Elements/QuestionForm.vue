@@ -84,4 +84,12 @@ export default {
   text-align: left;
 }
 
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+  padding-bottom: 1rem;
+}
+
 </style>

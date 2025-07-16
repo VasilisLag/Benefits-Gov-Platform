@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-element govgr-mb-12">
+  <div class="dropdown-element govgr-mb-12 input-wrapper">
     <label class="question-label govgr-heading-l" v-html="question"></label>
     <select class="govgr-input" v-model="selectedOption" @change="onChange(selectedOption)">
       <option v-for="option in options" :key="option" :value="option">
@@ -58,4 +58,9 @@ export default {
   text-align: left;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 </style>

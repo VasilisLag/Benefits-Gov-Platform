@@ -1,5 +1,5 @@
 <template>
-  <div class="govgr-field govgr-field--error">
+  <div class="govgr-field govgr-field--error input-wrapper">
     <fieldset class="govgr-fieldset" aria-describedby="radio-country">
       <legend role="heading" aria-level="1" class="govgr-fieldset__legend">
         <span class="govgr-heading-l">
@@ -99,6 +99,12 @@ export default {
 
 .hints {
   text-align: left;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 </style>
