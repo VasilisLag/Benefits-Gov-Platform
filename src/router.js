@@ -4,7 +4,8 @@ import ChildrenBenefit from './components/Pages/ChildrenBenefit.vue';
 import HousingBenefit from './components/Pages/HousingBenefit.vue';
 import HeatingBenefit from './components/Pages/HeatingBenefit.vue';
 import VulnerableBenefits from './components/Pages/VulnerableBenefits.vue';
-import OverallBenefits from './components/Pages/OverallBenefits.vue';
+import OverallBenefits from './components/Pages/TestBenefit.vue';
+import TestBenefit from './components/Pages/TestBenefit.vue';
 
 const routes = [
   { path: '/', component: HomePage },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/HousingBenefit', component: HousingBenefit },
   { path: '/HeatingBenefit', component: HeatingBenefit },
   { path: '/VulnerableBenefits', component: VulnerableBenefits },
+  { path: '/TestBenefit', component: TestBenefit },
 ];
 
 const router = createRouter({

@@ -53,6 +53,14 @@
           </router-link>
         </a>
       </li>
+      <li>
+        <a href="#" class="govgr-nav__list-item-link govgr-link">
+          <router-link to="/TestBenefit"
+            :class="{'govgr-nav__list-item-link--active': isActive('/VulnerableBenefits')}">
+            Test
+          </router-link>
+        </a>
+      </li>
     </ul>
   </nav>
 </template>
