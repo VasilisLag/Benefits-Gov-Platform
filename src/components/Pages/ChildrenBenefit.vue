@@ -87,8 +87,9 @@ import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
 import allQuestions from '@/questions/childrenBenefitQs.js';
-import { calcChildrenBenefit } from '@/utils/calcBenefits.js';
+import { evaluateAll } from '@/engine/evaluateAll.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
+import { calcChildrenBenefitAllowance } from '@/utils/calculates.js';
 
 export default {
   name: 'ChildrenBenefit',
@@ -116,93 +117,99 @@ export default {
       currentOption: null,
       results: null,
       summaryResults: [],
-      questionsInfo: questionsInfo.filter(q => q.tag === "childBenefit").map(q => q)
+      questionsInfo: questionsInfo.filter(q => q.tag === "childBenefit")
     };
+  },
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentQuestionIndex];
     },
-    computed: {
-      currentQuestion() {
-        return this.questions[this.currentQuestionIndex];
-      },
-      isLastQuestion() {
-        return this.currentQuestionIndex === this.questions.length;
-      },
-      isFirstQuestion() {
-        return this.currentQuestionIndex === 0;
-      },
-      answer() {
-        return this.questions[this.currentQuestionIndex]?.answer || null;
-      },
-      isFormSummary() {
-        return this.currentQuestionIndex === this.questions.length;
-      },
-      isQuestionReq() {
-        return this.currentQuestion?.required ?? false;
-      },
-      currentTag() {
-        return this.questions[this.currentQuestionIndex]?.tag;
-      }
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.questions.length;
     },
-    methods: {
-      handleAnswerChange(option) {
-        this.currentOption = option;
-      },
-      nextQuestion() {
-        if (this.currentQuestion) {
-          this.currentQuestion.answer = this.currentOption;
-        }
-        this.currentQuestionIndex++;
-        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
-      },
-      goBack() {
-        if (this.currentQuestionIndex === this.questions.length) {
-          this.results = null;
-        }
-        this.currentQuestionIndex--;
-        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
-      },
-      submitAnswers() {
-        if (this.currentQuestion) {
-          this.currentQuestion.answer = this.currentOption;
-        }
-        const answers = {};
-        this.questions.forEach(q => { answers[q.key] = q.answer; });
-        const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === 'Ναι';
-        const residesInGreece = answers['residesInGreece'] === 'Ναι';
-        const income = parseFloat(answers['income']);
-        const isSingleParent = answers['isSingleParent'] === 'Ναι';
-        const dependentChildren = parseInt(answers['dependentChildren']);
-        this.results = calcChildrenBenefit(
-          submittedTaxDeclaration,
-          income,
-          dependentChildren,
-          residesInGreece,
-          isSingleParent
-        );
-        this.summaryResults = [
-          {
-            title: this.results.title,
-            eligible: this.results.eligible,
-            allowanceAmount: this.results.allowanceAmount || 0,
-            reasons: this.results.reasons || [],
-            message: this.results.message || '',
-          }
-        ];
-      },
-      goToQuestion(index) {
-        this.results = null;
-        this.currentQuestionIndex = index;
-        this.currentOption = this.questions[index]?.answer || null;
-      }
+    isFirstQuestion() {
+      return this.currentQuestionIndex === 0;
     },
-    beforeRouteLeave(to, from, next) {
-      this.questions.forEach(q => { q.answer = null; });
-      this.currentQuestionIndex = 0;
-      this.currentOption = null;
-      this.results = null;
-      this.allResults = [];
-      next();
+    answer() {
+      return this.questions[this.currentQuestionIndex]?.answer || null;
+    },
+    isFormSummary() {
+      return this.currentQuestionIndex === this.questions.length;
+    },
+    isQuestionReq() {
+      return this.currentQuestion?.required ?? false;
+    },
+    currentTag() {
+      return this.questions[this.currentQuestionIndex]?.tag;
+    },
+    facts() {
+      const facts = {};
+      this.questions.forEach(q => {
+        if (q.answer !== null) facts[q.key] = q.answer;
+      });
+      return facts;
     }
-  };
+  },
+  methods: {
+    handleAnswerChange(option) {
+      this.currentOption = option;
+    },
+    nextQuestion() {
+      if (this.currentQuestion) {
+        this.currentQuestion.answer = this.currentOption;
+      }
+
+      const result = evaluateAll(this.questions, this.facts, "childrenBenefit");
+
+      if (!result.eligible && result.reasons.length > 0) {
+        this.results = {
+          title: "Επίδομα Παιδιού - Α21",
+          eligible: false,
+          reasons: result.reasons,
+          allowanceAmount: 0,
+          message: "Δεν είστε δικαιούχος.",
+        };
+        this.summaryResults = [this.results];
+        this.currentQuestionIndex = this.questions.length;
+        return;
+      }
+
+      this.currentQuestionIndex++;
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+    },
+    goBack() {
+      if (this.currentQuestionIndex === this.questions.length) {
+        this.results = null;
+      }
+      this.currentQuestionIndex--;
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+    },
+    submitAnswers() {
+      if (this.currentQuestion) {
+        this.currentQuestion.answer = this.currentOption;
+      }
+
+      const result = evaluateAll(this.questions, this.facts, "childrenBenefit");
+  
+      this.results = calcChildrenBenefitAllowance(this.facts, result.eligible, result.reasons)
+
+      this.summaryResults = [this.results];
+    },
+    goToQuestion(index) {
+      this.results = null;
+      this.currentQuestionIndex = index;
+      this.currentOption = this.questions[index]?.answer || null;
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.questions.forEach(q => { q.answer = null; });
+    this.currentQuestionIndex = 0;
+    this.currentOption = null;
+    this.results = null;
+    this.summaryResults = [];
+    next();
+  }
+};
 </script>
 
 <style scoped>

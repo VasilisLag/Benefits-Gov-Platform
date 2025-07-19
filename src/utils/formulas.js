@@ -28,7 +28,7 @@ export function childrenBenefitIncomeFormula(facts) {
     }
 
 
-    const equivalentIncome = Math.floor(inc / equivalenceScale);
+    const equivalentIncome = Math.ceil(inc / equivalenceScale);
     const formattedIncome = equivalentIncome.toLocaleString('el-GR');
     return {
         eligible: equivalentIncome <= 15000,

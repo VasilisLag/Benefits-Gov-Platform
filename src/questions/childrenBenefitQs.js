@@ -1,36 +1,64 @@
-const questions = [
+export default [
   {
-    key: "submittedTaxDeclaration",
-    question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
-    options: ["Ναι", "Όχι"],
-    category: "radio",
-    tag: "demography",
-    answer: null,
-    benefits: ["childrenBenefit"]
+    "key": "submittedTaxDeclaration",
+    "question": "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
+    "options": [
+      "Ναι",
+      "Όχι"
+    ],
+    "category": "radio",
+    "tag": "demography",
+    "answer": null,
+    "eligibility": {
+      "childrenBenefit": {
+        "type": "match",
+        "value": "Ναι",
+        "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      }
+    }
   },
   {
-    key: "residesInGreece",
-    question: "Διαμένετε μόνιμα στην Ελλάδα;",
-    options: ["Ναι", "Όχι"],
-    category: "radio",
-    tag: "demography",
-    answer: null,
-    benefits: ["childrenBenefit"]
+    "key": "residesInGreece",
+    "question": "Διαμένετε μόνιμα στην Ελλάδα;",
+    "options": [
+      "Ναι",
+      "Όχι"
+    ],
+    "category": "radio",
+    "tag": "demography",
+    "answer": null,
+    "eligibility": {
+      "childrenBenefit": {
+        "type": "match",
+        "value": "Ναι",
+        "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      }
+    }
   },
   {
-    key: "income",
-    question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
-    category: "textbox",
-    tag: "income",
-    answer: null,
-    benefits: ["childrenBenefit"]
+    "key": "income",
+    "question": "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
+    "category": "textbox",
+    "tag": "income",
+    "answer": null,
+    "eligibility": {
+      "childrenBenefit": {
+        "type": "formula",
+        "formulaKey": "childrenBenefitIncomeFormula", 
+      }
+    }
   },
   {
-    key: "isSingleParent",
-    question: "Είναι η οικογένειά σας μονογονεϊκή;",
-    options: ["Ναι", "Όχι"],
-    category: "radio",
-    note: `
+    "key": "isSingleParent",
+    "question": "Είναι η οικογένειά σας μονογονεϊκή;",
+    "options": [
+      "Ναι",
+      "Όχι"
+    ],
+    "category": "radio",
+    "tag": "household",
+    "answer": null,
+    "note": `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
@@ -41,16 +69,15 @@ const questions = [
             </ul>
           </p>
         </div>
-      </details>`,
-    tag: "household",
-    answer: null,
-    benefits: ["childrenBenefit"]
+      </details>`
   },
   {
-    key: "dependentChildren",
-    question: "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
-    category: "textbox",
-    note: `  
+    "key": "dependentChildren",
+    "question": "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
+    "category": "textbox",
+    "tag": "household",
+    "answer": null,
+    "note": `  
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
         <div class="govgr-details__content">
@@ -68,12 +95,14 @@ const questions = [
             </ul>
           </p>
         </div>
-      </details>`,
-    required: true,
-    tag: "household",
-    answer: null,
-    benefits: ["childrenBenefit"]
+      </details>`
+    ,
+    "eligibility": {
+      "childrenBenefit": {
+        "type": "range",
+        "min": 1,
+        "disqualifyReason": "Δεν έχετε δηλώσει εξαρτώμενα τέκνα."
+      }
+    }
   }
 ];
-
-export default questions;
