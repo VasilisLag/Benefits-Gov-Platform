@@ -4,16 +4,15 @@ export function childrenBenefitIncomeFormula(facts) {
     const isSingleParent = facts.isSingleParent == "Ναι";
     if (
     facts.income === undefined || facts.income === null || facts.income === "" ||
-    facts.dependentChildren === undefined || facts.dependentChildren === null || facts.dependentChildren === "" ||
+    facts.dependentChildren === undefined || facts.dependentChildren === null || facts.dependentChildren === "" || facts.dependentChildren <= 0 ||
     facts.isSingleParent === undefined || facts.isSingleParent === null || facts.isSingleParent === "" 
     ) {
         return {
-            eligible:null
+            eligible:null,
+            disqualifyReason: null
         };
     }
-    // console.log("Income", inc)
-    // console.log("Children", children)
-    // console.log("Is Single Parent", isSingleParent)
+
     let equivalenceScale = 1;
 
     if (!isSingleParent) {
@@ -28,12 +27,11 @@ export function childrenBenefitIncomeFormula(facts) {
         }
     }
 
-    // console.log("Equivalent Scale:", equivalenceScale)
 
-
-    const equivalentIncome = inc / equivalenceScale;
+    const equivalentIncome = Math.floor(inc / equivalenceScale);
+    const formattedIncome = equivalentIncome.toLocaleString('el-GR');
     return {
         eligible: equivalentIncome <= 15000,
-        disqualifyReason: `Το εισόδημα σας (${equivalentIncome}€) ξεπερνάει το όριο του ισοδύναμου οικογενειακού εισοδήματος (15.000€)`
+        disqualifyReason: `Το ισοδύναμο οικογενειακό εισόδημα σας (${formattedIncome}€) ξεπερνάει το όριο του ισοδύναμου οικογενειακού εισοδήματος (15.000€)`
     }
 }

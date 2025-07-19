@@ -1,10 +1,11 @@
-export function calcChildrenBenefitAllowance(facts)
+export function calcChildrenBenefitAllowance(facts, eligible, reasons)
 {
   const title = "Επίδομα Παιδιού - Α21"
   const income = parseFloat(facts.income);
   const dependentChildren = parseInt(facts.dependentChildren);
   const isSingleParent = facts.isSingleParent == "Ναι";
   if (
+    eligible &&
     income !== undefined && income !== null &&
     isSingleParent !== undefined && isSingleParent !== null &&
     dependentChildren !== undefined && dependentChildren !== null
@@ -56,13 +57,13 @@ export function calcChildrenBenefitAllowance(facts)
     };
   }
 
-  else {
+  else if(!eligible){
     return {
         title,
         eligible: null,
         allowanceAmount:null,
         message: null,
-        reasons: []
+        reasons: reasons
     }
   }
 

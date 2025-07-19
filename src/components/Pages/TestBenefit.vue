@@ -141,6 +141,13 @@ export default {
     },
     currentTag() {
       return this.questions[this.currentQuestionIndex]?.tag;
+    },
+    facts() {
+      const facts = {};
+      this.questions.forEach(q => {
+        if (q.answer !== null) facts[q.key] = q.answer;
+      });
+      return facts;
     }
   },
   methods: {
@@ -152,12 +159,7 @@ export default {
         this.currentQuestion.answer = this.currentOption;
       }
 
-      const facts = {};
-      this.questions.forEach(q => {
-        if (q.answer !== null) facts[q.key] = q.answer;
-      });
-
-      const result = evaluateAll(this.questions, facts, "childrenBenefit");
+      const result = evaluateAll(this.questions, this.facts, "childrenBenefit");
 
       if (!result.eligible && result.reasons.length > 0) {
         this.results = {
@@ -187,14 +189,9 @@ export default {
         this.currentQuestion.answer = this.currentOption;
       }
 
-      const facts = {};
-      this.questions.forEach(q => {
-        if (q.answer !== null) facts[q.key] = q.answer;
-      });
-      // console.log(facts)
-      const result = evaluateAll(this.questions, facts, "childrenBenefit");
-      console.log(result)
-      result.eligible ? this.results = calcChildrenBenefitAllowance(facts): null
+      const result = evaluateAll(this.questions, this.facts, "childrenBenefit");
+  
+      this.results = calcChildrenBenefitAllowance(this.facts, result.eligible, result.reasons)
 
       this.summaryResults = [this.results];
     },

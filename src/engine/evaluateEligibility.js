@@ -5,13 +5,9 @@ export function evaluateEligibility(question, facts, benefitId) {
   if (!rule) return { eligible: true, reason: null };
 
   const value = facts[question.key];
-  // console.log(rule.type)
-  // console.log(rule)
+
   switch (rule.type) {
     case "match":
-      // console.log(value, rule.value)
-      // console.log(value !== undefined)
-      // console.log(value !== undefined &&  value !== rule.value)
       return {
         eligible: value === null || value === undefined ? null: value === rule.value,
         reason: value !== undefined &&  value !== rule.value? rule.disqualifyReason : null
@@ -28,8 +24,6 @@ export function evaluateEligibility(question, facts, benefitId) {
 
     case "formula":
       try {
-        // console.log("Formula key", rule.formulaKey)
-        // console.log("Formulas", formulas)
         const fn = formulas[rule.formulaKey];
         if (!fn) throw new Error("Formula not found: " + rule.formulaKey);
         const result = fn(facts);
