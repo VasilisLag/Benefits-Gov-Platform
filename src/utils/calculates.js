@@ -1,3 +1,46 @@
+export function calcHousingBenefitAllowance(facts, eligible, reasons) {
+  const title = "Επίδομα Στέγασης";
+  const rent = parseFloat(facts.rent);
+  const dependentChildren = parseInt(facts.dependentChildren) || 0;
+  const unprotectedChildren = parseInt(facts.unprotectedChildren) || 0;
+  const hostedPersons = parseInt(facts.hostedPersons) || 0;
+  const isSingleParent = facts.isSingleParent === "Ναι";
+
+  if (
+    eligible &&
+    !isNaN(rent)
+  ) {
+    const allowanceBase = 70;
+    const allowanceThreshold = 210;
+    const unsupported_increment = 70;
+    const regular_increment = 35;
+    let allowanceAmount = allowanceBase;
+    allowanceAmount += unprotectedChildren * unsupported_increment;
+    if (isSingleParent && dependentChildren > 0) {
+      allowanceAmount += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
+    } else {
+      allowanceAmount += (dependentChildren + hostedPersons) * regular_increment;
+    }
+    allowanceAmount = Math.min(Math.min(rent, allowanceAmount), allowanceThreshold);
+
+    return {
+      title,
+      eligible: true,
+      allowanceAmount: allowanceAmount,
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
+      reasons: []
+    };
+  }
+  else if (!eligible) {
+    return {
+      title,
+      eligible: null,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+}
 export function calcChildrenBenefitAllowance(facts, eligible, reasons)
 {
   const title = "Επίδομα Παιδιού - Α21"

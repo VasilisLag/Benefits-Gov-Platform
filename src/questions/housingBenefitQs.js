@@ -1,4 +1,4 @@
-const questions = [
+export default[
   {
     key: "submittedTaxDeclaration",
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
@@ -7,7 +7,13 @@ const questions = [
     required: true,
     tag: "demography",
     answer: null,
-    benefits: ["housingBenefit"]
+    eligibility: {
+      housingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      }
+    }
   },
   {
     key: "income",
@@ -16,7 +22,13 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["housingBenefit"]
+    eligibility: {
+      housingBenefit: {
+        type: "formula",
+        formulaKey: "housingIncomeThresholdFormula",
+        disqualifyReason: "Το εισόδημά σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης."
+      }
+    }
   },
   {
     key: "activeRent",
@@ -26,7 +38,13 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit"]
+    eligibility: {
+      housingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία."
+      }
+    }
   },
   {
     key: "rent",
@@ -34,8 +52,7 @@ const questions = [
     category: "textbox",
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
   },
   {
     key: "isSingleParent",
@@ -44,8 +61,7 @@ const questions = [
     category: "radio",
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
   },
   {
     key: "dependentChildren",
@@ -71,8 +87,7 @@ const questions = [
     `,
     required: false,
     tag: "household",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
   },
   {
     key: "unprotectedChildren",
@@ -93,8 +108,7 @@ const questions = [
     `,
     required: false,
     tag: "household",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
   },
   {
     key: "hostedPersons",
@@ -102,8 +116,7 @@ const questions = [
     category: "textbox",
     required: false,
     tag: "household",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
   },
   {
     key: "propertyValue",
@@ -123,8 +136,15 @@ const questions = [
     `,
     required: true,
     tag: "assets",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
+    ,
+    eligibility: {
+      housingBenefit: {
+        type: "formula",
+        formulaKey: "propertyThresholdFormula",
+        disqualifyReason: "Η αξία της ακίνητης περιουσίας σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης."
+      }
+    }
   },
   {
     key: "savings",
@@ -144,8 +164,15 @@ const questions = [
     `,
     required: true,
     tag: "assets",
-    answer: null,
-    benefits: ["housingBenefit"]
+    answer: null
+    ,
+    eligibility: {
+      housingBenefit: {
+        type: "formula",
+        formulaKey: "savingsThresholdFormula",
+        disqualifyReason: "Οι καταθέσεις σας υπερβαίνουν το επιτρεπτό όριο για το επίδομα στέγασης."
+      }
+    }
   },
   {
     key: "luxuryBelonging",
@@ -160,12 +187,12 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["housingBenefit"]
-  },
+    eligibility: {
+      housingBenefit: {
+        type: "match",
+        value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+        disqualifyReason: "Διαθέτετε αποκλειστικά περιουσιακά στοιχεία που αποκλείουν το επίδομα."
+      }
+    }
+  }
 ];
-
-export default questions;
-
-
-
-

@@ -108,7 +108,7 @@ export function calcHousingBenefit(submittedTaxDeclaration, income, activeRent, 
   const savingsThreshold = incomeThreshold;
   let reasons = [];
 
-  incomeThreshold = Math.max(incomeThreshold, 21000);
+  incomeThreshold = Math.min(incomeThreshold, 21000);
 
   if(!submittedTaxDeclaration) {
     reasons.push("Δεν έχετε υποβάλλει φορολογική δήλωση για το προηγούμενο έτος.")

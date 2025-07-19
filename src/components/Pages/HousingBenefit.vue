@@ -87,7 +87,8 @@ import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
 import allQuestions from '@/questions/housingBenefitQs.js';
-import { calcHousingBenefit } from '@/utils/calcBenefits.js';
+import { evaluateAll } from '@/engine/evaluateAll.js';
+import { calcHousingBenefitAllowance } from '@/utils/calculates.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
 
 export default {
@@ -146,6 +147,13 @@ export default {
     },
     currentTag() {
       return this.questions[this.currentQuestionIndex]?.tag;
+    },
+    facts() {
+      const facts = {};
+      this.questions.forEach(q => {
+        if (q.answer !== null) facts[q.key] = q.answer;
+      });
+      return facts;
     }
   },
   methods: {
@@ -155,6 +163,20 @@ export default {
     nextQuestion() {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
+      }
+      const result = evaluateAll(this.questions, this.facts, "housingBenefit");
+      
+      if (!result.eligible && result.reasons.length > 0) {
+        this.results = {
+          title: "Επίδομα Στέγασης",
+          eligible: false,
+          reasons: result.reasons,
+          allowanceAmount: 0,
+          message: "Δεν είστε δικαιούχος",
+        };
+        this.summaryResults = [this.results];
+        this.currentQuestionIndex = this.questions.length;
+        return;
       }
       this.currentQuestionIndex++;
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
@@ -170,57 +192,23 @@ export default {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
       }
-      const answers = {};
-      this.questions.forEach(q => { answers[q.key] = q.answer; });
-      const submittedTaxDeclaration = answers['submittedTaxDeclaration'] === "Ναι";
-      const income = parseFloat(answers['income']);
-      const activeRent = answers['activeRent'] === "Ναι";
-      const rent = parseFloat(answers['rent']);
-      const isSingleParent = answers['isSingleParent'] === "Ναι";
-      const dependentChildren = parseInt(answers['dependentChildren']) || 0;
-      const unprotectedChildren = parseInt(answers['unprotectedChildren']) || 0;
-      const hostedPersons = parseInt(answers['hostedPersons']) || 0;
-      const propertyValue = parseFloat(answers['propertyValue']);
-      const savings = parseFloat(answers['savings']);
-      const luxuryBelonging = answers['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-
-      this.results = calcHousingBenefit(
-        submittedTaxDeclaration,
-        income,
-        activeRent,
-        rent,
-        isSingleParent,
-        dependentChildren,
-        unprotectedChildren,
-        hostedPersons,
-        propertyValue,
-        savings,
-        luxuryBelonging
-      );
-
-      this.summaryResults = [
-        {
-          title: this.results.title,
-          eligible: this.results.eligible,
-          allowanceAmount: this.results.allowanceAmount || 0,
-          reasons: this.results.reasons || [],
-          message: this.results.message || '',
-        }
-      ];
+      const result = evaluateAll(this.questions, this.facts, "housingBenefit");
+      this.results = calcHousingBenefitAllowance(this.facts, result.eligible, result.reasons);
+      this.summaryResults = [this.results];
     },
     goToQuestion(index) {
       this.results = null;
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer || null;
-    },
-    beforeRouteLeave(to, from, next) {
-      this.questions.forEach(q => { q.answer = null; });
-      this.currentQuestionIndex = 0;
-      this.currentOption = null;
-      this.results = null;
-      this.allResults = [];
-      next();
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.questions.forEach(q => { q.answer = null; });
+    this.currentQuestionIndex = 0;
+    this.currentOption = null;
+    this.results = null;
+    this.summaryResults = [];
+    next();
   }
 };
 </script>

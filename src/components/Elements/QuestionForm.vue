@@ -47,7 +47,7 @@ export default {
     selectedOption: String,
     questionIndex: Number,
     numberOfQuestions: Number,
-    currentTag: String, // ✅ νέο prop
+    currentTag: String,
   },
   computed: {
     hasNotChosen() {
