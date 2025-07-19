@@ -31,8 +31,8 @@ export default {
   },
   data() {
     return {
-      input: this.inputValue || "",
-      formattedInput: this.formatNumber(this.inputValue || ""),
+      input: this.inputValue ?? "",
+      formattedInput: this.formatNumber(this.inputValue ?? ""),
     };
   },
   watch: {

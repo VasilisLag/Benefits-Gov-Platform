@@ -137,7 +137,7 @@ export default {
       return this.currentQuestionIndex === 0;
     },
     answer() {
-      return this.questions[this.currentQuestionIndex]?.answer || null;
+      return this.questions[this.currentQuestionIndex].answer;
     },
     isFormSummary() {
       return this.currentQuestionIndex === this.questions.length;
