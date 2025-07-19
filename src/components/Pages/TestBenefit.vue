@@ -89,6 +89,7 @@ import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
 import allQuestions from '@/questions/childrenBenefitQuestionsWithEligibility.js';
 import { evaluateAll } from '@/engine/evaluateAll.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
+import { calcChildrenBenefitAllowance } from '@/utils/calculates.js';
 
 export default {
   name: 'ChildrenBenefit',
@@ -156,7 +157,7 @@ export default {
         if (q.answer !== null) facts[q.key] = q.answer;
       });
 
-      const result = evaluateAll(this.questions, facts, "childrenBenefit"); // ✅ βασισμένο σε embedded rules
+      const result = evaluateAll(this.questions, facts, "childrenBenefit");
 
       if (!result.eligible && result.reasons.length > 0) {
         this.results = {
@@ -190,18 +191,10 @@ export default {
       this.questions.forEach(q => {
         if (q.answer !== null) facts[q.key] = q.answer;
       });
-
+      // console.log(facts)
       const result = evaluateAll(this.questions, facts, "childrenBenefit");
-
-      this.results = {
-        title: "Επίδομα Παιδιού - Α21",
-        eligible: result.eligible,
-        reasons: result.reasons,
-        allowanceAmount: result.eligible ? 123 : 0, // μπορείς να βάλεις το calc αργότερα
-        message: result.eligible
-          ? "Είστε δικαιούχος. Προσωρινό ποσό επιδότησης."
-          : "Δεν είστε δικαιούχος.",
-      };
+      console.log(result)
+      result.eligible ? this.results = calcChildrenBenefitAllowance(facts): null
 
       this.summaryResults = [this.results];
     },
@@ -221,3 +214,30 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+section {
+  text-align:left;
+}
+
+.question-layout {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.question-column-left {
+  width: 66.66%;
+}
+
+.question-column-right {
+  width: 33.33%;
+  /* border-left: 1px solid #ccc; */
+  padding: 1.5rem;
+}
+
+.note-box {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+</style>

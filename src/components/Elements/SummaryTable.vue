@@ -11,7 +11,7 @@
       >
         <dt class="govgr-summary-list__key">{{ question }}</dt>
         <dd class="govgr-summary-list__value">
-          {{ answers[index] || '-' }}
+          {{ answers[index] }}
         </dd>
         <dd class="govgr-summary-list__actions">
           <button class="govgr-link" @click="$emit('edit', index)">
