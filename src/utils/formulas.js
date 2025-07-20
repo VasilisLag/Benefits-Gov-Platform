@@ -1,3 +1,58 @@
+// Eligibility formulas for Heating Benefit
+export function heatingIncomeThresholdFormula(facts) {
+    const income = parseFloat(facts.income);
+    const dependentChildren = parseInt(facts.dependentChildren);
+    const maritalStatus = facts.maritalStatus;
+    // Έλεγχος για undefined/null/NaN
+    if (
+      income === undefined || income === null || isNaN(income) ||
+      dependentChildren === undefined || dependentChildren === null || isNaN(dependentChildren) ||
+      maritalStatus === undefined || maritalStatus === null || maritalStatus === ""
+    ) {
+      return { eligible: null, disqualifyReason: null };
+    }
+    let threshold = 16000;
+    if (maritalStatus === "Μονογονέας") {
+        threshold = 29000;
+    } else if (maritalStatus === "Έγγαμος/η - Σύμφωνο συμβίωσης") {
+        threshold = 24000;
+    }
+    threshold += 5000 * dependentChildren;
+    return {
+        eligible: income <= threshold,
+        disqualifyReason: `Το εισόδημά σας (${income?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€) για το επίδομα θέρμανσης.`
+    };
+}
+
+export function heatingBusinessIncomeFormula(facts) {
+    const isBusinessOwner = facts.isBusinessOwner === "Ναι";
+    const businessIncome = parseFloat(facts.businessIncome) || 0;
+    const threshold = 80000;
+    if (!isBusinessOwner) return { eligible: true, disqualifyReason: null };
+    if (businessIncome === undefined || isNaN(businessIncome)) {
+        return { eligible: null, disqualifyReason: null };
+    }
+    return {
+        eligible: businessIncome <= threshold,
+        disqualifyReason: `Τα έσοδα από επιχειρηματική δραστηριότητα (${businessIncome?.toLocaleString('el-GR')}€) υπερβαίνουν το όριο (${threshold?.toLocaleString('el-GR')}€).`
+    };
+}
+
+export function heatingPropertyThresholdFormula(facts) {
+    const propertyValue = parseFloat(facts.propertyValue);
+    const maritalStatus = facts.maritalStatus;
+    let threshold = 200000;
+    if (maritalStatus === "Έγγαμος/η - Σύμφωνο συμβίωσης" || maritalStatus === "Μονογονέας") {
+        threshold = 260000;
+    }
+    if (propertyValue === undefined || isNaN(propertyValue)) {
+        return { eligible: null, disqualifyReason: null };
+    }
+    return {
+        eligible: propertyValue <= threshold,
+        disqualifyReason: `Η αξία της ακίνητης περιουσίας σας (${propertyValue?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€) για το επίδομα θέρμανσης.`
+    };
+}
 // Υπολογισμός εισοδηματικού ορίου για Επίδομα Στέγασης
 export function housingIncomeThresholdFormula(facts) {
     const income = parseFloat(facts.income);
@@ -38,7 +93,7 @@ export function housingIncomeThresholdFormula(facts) {
 }
 
 // Υπολογισμός ορίου ακίνητης περιουσίας για Επίδομα Στέγασης
-export function propertyThresholdFormula(facts) {
+export function housingPropertyThresholdFormula(facts) {
     const propertyValue = parseFloat(facts.propertyValue);
     const dependentChildren = parseInt(facts.dependentChildren);
     const unprotectedChildren = parseInt(facts.unprotectedChildren);
@@ -61,7 +116,7 @@ export function propertyThresholdFormula(facts) {
 }
 
 // Υπολογισμός ορίου καταθέσεων για Επίδομα Στέγασης
-export function savingsThresholdFormula(facts) {
+export function housingSavingsThresholdFormula(facts) {
     const savings = parseFloat(facts.savings);
     const dependentChildren = parseInt(facts.dependentChildren) || 0;
     const unprotectedChildren = parseInt(facts.unprotectedChildren) || 0;

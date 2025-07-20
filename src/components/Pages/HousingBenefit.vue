@@ -172,7 +172,7 @@ export default {
           eligible: false,
           reasons: result.reasons,
           allowanceAmount: 0,
-          message: "Δεν είστε δικαιούχος",
+          message: "Δεν είστε δικαιούχος για το Επίδομα Στέγασης",
         };
         this.summaryResults = [this.results];
         this.currentQuestionIndex = this.questions.length;
@@ -237,5 +237,6 @@ section {
 .note-box {
   font-size: 0.95rem;
   line-height: 1.5;
+  margin-top: 2rem;
 }
 </style>

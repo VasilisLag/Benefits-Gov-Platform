@@ -7,7 +7,13 @@ const questions = [
     required: true,
     tag: "demography",
     answer: null,
-    benefits: ["heatingBenefit"]
+    eligibility: {
+      heatingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      }
+    }
   },
   {
     key: "residesInGreece",
@@ -27,7 +33,13 @@ const questions = [
     `,
     tag: "demography",
     answer: null,
-    benefits: ["heatingBenefit"]
+    eligibility: {
+      heatingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      }
+    }
   },
   {
     key: "income",
@@ -36,7 +48,12 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["heatingBenefit"]
+    eligibility: {
+      heatingBenefit: {
+        type: "formula",
+        formulaKey: "heatingIncomeThresholdFormula",
+      }
+    }
   },
   {
     key: "isBusinessOwner",
@@ -46,7 +63,6 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["heatingBenefit"]
   },
   {
     key: "businessIncome",
@@ -65,7 +81,12 @@ const questions = [
     required: false,
     tag: "income",
     answer: null,
-    benefits: ["heatingBenefit"]
+    eligibility: {
+      heatingBenefit: {
+        type: "formula",
+        formulaKey: "heatingBusinessIncomeFormula",
+      }
+    }
   },
   {
     key: "propertyValue",
@@ -84,7 +105,12 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["heatingBenefit"]
+    eligibility: {
+      heatingBenefit: {
+        type: "formula",
+        formulaKey: "heatingPropertyThresholdFormula",
+      }
+    }
   },
   {
     key: "maritalStatus",
@@ -93,8 +119,7 @@ const questions = [
     category: "dropdown",
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["heatingBenefit"]
+    answer: null
   },
   {
     key: "dependentChildren",
@@ -119,8 +144,7 @@ const questions = [
       </details>`,
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["heatingBenefit"]
+    answer: null
   },
   {
     key: "area",
@@ -128,8 +152,7 @@ const questions = [
     category: "geo-dropdown",
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["heatingBenefit"]
+    answer: null
   },
   {
     key: "heatingSource",
@@ -138,8 +161,7 @@ const questions = [
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
     required: true,
     tag: "household",
-    answer: null,
-    benefits: ["heatingBenefit"]
+    answer: null
   },
 ];
 

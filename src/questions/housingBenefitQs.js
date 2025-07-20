@@ -141,7 +141,7 @@ export default[
     eligibility: {
       housingBenefit: {
         type: "formula",
-        formulaKey: "propertyThresholdFormula",
+        formulaKey: "housingPropertyThresholdFormula",
         disqualifyReason: "Η αξία της ακίνητης περιουσίας σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης."
       }
     }
@@ -169,7 +169,7 @@ export default[
     eligibility: {
       housingBenefit: {
         type: "formula",
-        formulaKey: "savingsThresholdFormula",
+        formulaKey: "housingSavingsThresholdFormula",
         disqualifyReason: "Οι καταθέσεις σας υπερβαίνουν το επιτρεπτό όριο για το επίδομα στέγασης."
       }
     }

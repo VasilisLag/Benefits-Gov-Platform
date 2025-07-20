@@ -1,3 +1,66 @@
+import {getCoefficient} from '@/utils/calcCoefficient.js';
+
+export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
+  const title = "Επίδομα Θέρμανσης";
+  const dependentChildren = parseInt(facts.dependentChildren) || 0;
+  const area = facts.area;
+  const heatingSource = facts.heatingSource;
+  // getCoefficient should be imported from calcCoefficient.js
+  // import { getCoefficient } from '@/utils/calcCoefficient.js';
+  let baseAmount = null;
+  let coefficient = 1;
+  if (typeof getCoefficient === 'function' && area) {
+    coefficient = getCoefficient(area);
+  }
+  switch (heatingSource) {
+    case "Ηλεκτρικό Ρεύμα":
+      baseAmount = 380;
+      break;
+    case "Φυσικό Αέριο":
+      baseAmount = 325;
+      break;
+    case "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο":
+      baseAmount = 300;
+      break;
+    case "Βιομάζα (Πέλετ)":
+      baseAmount = 360;
+      break;
+    case "Τηλεθέρμανση/Καυσόξυλα":
+      baseAmount = 350;
+      break;
+    default:
+      baseAmount = 0;
+  }
+  let allowanceAmount = baseAmount * coefficient;
+  allowanceAmount += allowanceAmount * 0.2 * dependentChildren;
+  let limit = 800;
+  if (coefficient >= 1) {
+    allowanceAmount *= 1.25;
+    limit = 1000;
+  }
+  if (coefficient >= 1.2) {
+    allowanceAmount *= 1.25;
+    limit = 1200;
+  }
+  allowanceAmount = Math.max(100, Math.min(allowanceAmount, limit)).toFixed(0);
+  if (eligible) {
+    return {
+      title,
+      eligible: true,
+      allowanceAmount: allowanceAmount,
+      message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`,
+      reasons: []
+    };
+  } else {
+    return {
+      title,
+      eligible: null,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+}
 export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const title = "Επίδομα Στέγασης";
   const rent = parseFloat(facts.rent);
