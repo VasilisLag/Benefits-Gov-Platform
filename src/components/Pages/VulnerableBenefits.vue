@@ -135,7 +135,6 @@ export default {
   },
   computed: {
     questions() {
-      // Επιστρέφει το δυναμικά φιλτραρισμένο array
       return this.filteredQuestions;
     },
     currentQuestion() {
@@ -172,15 +171,19 @@ export default {
       this.currentOption = option;
     },
     filterQuestions() {
-      // Επιστρέφει μόνο ερωτήσεις που αφορούν επιδόματα που δεν έχουν αποκλειστεί
+      // Φιλτράρει μόνο τις ερωτήσεις που απομένουν να απαντηθούν (από το currentQuestionIndex και μετά)
       const excluded = Object.entries(this.benefitEligibility)
         .filter(([, eligible]) => eligible === false)
         .map(([benefit]) => benefit);
-      this.filteredQuestions = this.allQuestions.filter(q => {
+      // Κρατάμε τις ήδη απαντημένες ερωτήσεις όπως είναι
+      const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
+      // Φιλτράρουμε μόνο τις επόμενες ερωτήσεις
+      const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
         if (!q.benefitTags || q.benefitTags.length === 0) return true;
-        // Αν όλες οι benefitTags της ερώτησης είναι αποκλεισμένες, κρύβεται
         return !q.benefitTags.every(tag => excluded.includes(tag));
       });
+      this.filteredQuestions = [...answered, ...remaining];
+      //console.log('Filtered Questions:', this.filteredQuestions);
     },
     nextQuestion() {
       if (this.currentQuestion) {
@@ -189,9 +192,7 @@ export default {
 
       const keaResult = evaluateAll(this.questions, this.facts, 'kea');
       const kotResult = evaluateAll(this.questions, this.facts, 'kot');
-      // console.log(keaResult)
-      // console.log(kotResult)
-      // console.log(this.facts)
+
 
       this.benefitEligibility.kea = keaResult.eligible;
       this.benefitEligibility.kot = kotResult.eligible;
@@ -213,6 +214,10 @@ export default {
         return;
       }
       this.currentQuestionIndex++;
+      this.filterQuestions();
+      if (this.currentQuestionIndex > this.questions.length) {
+        this.currentQuestionIndex = this.questions.length;
+      }
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     goBack() {
@@ -228,9 +233,7 @@ export default {
       this.currentOption = this.questions[index]?.answer || null;
     },
     submitAnswers() {
-      if (this.currentQuestion) {
-        this.currentQuestion.answer = this.currentOption;
-      }
+
 
       // Rule engine για KEA
       const keaResult = evaluateAll(this.questions, this.facts, 'kea');
