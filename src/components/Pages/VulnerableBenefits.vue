@@ -87,7 +87,8 @@ import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
 import allQuestions from '@/questions/vulnerableBenefitsQs.js';
-import { calcKEABenefit, calcKOTBenefit } from '@/utils/calcBenefits.js';
+import { calcKEABenefitAllowance, calcKOTBenefitAllowance } from '@/utils/calculates.js';
+import { evaluateAll } from '@/engine/evaluateAll.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
 
 export default {
@@ -118,16 +119,25 @@ export default {
     ];
     return {
       title: 'Προσομοίωση Αξιολόγησης Ε.Ε.Ε και Κ.Ο.Τ.',
-      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
+      allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
+      filteredQuestions: [],
       currentQuestionIndex: 0,
       currentOption: null,
       results: null,
       summaryResults: [],
       allResults: null,
+      benefitEligibility: {
+        kea: null,
+        kot: null
+      },
       questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q)
     };
   },
   computed: {
+    questions() {
+      // Επιστρέφει το δυναμικά φιλτραρισμένο array
+      return this.filteredQuestions;
+    },
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
@@ -148,15 +158,59 @@ export default {
     },
     currentTag() {
       return this.questions[this.currentQuestionIndex]?.tag;
+    },
+    facts() {
+      const facts = {};
+      this.questions.forEach(q => {
+        if (q.answer !== null) facts[q.key] = q.answer;
+      });
+      return facts;
     }
   },
   methods: {
     handleAnswerChange(option) {
-        this.currentOption = option;
-      },
+      this.currentOption = option;
+    },
+    filterQuestions() {
+      // Επιστρέφει μόνο ερωτήσεις που αφορούν επιδόματα που δεν έχουν αποκλειστεί
+      const excluded = Object.entries(this.benefitEligibility)
+        .filter(([, eligible]) => eligible === false)
+        .map(([benefit]) => benefit);
+      this.filteredQuestions = this.allQuestions.filter(q => {
+        if (!q.benefitTags || q.benefitTags.length === 0) return true;
+        // Αν όλες οι benefitTags της ερώτησης είναι αποκλεισμένες, κρύβεται
+        return !q.benefitTags.every(tag => excluded.includes(tag));
+      });
+    },
     nextQuestion() {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
+      }
+
+      const keaResult = evaluateAll(this.questions, this.facts, 'kea');
+      const kotResult = evaluateAll(this.questions, this.facts, 'kot');
+      // console.log(keaResult)
+      // console.log(kotResult)
+      // console.log(this.facts)
+
+      this.benefitEligibility.kea = keaResult.eligible;
+      this.benefitEligibility.kot = kotResult.eligible;
+
+      if (!keaResult.eligible && !kotResult.eligible) {
+        this.keaResults = calcKEABenefitAllowance(this.facts, keaResult.eligible, keaResult.reasons);
+        this.facts.keaEligible = this.keaResults.eligible;
+        this.kotResults = calcKOTBenefitAllowance(this.facts, kotResult.eligible, kotResult.reasons);
+
+        const benefits = [this.keaResults, this.kotResults];
+        this.allResults = benefits.map(benefit => ({
+          title: benefit.title,
+          eligible: benefit.eligible,
+          allowanceAmount: benefit.allowanceAmount || 0,
+          reasons: benefit.reasons || [],
+          message: benefit.message || '',
+        }));
+        this.currentQuestionIndex = this.questions.length;
+        return;
       }
       this.currentQuestionIndex++;
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
@@ -177,14 +231,24 @@ export default {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
       }
-      const answers = {};
-      this.questions.forEach(q => { answers[q.key] = q.answer; });
 
-      this.keaResults = this.calculateKEABenefits(answers);
-      const aCatEligible = this.keaResults.eligible;
-      this.kotResults = this.calculateKOTBenefits(answers, aCatEligible);
+      // Rule engine για KEA
+      const keaResult = evaluateAll(this.questions, this.facts, 'kea');
+      this.keaResults = calcKEABenefitAllowance(this.facts, keaResult.eligible, keaResult.reasons);
+      this.benefitEligibility.kea = keaResult.eligible;
+      console.log("KEA Result", keaResult)
+      console.log("KEA Results", this.keaResults)
+      // Rule engine για KOT
+      const kotResult = evaluateAll(this.questions, this.facts, 'kot');
+      // Pass KEA eligibility as facts.keaEligible for KOT allowance
+      this.facts.keaEligible = this.keaResults.eligible;
+      this.kotResults = calcKOTBenefitAllowance(this.facts, kotResult.eligible, kotResult.reasons);
+      this.benefitEligibility.kot = kotResult.eligible;
+            console.log("KOT Result", kotResult)
+      console.log("KOT Results", this.kotResults)
+
+
       const benefits = [this.keaResults, this.kotResults];
-      console.log(this.keaResults)
       this.allResults = benefits.map(benefit => ({
         title: benefit.title,
         eligible: benefit.eligible,
@@ -193,60 +257,18 @@ export default {
         message: benefit.message || '',
       }));
     },
-    calculateKEABenefits(answers) {
-      const residesInGreece = answers['residesInGreece'] === "Ναι";
-      const adults = parseInt(answers['adults']);
-      const dependentChildren = parseInt(answers['dependentChildren']) || 0;
-      const unsupportedChildren = parseInt(answers['unsupportedChildren']) || 0;
-      const isSingleParent = answers['isSingleParent'] === "Ναι";
-      const income = parseFloat(answers['income6m']);
-      const propertyValue = parseFloat(answers['propertyValue']);
-      const vehicleValue = parseFloat(answers['vehicleValue']);
-      const savings = parseFloat(answers['savings']);
-      const luxuryBelonging = answers['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-      return calcKEABenefit(
-        residesInGreece,
-        adults,
-        dependentChildren,
-        unsupportedChildren,
-        isSingleParent,
-        income,
-        propertyValue,
-        vehicleValue,
-        savings,
-        luxuryBelonging
-      );
-    },
-    calculateKOTBenefits(answers, aCatEligible) {
-      const residesInGreece = answers['residesInGreece'] === "Ναι";
-      const adults = parseInt(answers['adults']);
-      const dependentChildren = parseInt(answers['dependentChildren']) || 0;
-      const unsupportedChildren = parseInt(answers['unsupportedChildren']) || 0;
-      const disabledPerson = answers['vulnerableCategory'] === "Αναπηρία 67% και άνω";
-      const lifesupportedPerson = answers['vulnerableCategory'] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές";
-      const income = parseFloat(answers['income']);
-      const propertyValue = parseFloat(answers['propertyValue']);
-      const luxuryBelonging = answers['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω";
-      return calcKOTBenefit(
-        residesInGreece,
-        adults,
-        dependentChildren,
-        unsupportedChildren,
-        disabledPerson,
-        lifesupportedPerson,
-        income,
-        propertyValue,
-        luxuryBelonging,
-        aCatEligible
-      );
-    }
+  },
+  created() {
+    // Αρχικό filtering (όλα τα επιδόματα ενεργά)
+    this.filteredQuestions = [...this.allQuestions];
   },
   beforeRouteLeave(to, from, next) {
-    this.questions.forEach(q => { q.answer = null; });
+    this.filteredQuestions.forEach(q => { q.answer = null; });
     this.currentQuestionIndex = 0;
     this.currentOption = null;
     this.results = null;
     this.allResults = [];
+    this.benefitEligibility = { kea: null, kot: null };
     next();
   }
 };

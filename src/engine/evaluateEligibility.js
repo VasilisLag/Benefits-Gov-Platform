@@ -2,7 +2,7 @@ import * as formulas from '@/utils/formulas.js';
 
 export function evaluateEligibility(question, facts, benefitId) {
   const rule = question.eligibility?.[benefitId];
-  if (!rule) return { eligible: true, reason: null };
+  if (!rule) return { eligible: null, reason: null };
 
   const value = facts[question.key];
 

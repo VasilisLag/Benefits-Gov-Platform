@@ -186,3 +186,133 @@ export function childrenBenefitIncomeFormula(facts) {
         disqualifyReason: `Το ισοδύναμο οικογενειακό εισόδημα σας (${formattedIncome}€) ξεπερνάει το όριο του ισοδύναμου οικογενειακού εισοδήματος (15.000€)`
     }
 }
+
+// KEA: Εισοδηματικό όριο 6μήνου
+export function keaIncomeThresholdFormula(facts) {
+  const income6m = parseFloat(facts.income6m);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let isSingleParent = facts.isSingleParent === "Ναι";
+
+  // Αν μονογονεϊκή, προστίθεται ενήλικας
+  if (isSingleParent && dependentChildren > 0) {
+    dependentChildren -= 1;
+    adults += 1;
+  }
+  const totalAdults = adults + unsupportedChildren;
+  const totalChildren = dependentChildren;
+  const baseAmount = 216;
+  const guaranteedIncome = baseAmount + (totalAdults-1) * 108 + (totalChildren * 54);
+  const threshold = 6 * Math.min(guaranteedIncome, 972);
+
+  if (isNaN(income6m) || totalAdults < 1) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: income6m < threshold,
+    disqualifyReason: `Το εισόδημα σας κατα τους τελευταίους 6 μήνες (${income6m?.toLocaleString('el-GR')}€) υπερβαίνει το εισοδηματικό όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}
+
+// KEA: Ακίνητη περιουσία
+export function keaPropertyThresholdFormula(facts) {
+  const propertyValue = parseFloat(facts.propertyValue);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let isSingleParent = facts.isSingleParent === "Ναι";
+  if (isSingleParent && dependentChildren > 0) {
+    dependentChildren -= 1;
+    adults += 1;
+  }
+  const totalAdults = adults + unsupportedChildren;
+  const totalChildren = dependentChildren;
+  let threshold = Math.min(150000, 90000 + (totalAdults + totalChildren - 1) * 15000);
+  if (isNaN(propertyValue)) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: propertyValue <= threshold,
+    disqualifyReason: `Η αξία των ακινήτων σας (${propertyValue?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}
+
+// KEA: Οχήματα
+export function keaVehicleThresholdFormula(facts) {
+  const vehicleValue = parseFloat(facts.vehicleValue);
+  const threshold = 6000;
+  if (isNaN(vehicleValue)) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: vehicleValue <= threshold,
+    disqualifyReason: `Η αντικειμενική δαπάνη των επιβατικών σας οχημάτων (${vehicleValue?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}
+
+// KEA: Καταθέσεις
+export function keaSavingsThresholdFormula(facts) {
+  const savings = parseFloat(facts.savings);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let isSingleParent = facts.isSingleParent === "Ναι";
+  if (isSingleParent && dependentChildren > 0) {
+    dependentChildren -= 1;
+    adults += 1;
+  }
+  const totalAdults = adults + unsupportedChildren;
+  const totalChildren = dependentChildren;
+  // Threshold logic from calcBenefits.js
+  let threshold = 4800 + (totalAdults - 1) * 2400 + totalChildren * 1200;
+  if (isNaN(savings)) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: savings <= threshold,
+    disqualifyReason: `Η αξία των καταθέσεων σας (${savings?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}
+
+// KOT: Εισοδηματικό όριο
+export function kotIncomeThresholdFormula(facts) {
+  const income = parseFloat(facts.income);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let vulnerableCategory = facts.vulnerableCategory;
+  const totalAdults = adults;
+  const totalChildren = dependentChildren + unsupportedChildren;
+  let threshold = Math.min(9000 + (totalAdults - 1) * 4500 + totalChildren * 2250, 31500);
+  if (vulnerableCategory === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές") {
+    threshold += 15000;
+  } else if (vulnerableCategory === "Αναπηρία 67% και άνω") {
+    threshold += 8000;
+  }
+  if (isNaN(income)) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: income < threshold,
+    disqualifyReason: `Το εισόδημα σας (${income?.toLocaleString('el-GR')}€) υπερβαίνει το εισοδηματικό όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}
+
+// KOT: Ακίνητη περιουσία
+export function kotPropertyThresholdFormula(facts) {
+  const propertyValue = parseFloat(facts.propertyValue);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  const totalAdults = adults;
+  const totalChildren = dependentChildren + unsupportedChildren;
+  let threshold = Math.min(120000 + (totalAdults + totalChildren - 1) * 15000, 180000);
+  if (isNaN(propertyValue)) {
+    return { eligible: null, disqualifyReason: null };
+  }
+  return {
+    eligible: propertyValue <= threshold,
+    disqualifyReason: `Η αξία των ακινήτων σας (${propertyValue?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€).`
+  };
+}

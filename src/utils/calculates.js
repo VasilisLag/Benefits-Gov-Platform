@@ -1,3 +1,79 @@
+// Υπολογισμός ποσού για Ελάχιστο Εγγυημένο Εισόδημα (KEA)
+export function calcKEABenefitAllowance(facts, eligible, reasons) {
+  const title = "Ελάχιστο Εγγυημένο Εισόδημα";
+  const income6m = parseFloat(facts.income6m);
+  let adults = parseInt(facts.adults) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren) || 0;
+  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let isSingleParent = facts.isSingleParent === "Ναι";
+  if (isSingleParent && dependentChildren > 0) {
+    dependentChildren -= 1;
+    adults += 1;
+  }
+  const totalAdults = adults + unsupportedChildren;
+  const totalChildren = dependentChildren;
+  const baseAmount = 216;
+  const guaranteedIncome = baseAmount + (totalAdults-1) * 108 + (totalChildren * 54);
+  const incomeThreshold = 6 * Math.min(guaranteedIncome, 972);
+  let allowanceAmount = 0;
+  if (eligible && !isNaN(income6m)) {
+    allowanceAmount = parseInt((incomeThreshold - income6m) / 6);
+    if(allowanceAmount > 0)
+    {
+      return {
+        title,
+        eligible: true,
+        allowanceAmount,
+        message: `Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
+        reasons: []
+      };
+    }
+
+  } else {
+    return {
+      title,
+      eligible: null,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+}
+
+// Υπολογισμός ποσού για Κοινωνικό Οικιακό Τιμολόγιο (KOT)
+export function calcKOTBenefitAllowance(facts, eligible, reasons) {
+  const title = "Κοινωνικό Οικιακό Τιμολόγιο";
+  const keaEligible = facts.keaEligible;
+  let allowanceAmount = null;
+  if (keaEligible && eligible) {
+    allowanceAmount = 0.075;
+    return {
+      title,
+      eligible: true,
+      allowanceAmount,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`,
+      reasons: []
+    };
+  }
+  if (eligible) {
+    allowanceAmount = 0.045;
+    return {
+      title,
+      eligible: true,
+      allowanceAmount,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`,
+      reasons: []
+    };
+  } else {
+    return {
+      title,
+      eligible: null,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+}
 import {getCoefficient} from '@/utils/calcCoefficient.js';
 
 export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
@@ -5,8 +81,7 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
   const dependentChildren = parseInt(facts.dependentChildren) || 0;
   const area = facts.area;
   const heatingSource = facts.heatingSource;
-  // getCoefficient should be imported from calcCoefficient.js
-  // import { getCoefficient } from '@/utils/calcCoefficient.js';
+
   let baseAmount = null;
   let coefficient = 1;
   if (typeof getCoefficient === 'function' && area) {

@@ -4,25 +4,46 @@ const questions = [
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "demography",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
+    eligibility: {
+      kea: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      },
+      kot: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      }
+    }
   },
   {
     key: "adults",
     question: "Πόσοι ενήλικες μένετε στο νοικοκυριό σας;",
     category: "textbox",
-    required: true,
     tag: "household",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
+    eligibility: {
+      kea: {
+        type: "range",
+        min: 1,
+        disqualifyReason: "Πρέπει να υπάρχει τουλάχιστον ένας ενήλικας στο νοικοκυριό."
+      },
+      kot: {
+        type: "range",
+        min: 1,
+        disqualifyReason: "Πρέπει να υπάρχει τουλάχιστον ένας ενήλικας στο νοικοκυριό."
+      }
+    }
   },
   {
     key: "dependentChildren",
     question: "Πόσα ανήλικα μέλη έχετε ως εξαρτώμενα;",
     category: "textbox",
-    required: false,
     note: `  
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -42,7 +63,7 @@ const questions = [
       </details>`,
     tag: "household",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
   },
   {
     key: "unsupportedChildren",
@@ -62,27 +83,24 @@ const questions = [
         </div>
       </details>
     `,
-    required: false,
     tag: "household",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
   },
   {
     key: "isSingleParent",
     question: "Είστε μονογονεϊκή οικογένεια;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "household",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea"],
   },
   {
     key: "vulnerableCategory",
     question: "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
     category: "radio",
     options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
-    required: true,
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -96,22 +114,26 @@ const questions = [
     `,
     tag: "vulnerable",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kot"],
   },
   {
     key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού;",
     category: "textbox",
-    required: true,
     tag: "income",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kot"],
+    eligibility: {
+      kot: {
+        type: "formula",
+        formulaKey: "kotIncomeThresholdFormula"
+      }
+    }
   },
   {
     key: "income6m",
     question: "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
     category: "textbox",
-    required: true,
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -124,7 +146,13 @@ const questions = [
     `,
     tag: "income",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea"],
+    eligibility: {
+      kea: {
+        type: "formula",
+        formulaKey: "keaIncomeThresholdFormula"
+      }
+    }
   },
   {
     key: "propertyValue",
@@ -152,10 +180,19 @@ const questions = [
           </ul>
         </div>
       </details>`,
-    required: true,
     tag: "assets",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
+    eligibility: {
+      kea: {
+        type: "formula",
+        formulaKey: "keaPropertyThresholdFormula"
+      },
+      kot: {
+        type: "formula",
+        formulaKey: "kotPropertyThresholdFormula"
+      }
+    }
   },
   {
     key: "vehicleValue",
@@ -177,10 +214,15 @@ const questions = [
           </ul>
         </div>
       </details>`,
-    required: true,
     tag: "assets",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea"],
+    eligibility: {
+      kea: {
+        type: "formula",
+        formulaKey: "keaVehicleThresholdFormula"
+      }
+    }
   },
   {
     key: "savings",
@@ -201,10 +243,15 @@ const questions = [
           </ul>
         </div>
       </details>`,
-    required: true,
     tag: "assets",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea"],
+    eligibility: {
+      kea: {
+        type: "formula",
+        formulaKey: "keaSavingsThresholdFormula"
+      }
+    }
   },
   {
     key: "luxuryBelonging",
@@ -216,10 +263,21 @@ const questions = [
       "Οικιακούς βοηθούς, οδηγούς ή δασκάλους",
     ],
     category: "radio",
-    required: true,
     tag: "assets",
     answer: null,
-    benefits: ["vulnerableBenefits"]
+    benefitTags: ["kea", "kot"],
+    eligibility: {
+      kea: {
+        type: "match",
+        value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+        disqualifyReason: "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών."
+      },
+      kot: {
+        type: "match",
+        value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+        disqualifyReason: "Αποκλείεστε από το Κοινωνικό Οικιακό Τιμολόγιο λόγω κατοχής πολυτελών αγαθών."
+      }
+    }
   },
 ];
 
