@@ -130,7 +130,22 @@ export default {
         kea: null,
         kot: null
       },
-      questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q)
+      questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q),
+      benefits: [
+        {
+          key: 'kea',
+          title: 'Ελάχιστο Εγγυημένο Εισόδημα',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kea'),
+          calculate: calcKEABenefitAllowance
+        },
+        {
+          key: 'kot',
+          title: 'Κοινωνικό Οικιακό Τιμολόγιο',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kot'),
+          calculate: calcKOTBenefitAllowance
+        }
+        // Προσθέτεις εδώ νέα επιδόματα π.χ. { key: 'housing', ... }
+      ],
     };
   },
   computed: {
@@ -190,20 +205,22 @@ export default {
         this.currentQuestion.answer = this.currentOption;
       }
 
-      const keaResult = evaluateAll(this.questions, this.facts, 'kea');
-      const kotResult = evaluateAll(this.questions, this.facts, 'kot');
+      // Υπολογισμός eligibility για όλα τα επιδόματα
+      this.benefitEligibility = {};
+      let resultsArr = [];
+      let facts = this.facts;
 
+      this.benefits.forEach(benefit => {
+        const result = benefit.evaluate(this.questions, facts);
+        this.benefitEligibility[benefit.key] = result.eligible;
+        facts[`${benefit.key}Eligible`] = result.eligible;
+        const calcResult = benefit.calculate(facts, result.eligible, result.reasons);
+        resultsArr.push(calcResult);
+      });
 
-      this.benefitEligibility.kea = keaResult.eligible;
-      this.benefitEligibility.kot = kotResult.eligible;
-
-      if (!keaResult.eligible && !kotResult.eligible) {
-        this.keaResults = calcKEABenefitAllowance(this.facts, keaResult.eligible, keaResult.reasons);
-        this.facts.keaEligible = this.keaResults.eligible;
-        this.kotResults = calcKOTBenefitAllowance(this.facts, kotResult.eligible, kotResult.reasons);
-
-        const benefits = [this.keaResults, this.kotResults];
-        this.allResults = benefits.map(benefit => ({
+      // Αν κανένα επίδομα δεν είναι eligible, δείξε τα αποτελέσματα
+      if (Object.values(this.benefitEligibility).every(e => !e)) {
+        this.allResults = resultsArr.map(benefit => ({
           title: benefit.title,
           eligible: benefit.eligible,
           allowanceAmount: benefit.allowanceAmount || 0,
@@ -233,26 +250,19 @@ export default {
       this.currentOption = this.questions[index]?.answer || null;
     },
     submitAnswers() {
+      let facts = this.facts;
+      this.benefitEligibility = {};
+      let resultsArr = [];
 
+      this.benefits.forEach(benefit => {
+        const result = benefit.evaluate(this.questions, facts);
+        this.benefitEligibility[benefit.key] = result.eligible;
+        facts[`${benefit.key}Eligible`] = result.eligible;
+        const calcResult = benefit.calculate(facts, result.eligible, result.reasons);
+        resultsArr.push(calcResult);
+      });
 
-      // Rule engine για KEA
-      const keaResult = evaluateAll(this.questions, this.facts, 'kea');
-      this.keaResults = calcKEABenefitAllowance(this.facts, keaResult.eligible, keaResult.reasons);
-      this.benefitEligibility.kea = keaResult.eligible;
-      console.log("KEA Result", keaResult)
-      console.log("KEA Results", this.keaResults)
-      // Rule engine για KOT
-      const kotResult = evaluateAll(this.questions, this.facts, 'kot');
-      // Pass KEA eligibility as facts.keaEligible for KOT allowance
-      this.facts.keaEligible = this.keaResults.eligible;
-      this.kotResults = calcKOTBenefitAllowance(this.facts, kotResult.eligible, kotResult.reasons);
-      this.benefitEligibility.kot = kotResult.eligible;
-            console.log("KOT Result", kotResult)
-      console.log("KOT Results", this.kotResults)
-
-
-      const benefits = [this.keaResults, this.kotResults];
-      this.allResults = benefits.map(benefit => ({
+      this.allResults = resultsArr.map(benefit => ({
         title: benefit.title,
         eligible: benefit.eligible,
         allowanceAmount: benefit.allowanceAmount || 0,
@@ -266,7 +276,7 @@ export default {
     this.filteredQuestions = [...this.allQuestions];
   },
   beforeRouteLeave(to, from, next) {
-    this.filteredQuestions.forEach(q => { q.answer = null; });
+    this.allQuestions.forEach(q => { q.answer = null; });
     this.currentQuestionIndex = 0;
     this.currentOption = null;
     this.results = null;
