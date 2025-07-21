@@ -190,6 +190,7 @@ export default {
       const excluded = Object.entries(this.benefitEligibility)
         .filter(([, eligible]) => eligible === false)
         .map(([benefit]) => benefit);
+      console.log('Excluded Benefits:', excluded);
       // Κρατάμε τις ήδη απαντημένες ερωτήσεις όπως είναι
       const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
       // Φιλτράρουμε μόνο τις επόμενες ερωτήσεις
@@ -197,8 +198,24 @@ export default {
         if (!q.benefitTags || q.benefitTags.length === 0) return true;
         return !q.benefitTags.every(tag => excluded.includes(tag));
       });
+
+      this.allQuestions.forEach(q => {
+        if (
+          q.benefitTags &&
+          q.benefitTags.length > 0 &&
+          q.benefitTags.every(tag => excluded.includes(tag)) &&
+          q.answer === undefined
+        ) {
+          q.answer = null;
+        }
+     });
+      console.log('Remaining Questions:', remaining);
       this.filteredQuestions = [...answered, ...remaining];
-      //console.log('Filtered Questions:', this.filteredQuestions);
+      console.log('Filtered Questions:', this.filteredQuestions);
+
+      if (remaining.length === 0) {
+        this.currentQuestionIndex = this.filteredQuestions.length;
+      }
     },
     nextQuestion() {
       if (this.currentQuestion) {
@@ -230,11 +247,32 @@ export default {
         this.currentQuestionIndex = this.questions.length;
         return;
       }
-      this.currentQuestionIndex++;
+
+      // Προχώρα στο επόμενο index και κάνε skip τα excluded
+      do {
+        this.currentQuestionIndex++;
+        const q = this.allQuestions[this.currentQuestionIndex];
+        const excluded = Object.entries(this.benefitEligibility)
+          .filter(([, eligible]) => eligible === false)
+          .map(([benefit]) => benefit);
+        if (
+          !q ||
+          !q.benefitTags ||
+          q.benefitTags.length === 0 ||
+          !q.benefitTags.every(tag => excluded.includes(tag))
+        ) {
+          break;
+        }
+        // Αν είναι excluded, δώσε τιμή null και συνέχισε
+        q.answer = null;
+      } while (this.currentQuestionIndex < this.allQuestions.length);
+
       this.filterQuestions();
+
       if (this.currentQuestionIndex > this.questions.length) {
         this.currentQuestionIndex = this.questions.length;
       }
+
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     goBack() {
