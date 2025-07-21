@@ -281,11 +281,18 @@ export default {
       }
       this.currentQuestionIndex--;
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+       this.clearAnswersFrom(this.currentQuestionIndex);
     },
     goToQuestion(index) {
       this.allResults = null;
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer || null;
+      this.clearAnswersFrom(this.currentQuestionIndex);
+    },
+    clearAnswersFrom(index) {
+      for (let i = index + 1; i < this.questions.length; i++) {
+        this.questions[i].answer = null;
+      }
     },
     submitAnswers() {
       let facts = this.facts;
