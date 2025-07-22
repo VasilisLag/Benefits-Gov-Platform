@@ -110,7 +110,7 @@ export default {
       'rent',
       'isSingleParent',
       'dependentChildren',
-      'unprotectedChildren',
+      'unsupportedChildren',
       'hostedPersons',
       'propertyValue',
       'savings',

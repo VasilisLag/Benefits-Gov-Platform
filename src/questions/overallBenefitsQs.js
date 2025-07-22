@@ -48,11 +48,17 @@ const questions = [
         value: "Ναι",
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
       },
-      vulnerableBenefits: {
+      kea: {
         type: "match",
         value: "Ναι",
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
-      }
+      },
+      kot: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      },
+
     },
     note: `
       <details class="govgr-details">
@@ -73,7 +79,7 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "vulnerableBenefits"],
+    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kot"],
     eligibility: {
       childrenBenefit: {
         type: "formula",
@@ -88,7 +94,7 @@ const questions = [
         formulaKey: "housingIncomeThresholdFormula",
         disqualifyReason: "Το εισόδημά σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης."
       },
-      vulnerableBenefits: {
+      kot: {
         type: "formula",
         formulaKey: "kotIncomeThresholdFormula"
       }
@@ -139,7 +145,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["heatingBenefit", "childrenBenefit", "housingBenefit", "vulnerableBenefits"]
+    benefits: ["heatingBenefit", "childrenBenefit", "housingBenefit", "kea"]
   },
   // Εξαρτώμενα τέκνα
   {
@@ -149,7 +155,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "vulnerableBenefits"],
+    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -178,13 +184,13 @@ const questions = [
   },
   // Απροστάτευτα τέκνα
   {
-    key: "unprotectedChildren",
+    key: "unsupportedChildren",
     question: "Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)",
     category: "textbox",
     required: false,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit", "vulnerableBenefits"],
+    benefits: ["housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -207,7 +213,7 @@ const questions = [
     required: false,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit"]
+    benefits: ["housingBenefit", "kea", "kot"]
   },
   // Τόπος διαμονής
   {
@@ -266,7 +272,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["heatingBenefit", "housingBenefit", "vulnerableBenefits"],
+    benefits: ["heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -289,9 +295,13 @@ const questions = [
         formulaKey: "housingPropertyThresholdFormula",
         disqualifyReason: "Η αξία της ακίνητης περιουσίας σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης."
       },
-      vulnerableBenefits: {
+      kea: {
         type: "formula",
         formulaKey: "keaPropertyThresholdFormula"
+      },
+      kot: {
+        type: "formula",
+        formulaKey: "kotPropertyThresholdFormula"
       }
     }
   },
@@ -303,7 +313,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["housingBenefit", "vulnerableBenefits"],
+    benefits: ["housingBenefit", "kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -322,7 +332,7 @@ const questions = [
         formulaKey: "housingSavingsThresholdFormula",
         disqualifyReason: "Οι καταθέσεις σας υπερβαίνουν το επιτρεπτό όριο για το επίδομα στέγασης."
       },
-      vulnerableBenefits: {
+      kea: {
         type: "formula",
         formulaKey: "keaSavingsThresholdFormula"
       }
@@ -336,7 +346,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["vulnerableBenefits"],
+    benefits: ["kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -355,7 +365,7 @@ const questions = [
       </details>
     `,
     eligibility: {
-      vulnerableBenefits: {
+      kea: {
         type: "formula",
         formulaKey: "keaVehicleThresholdFormula"
       }
@@ -382,11 +392,16 @@ const questions = [
         value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
         disqualifyReason: "Διαθέτετε αποκλειστικά περιουσιακά στοιχεία που αποκλείουν το επίδομα."
       },
-      vulnerableBenefits: {
+      kea: {
         type: "match",
         value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
         disqualifyReason: "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών."
-      }
+      },
+      kot: {
+        type: "match",
+        value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+        disqualifyReason: "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών."
+      },
     }
   },
   // Ευάλωτες κατηγορίες
@@ -398,7 +413,7 @@ const questions = [
     required: true,
     tag: "vulnerable",
     answer: null,
-    benefits: ["vulnerableBenefits"],
+    benefits: ["kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -419,7 +434,7 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["vulnerableBenefits"],
+    benefits: ["kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -431,7 +446,7 @@ const questions = [
       </details>
     `,
     eligibility: {
-      vulnerableBenefits: {
+      kea: {
         type: "formula",
         formulaKey: "keaIncomeThresholdFormula"
       }

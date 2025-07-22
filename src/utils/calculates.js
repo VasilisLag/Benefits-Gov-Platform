@@ -2,10 +2,11 @@
 export function calcKEABenefitAllowance(facts, eligible, reasons) {
   const title = "Ελάχιστο Εγγυημένο Εισόδημα";
   const income6m = parseFloat(facts.income6m);
-  let adults = parseInt(facts.adults) || 0;
+  let adults = parseInt(facts.adults) || parseInt(facts.hostedPersons);
   let dependentChildren = parseInt(facts.dependentChildren) || 0;
   let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
-  let isSingleParent = facts.isSingleParent === "Ναι";
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
+
   if (isSingleParent && dependentChildren > 0) {
     dependentChildren -= 1;
     adults += 1;
@@ -140,9 +141,9 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const title = "Επίδομα Στέγασης";
   const rent = parseFloat(facts.rent);
   const dependentChildren = parseInt(facts.dependentChildren) || 0;
-  const unprotectedChildren = parseInt(facts.unprotectedChildren) || 0;
+  const unprotectedChildren = parseInt(facts.unsupportedChildren);
   const hostedPersons = parseInt(facts.hostedPersons) || 0;
-  const isSingleParent = facts.isSingleParent === "Ναι";
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
   if (
     eligible &&
@@ -184,7 +185,7 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
   const title = "Επίδομα Παιδιού - Α21"
   const income = parseFloat(facts.income);
   const dependentChildren = parseInt(facts.dependentChildren);
-  const isSingleParent = facts.isSingleParent == "Ναι";
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
   if (
     eligible &&
     income !== undefined && income !== null &&

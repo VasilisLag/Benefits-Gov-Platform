@@ -90,7 +90,7 @@ export default[
     answer: null
   },
   {
-    key: "unprotectedChildren",
+    key: "unsupportedChildren",
     question: `Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)` ,
     category: "textbox",
     note: `

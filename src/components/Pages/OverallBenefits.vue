@@ -4,7 +4,6 @@
       <div class="govgr-layout-wrapper govgr-mt-6">
         <main>
           <div v-if="!isFormSummary" class="question-layout">
-            <!-- Φόρμα ερωτήσεων -->
             <div class="question-column-left">
               <QuestionForm
                 :title="title"
@@ -32,19 +31,16 @@
                 />
               </QuestionForm>
             </div>
-
-            <!-- Note (βοήθεια) -->
             <div class="question-column-right">
               <div class="note-box">
                 <p v-if="currentQuestion?.note" v-html="currentQuestion.note" />
               </div>
             </div>
           </div>
-
           <div v-if="isFormSummary">
             <SummaryTable
-              :questions="questions.map(q => q.question)"
-              :answers="questions.map(q => q.answer)"
+              :questions="answeredQuestions.map(q => q.question)"
+              :answers="answeredQuestions.map(q => q.answer)"
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
@@ -88,13 +84,14 @@ import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
 import allQuestions from '@/questions/overallBenefitsQs.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
+import { evaluateAll } from '@/engine/evaluateAll.js';
 import {
-  calcChildrenBenefit,
-  calcHeatingBenefit,
-  calcKEABenefit,
-  calcKOTBenefit,
-  calcHousingBenefit
-} from '@/utils/calcBenefits.js';
+  calcChildrenBenefitAllowance,
+  calcHeatingBenefitAllowance,
+  calcKEABenefitAllowance,
+  calcKOTBenefitAllowance,
+  calcHousingBenefitAllowance
+} from '@/utils/calculates.js';
 
 export default {
   name: 'OverallBenefits',
@@ -129,18 +126,57 @@ export default {
       'luxuryBelonging',
       'vulnerableCategory',
     ];
-
     return {
       title: 'Συνολική Προσομοίωση',
-      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
+      allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,
       results: null,
       allResults: null,
-      questionsInfo:  questionsInfo.filter(q => q.tag === "all").map(q => q)
+      questionsInfo:  questionsInfo.filter(q => q.tag === "all").map(q => q),
+      benefits: [
+        {
+          key: 'children',
+          title: 'Επίδομα Παιδιού',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'childrenBenefit'),
+          calculate: calcChildrenBenefitAllowance
+        },
+        {
+          key: 'housing',
+          title: 'Επίδομα Στέγασης',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'housingBenefit'),
+          calculate: calcHousingBenefitAllowance
+        },
+        {
+          key: 'heating',
+          title: 'Επίδομα Θέρμανσης',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'heatingBenefit'),
+          calculate: calcHeatingBenefitAllowance
+        },
+        {
+          key: 'kea',
+          title: 'Ελάχιστο Εγγυημένο Εισόδημα',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kea'),
+          calculate: calcKEABenefitAllowance
+        },
+        {
+          key: 'kot',
+          title: 'Κοινωνικό Οικιακό Τιμολόγιο',
+          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kot'),
+          calculate: calcKOTBenefitAllowance
+        }
+      ],
+      benefitEligibility: {},
+      filteredQuestions: [],
     };
   },
   computed: {
+    questions() {
+      return this.filteredQuestions;
+    },
+    answeredQuestions() {
+      return this.questions.filter(q => q.answer !== null && q.answer !== undefined);
+    },
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
@@ -161,17 +197,102 @@ export default {
     },
     currentTag() {
       return this.questions[this.currentQuestionIndex]?.tag;
+    },
+    facts() {
+      const facts = {};
+      this.questions.forEach(q => {
+        if (q.answer !== null) facts[q.key] = q.answer;
+      });
+      return facts;
     }
   },
   methods: {
     handleAnswerChange(option) {
-        this.currentOption = option;
-      },
+      this.currentOption = option;
+    },
+    filterQuestions() {
+      // Φιλτράρει μόνο τις ερωτήσεις που απομένουν να απαντηθούν (από το currentQuestionIndex και μετά)
+      const excluded = Object.entries(this.benefitEligibility)
+        .filter(([, eligible]) => eligible === false)
+        .map(([benefit]) => benefit);
+
+      const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
+      const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
+        if (!q.benefitTags || q.benefitTags.length === 0) return true;
+        return !q.benefitTags.every(tag => excluded.includes(tag));
+      });
+
+      this.allQuestions.forEach(q => {
+        if (
+          q.benefitTags &&
+          q.benefitTags.length > 0 &&
+          q.benefitTags.every(tag => excluded.includes(tag)) &&
+          q.answer === undefined
+        ) {
+          q.answer = null;
+        }
+      });
+
+      this.filteredQuestions = [...answered, ...remaining];
+
+      if (remaining.length === 0) {
+        this.currentQuestionIndex = this.filteredQuestions.length;
+      }
+    },
     nextQuestion() {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
       }
-      this.currentQuestionIndex++;
+      this.benefitEligibility = {};
+      let resultsArr = [];
+      let facts = this.facts;
+
+      this.benefits.forEach(benefit => {
+        const result = benefit.evaluate(this.questions, facts);
+        this.benefitEligibility[benefit.key] = result.eligible;
+        facts[`${benefit.key}Eligible`] = result.eligible;
+        const calcResult = benefit.calculate(facts, result.eligible, result.reasons);
+        resultsArr.push(calcResult);
+      });
+
+      // Αν κανένα επίδομα δεν είναι eligible, δείξε τα αποτελέσματα και σταμάτα τη φόρμα
+      if (Object.values(this.benefitEligibility).every(e => !e)) {
+        this.allResults = resultsArr.map(benefit => ({
+          title: benefit.title,
+          eligible: benefit.eligible,
+          allowanceAmount: benefit.allowanceAmount || 0,
+          reasons: benefit.reasons || [],
+          message: benefit.message || '',
+        }));
+        this.currentQuestionIndex = this.questions.length;
+        return;
+      }
+
+      // Προχώρα στο επόμενο index και κάνε skip τα excluded
+      do {
+        this.currentQuestionIndex++;
+        const q = this.allQuestions[this.currentQuestionIndex];
+        const excluded = Object.entries(this.benefitEligibility)
+          .filter(([, eligible]) => eligible === false)
+          .map(([benefit]) => benefit);
+        if (
+          !q ||
+          !q.benefitTags ||
+          q.benefitTags.length === 0 ||
+          !q.benefitTags.every(tag => excluded.includes(tag))
+        ) {
+          break;
+        }
+        // Αν είναι excluded, δώσε τιμή null και συνέχισε
+        q.answer = null;
+      } while (this.currentQuestionIndex < this.allQuestions.length);
+
+      this.filterQuestions();
+
+      if (this.currentQuestionIndex > this.questions.length) {
+        this.currentQuestionIndex = this.questions.length;
+      }
+
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     goBack() {
@@ -180,121 +301,56 @@ export default {
       }
       this.currentQuestionIndex--;
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+      this.clearAnswersFrom(this.currentQuestionIndex);
     },
     goToQuestion(index) {
       this.allResults = null;
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer || null;
+      this.clearAnswersFrom(this.currentQuestionIndex);
+    },
+    clearAnswersFrom(index) {
+      for (let i = index + 1; i < this.questions.length; i++) {
+        this.questions[i].answer = null;
+      }
     },
     submitAnswers() {
       if (this.currentQuestion) {
         this.currentQuestion.answer = this.currentOption;
       }
-      const answers = {};
-      this.questions.forEach(q => { answers[q.key] = q.answer; });
+      let facts = this.facts;
+      this.benefitEligibility = {};
+      let resultsArr = [];
 
-      this.resChildren = this.calcChildren(answers);
-      this.resHousing = this.calcHousing(answers);
-      this.resHeating = this.calcHeating(answers);
-      this.resKEA = this.calcKEA(answers);
-      this.resKOT = this.calcKOT(answers, this.resKEA.eligible);
-      const benefits = [
-        this.resChildren,
-        this.resHousing,
-        this.resHeating,
-        this.resKEA,
-        this.resKOT
-      ];
-      console.log(benefits)
-      this.allResults = benefits.map(benefit => ({
+      this.benefits.forEach(benefit => {
+        const result = benefit.evaluate(this.questions, facts);
+        this.benefitEligibility[benefit.key] = result.eligible;
+        facts[`${benefit.key}Eligible`] = result.eligible;
+        const calcResult = benefit.calculate(facts, result.eligible, result.reasons);
+        resultsArr.push(calcResult);
+      });
+
+      this.allResults = resultsArr.map(benefit => ({
         title: benefit.title,
         eligible: benefit.eligible,
         allowanceAmount: benefit.allowanceAmount || 0,
         reasons: benefit.reasons || [],
         message: benefit.message || '',
       }));
-      console.log(this.allResults)
-    },
-    calcChildren(ans) {
-      // calcChildrenBenefit(submittedTaxDeclaration, income, dependentChildren, residesInGreece, isSingleParent)
-      return calcChildrenBenefit(
-        ans['submittedTaxDeclaration'] === "Ναι",
-        parseFloat(ans['income']),
-        parseInt(ans['dependentChildren']) || 0,
-        ans['residesInGreece'] === "Ναι",
-        ans['maritalStatus'] === "Μονογονέας"
-      );
-    },
-    calcHousing(ans) {
-      // calcHousingBenefit(submittedTaxDeclaration, income, activeRent, rent, isSingleParent, dependentChildren, unprotectedChildren, hostedPersons, propertyValue, savings, luxuryBelonging)
-      return calcHousingBenefit(
-        ans['submittedTaxDeclaration'] === "Ναι",
-        parseFloat(ans['income']),
-        ans['activeRent'] === "Ναι",
-        parseFloat(ans['rent']),
-        ans['maritalStatus'] === "Μονογονέας",
-        parseInt(ans['dependentChildren']) || 0,
-        parseInt(ans['unprotectedChildren']) || 0,
-        parseInt(ans['hostedPersons']) || 0,
-        parseFloat(ans['propertyValue']),
-        parseFloat(ans['savings']),
-        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
-      );
-    },
-    calcHeating(ans) {
-      // calcHeatingBenefit(submittedTaxDeclaration, residesInGreece, income, isBusinessOwner, businessIncome, propertyValue, isMarried, isSingleParent, dependentChildren, area, heatingSource)
-      return calcHeatingBenefit(
-        ans['submittedTaxDeclaration'] === "Ναι",
-        ans['residesInGreece'] === "Ναι",
-        parseFloat(ans['income']),
-        ans['isBusinessOwner'] === "Ναι",
-        parseFloat(ans['businessIncome']),
-        parseFloat(ans['propertyValue']),
-        ans['maritalStatus'] === "Έγγαμος/η - Σύμφωνο συμβίωσης",
-        ans['maritalStatus'] === "Μονογονέας",
-        parseInt(ans['dependentChildren']) || 0,
-        ans['area'],
-        ans['heatingSource']
-      );
-    },
-    calcKEA(ans) {
-      // calcKEABenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, isSingleParent, income, propertyValue, vehicleValue, savings, luxuryBelonging)
-      return calcKEABenefit(
-        ans['residesInGreece'] === "Ναι",
-        (parseInt(ans['hostedPersons']) ? parseInt(ans['hostedPersons']) + 1 : 1),
-        parseInt(ans['dependentChildren']) || 0,
-        parseInt(ans['unsupportedChildren']) || 0,
-        ans['maritalStatus'] === "Μονογονέας",
-        parseFloat(ans['income6m']),
-        parseFloat(ans['propertyValue']),
-        parseFloat(ans['vehicleValue']),
-        parseFloat(ans['savings']),
-        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω"
-      );
-    },
-    calcKOT(ans, keaEligible) {
-      // calcKOTBenefit(residesInGreece, adults, dependentChildren, unsupportedChildren, disabledPerson, lifesupportedPerson, income, propertyValue, luxuryBelonging, keaEligible)
-      return calcKOTBenefit(
-        ans['residesInGreece'] === "Ναι",
-        (parseInt(ans['hostedPersons']) ? parseInt(ans['hostedPersons']) + 1 : 1),
-        parseInt(ans['dependentChildren']),
-        parseInt(ans['unsupportedChildren']),
-        ans['vulnerableCategory'] === "Αναπηρία 67% και άνω",
-        ans['vulnerableCategory'] === "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές",
-        parseFloat(ans['income']),
-        parseFloat(ans['propertyValue']),
-        ans['luxuryBelonging'] === "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
-        keaEligible
-      );
     },
     beforeRouteLeave(to, from, next) {
-      this.questions.forEach(q => { q.answer = null; });
+      this.allQuestions.forEach(q => { q.answer = null; });
       this.currentQuestionIndex = 0;
       this.currentOption = null;
       this.results = null;
       this.allResults = [];
+      this.benefitEligibility = {};
       next();
     }
+  },
+  created() {
+    // Αρχικό filtering (όλα τα επιδόματα ενεργά)
+    this.filteredQuestions = [...this.allQuestions];
   }
 };
 </script>
@@ -303,23 +359,19 @@ export default {
 section {
   text-align:left;
 }
-
 .question-layout {
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
 }
-
 .question-column-left {
   width: 66.66%;
 }
-
 .question-column-right {
   width: 33.33%;
   /* border-left: 1px solid #ccc; */
   padding: 1.5rem;
 }
-
 .note-box {
   font-size: 0.95rem;
   line-height: 1.5;
