@@ -43,8 +43,8 @@
 
           <div v-if="isFormSummary">
             <SummaryTable
-              :questions="questions.map(q => q.question)"
-              :answers="questions.map(q => q.answer)"
+              :questions="answeredQuestions.map(q => q.question)"
+              :answers="answeredQuestions.map(q => q.answer)"
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
@@ -151,6 +151,9 @@ export default {
   computed: {
     questions() {
       return this.filteredQuestions;
+    },
+    answeredQuestions() {
+      return this.questions.filter(q => q.answer !== null && q.answer !== undefined);
     },
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
