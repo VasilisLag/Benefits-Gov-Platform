@@ -129,6 +129,7 @@ const questions = [
     tag: "income",
     answer: null,
     benefits: ["heatingBenefit"],
+    showIf: { key: "isBusinessOwner", value: "Ναι" },
     eligibility: {
       heatingBenefit: {
         type: "formula",
