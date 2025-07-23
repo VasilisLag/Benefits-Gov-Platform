@@ -42,15 +42,25 @@ export function heatingPropertyThresholdFormula(facts) {
     const propertyValue = parseFloat(facts.propertyValue);
     const maritalStatus = facts.maritalStatus;
     let threshold = 200000;
-    if (maritalStatus === "Έγγαμος/η - Σύμφωνο συμβίωσης" || maritalStatus === "Μονογονέας") {
-        threshold = 260000;
+
+    if( parseInt(propertyValue) && propertyValue > 260000){
+      return {
+          eligible: false,
+          disqualifyReason: `Η αξία της ακίνητης περιουσίας σας (${propertyValue?.toLocaleString('el-GR')}€) υπερβαίνει το ανώτατο όριο (260.000€) για το επίδομα θέρμανσης.`
+      };
     }
+
     if (
         propertyValue === undefined || isNaN(propertyValue) ||
         maritalStatus === undefined || maritalStatus === null || maritalStatus === ""
     ) {
         return { eligible: null, disqualifyReason: null };
     }
+
+    if (maritalStatus === "Έγγαμος/η - Σύμφωνο συμβίωσης" || maritalStatus === "Μονογονέας") {
+        threshold = 260000;
+    }
+
     return {
         eligible: propertyValue <= threshold,
         disqualifyReason: `Η αξία της ακίνητης περιουσίας σας (${propertyValue?.toLocaleString('el-GR')}€) υπερβαίνει το όριο (${threshold?.toLocaleString('el-GR')}€) για το επίδομα θέρμανσης.`
@@ -60,7 +70,7 @@ export function heatingPropertyThresholdFormula(facts) {
 export function housingIncomeThresholdFormula(facts) {
     const income = parseFloat(facts.income);
     const dependentChildren = parseInt(facts.dependentChildren);
-    const unprotectedChildren = parseInt(facts.unprotectedChildren);
+    const unsupportedChildren = parseInt(facts.unsupportedChildren);
     const hostedPersons = parseInt(facts.hostedPersons);
     const isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
@@ -70,7 +80,7 @@ export function housingIncomeThresholdFormula(facts) {
 
     if (
         income === undefined || isNaN(income) ||
-        isNaN(dependentChildren) || isNaN(unprotectedChildren) || isNaN(hostedPersons)
+        isNaN(dependentChildren) || isNaN(unsupportedChildren) || isNaN(hostedPersons)
     ) {
         return { eligible: null, disqualifyReason: null };
     }
@@ -79,7 +89,7 @@ export function housingIncomeThresholdFormula(facts) {
     const unsupported_increment = 7000;
     const regular_increment = 3500;
     let threshold = incomeBase;
-    threshold += unprotectedChildren * unsupported_increment;
+    threshold += unsupportedChildren * unsupported_increment;
     if (isSingleParent && dependentChildren > 0) {
         threshold += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
     } else {
@@ -157,12 +167,11 @@ export function childrenBenefitIncomeFormula(facts) {
     const children = parseInt(facts.dependentChildren);
     const isSingleParent = facts.isSingleParent == "Ναι" || facts.maritalStatus === "Μονογονέας";
     if (
-    inc === undefined || inc === null || inc === "" ||
-    children === undefined || children === null || children === "" || facts.dependentChildren <= 0 ||
-    isSingleParent === undefined || isSingleParent === null || isSingleParent === "" 
+        inc === undefined || inc === null || inc === "" || isNaN(inc) ||
+        children === undefined || children === null || children === "" || isNaN(children) || facts.dependentChildren <= 0
     ) {
         return {
-            eligible:null,
+            eligible: null,
             disqualifyReason: null
         };
     }

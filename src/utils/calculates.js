@@ -3,8 +3,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
   const title = "Ελάχιστο Εγγυημένο Εισόδημα";
   const income6m = parseFloat(facts.income6m);
   let adults = parseInt(facts.adults) || parseInt(facts.hostedPersons);
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
   if (isSingleParent && dependentChildren > 0) {
@@ -79,7 +79,7 @@ import {getCoefficient} from '@/utils/calcCoefficient.js';
 
 export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
   const title = "Επίδομα Θέρμανσης";
-  const dependentChildren = parseInt(facts.dependentChildren) || 0;
+  const dependentChildren = parseInt(facts.dependentChildren);
   const area = facts.area;
   const heatingSource = facts.heatingSource;
 
@@ -140,9 +140,9 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
 export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const title = "Επίδομα Στέγασης";
   const rent = parseFloat(facts.rent);
-  const dependentChildren = parseInt(facts.dependentChildren) || 0;
-  const unprotectedChildren = parseInt(facts.unsupportedChildren);
-  const hostedPersons = parseInt(facts.hostedPersons) || 0;
+  const dependentChildren = parseInt(facts.dependentChildren);
+  const unsupportedChildren = parseInt(facts.unsupportedChildren);
+  const hostedPersons = parseInt(facts.hostedPersons);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
   if (
@@ -154,7 +154,7 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
     const unsupported_increment = 70;
     const regular_increment = 35;
     let allowanceAmount = allowanceBase;
-    allowanceAmount += unprotectedChildren * unsupported_increment;
+    allowanceAmount += unsupportedChildren * unsupported_increment;
     if (isSingleParent && dependentChildren > 0) {
       allowanceAmount += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
     } else {
