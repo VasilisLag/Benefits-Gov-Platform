@@ -26,7 +26,7 @@ export function heatingIncomeThresholdFormula(facts) {
 
 export function heatingBusinessIncomeFormula(facts) {
     const isBusinessOwner = facts.isBusinessOwner === "Ναι";
-    const businessIncome = parseFloat(facts.businessIncome) || 0;
+    const businessIncome = parseFloat(facts.businessIncome);
     const threshold = 80000;
     if (!isBusinessOwner) return { eligible: true, disqualifyReason: null };
     if (businessIncome === undefined || isNaN(businessIncome)) {
@@ -45,7 +45,10 @@ export function heatingPropertyThresholdFormula(facts) {
     if (maritalStatus === "Έγγαμος/η - Σύμφωνο συμβίωσης" || maritalStatus === "Μονογονέας") {
         threshold = 260000;
     }
-    if (propertyValue === undefined || isNaN(propertyValue)) {
+    if (
+        propertyValue === undefined || isNaN(propertyValue) ||
+        maritalStatus === undefined || maritalStatus === null || maritalStatus === ""
+    ) {
         return { eligible: null, disqualifyReason: null };
     }
     return {
@@ -59,7 +62,7 @@ export function housingIncomeThresholdFormula(facts) {
     const dependentChildren = parseInt(facts.dependentChildren);
     const unprotectedChildren = parseInt(facts.unprotectedChildren);
     const hostedPersons = parseInt(facts.hostedPersons);
-    const isSingleParent = facts.isSingleParent === "Ναι";
+    const isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
     const maxHousingIncomeThreshold = 21000
     if(income > maxHousingIncomeThreshold)
@@ -96,17 +99,17 @@ export function housingIncomeThresholdFormula(facts) {
 export function housingPropertyThresholdFormula(facts) {
     const propertyValue = parseFloat(facts.propertyValue);
     const dependentChildren = parseInt(facts.dependentChildren);
-    const unprotectedChildren = parseInt(facts.unsupportedChildren);
+    const unsupportedChildren = parseInt(facts.unsupportedChildren);
     const hostedPersons = parseInt(facts.hostedPersons);
 
     if (
         propertyValue === undefined || isNaN(propertyValue) ||
-        isNaN(dependentChildren) || isNaN(unprotectedChildren) || isNaN(hostedPersons)
+        isNaN(dependentChildren) || isNaN(unsupportedChildren) || isNaN(hostedPersons)
     ) {
         return { eligible: null, disqualifyReason: null };
     }
 
-    let threshold = Math.min(120000 + 15000 * (dependentChildren + unprotectedChildren + hostedPersons), 180000);
+    let threshold = Math.min(120000 + 15000 * (dependentChildren + unsupportedChildren + hostedPersons), 180000);
     const formattedValue = propertyValue.toLocaleString('el-GR');
     const formattedThreshold = threshold.toLocaleString('el-GR');
     return {
@@ -118,14 +121,14 @@ export function housingPropertyThresholdFormula(facts) {
 // Υπολογισμός ορίου καταθέσεων για Επίδομα Στέγασης
 export function housingSavingsThresholdFormula(facts) {
     const savings = parseFloat(facts.savings);
-    const dependentChildren = parseInt(facts.dependentChildren) || 0;
-    const unprotectedChildren = parseInt(facts.unprotectedChildren) || 0;
-    const hostedPersons = parseInt(facts.hostedPersons) || 0;
-    const isSingleParent = facts.isSingleParent === "Ναι";
+    const dependentChildren = parseInt(facts.dependentChildren);
+    const unsupportedChildren = parseInt(facts.unsupportedChildren);
+    const hostedPersons = parseInt(facts.hostedPersons);
+    const isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
     if (
         savings === undefined || isNaN(savings) ||
-        isNaN(dependentChildren) || isNaN(unprotectedChildren) || isNaN(hostedPersons)
+        isNaN(dependentChildren) || isNaN(unsupportedChildren) || isNaN(hostedPersons)
     ) {
         return { eligible: null, disqualifyReason: null };
     }
@@ -134,7 +137,7 @@ export function housingSavingsThresholdFormula(facts) {
     const unsupported_increment = 7000;
     const regular_increment = 3500;
     let threshold = base;
-    threshold += unprotectedChildren * unsupported_increment;
+    threshold += unsupportedChildren * unsupported_increment;
     if (isSingleParent && dependentChildren > 0) {
         threshold += unsupported_increment + (dependentChildren - 1 + hostedPersons) * regular_increment;
     } else {
@@ -152,11 +155,11 @@ export function housingSavingsThresholdFormula(facts) {
 export function childrenBenefitIncomeFormula(facts) {
     const inc = parseFloat(facts.income);
     const children = parseInt(facts.dependentChildren);
-    const isSingleParent = facts.isSingleParent == "Ναι";
+    const isSingleParent = facts.isSingleParent == "Ναι" || facts.maritalStatus === "Μονογονέας";
     if (
-    facts.income === undefined || facts.income === null || facts.income === "" ||
-    facts.dependentChildren === undefined || facts.dependentChildren === null || facts.dependentChildren === "" || facts.dependentChildren <= 0 ||
-    facts.isSingleParent === undefined || facts.isSingleParent === null || facts.isSingleParent === "" 
+    inc === undefined || inc === null || inc === "" ||
+    children === undefined || children === null || children === "" || facts.dependentChildren <= 0 ||
+    isSingleParent === undefined || isSingleParent === null || isSingleParent === "" 
     ) {
         return {
             eligible:null,
@@ -190,10 +193,10 @@ export function childrenBenefitIncomeFormula(facts) {
 // KEA: Εισοδηματικό όριο 6μήνου
 export function keaIncomeThresholdFormula(facts) {
   const income6m = parseFloat(facts.income6m);
-  let adults = parseInt(facts.adults) || 0;
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
-  let isSingleParent = facts.isSingleParent === "Ναι";
+  let adults = parseInt(facts.adults);
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
 
   // Αν μονογονεϊκή, προστίθεται ενήλικας
   if (isSingleParent && dependentChildren > 0) {
@@ -218,10 +221,10 @@ export function keaIncomeThresholdFormula(facts) {
 // KEA: Ακίνητη περιουσία
 export function keaPropertyThresholdFormula(facts) {
   const propertyValue = parseFloat(facts.propertyValue);
-  let adults = parseInt(facts.adults) || 0;
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
-  let isSingleParent = facts.isSingleParent === "Ναι";
+  let adults = parseInt(facts.adults);
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
   if (isSingleParent && dependentChildren > 0) {
     dependentChildren -= 1;
     adults += 1;
@@ -255,9 +258,9 @@ export function keaVehicleThresholdFormula(facts) {
 export function keaSavingsThresholdFormula(facts) {
   const savings = parseFloat(facts.savings);
   let adults = parseInt(facts.adults) || 0;
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
-  let isSingleParent = facts.isSingleParent === "Ναι";
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
+  let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
   if (isSingleParent && dependentChildren > 0) {
     dependentChildren -= 1;
     adults += 1;
@@ -278,9 +281,9 @@ export function keaSavingsThresholdFormula(facts) {
 // KOT: Εισοδηματικό όριο
 export function kotIncomeThresholdFormula(facts) {
   const income = parseFloat(facts.income);
-  let adults = parseInt(facts.adults) || 0;
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let adults = parseInt(facts.adults);
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let vulnerableCategory = facts.vulnerableCategory;
   const totalAdults = adults;
   const totalChildren = dependentChildren + unsupportedChildren;
@@ -302,9 +305,9 @@ export function kotIncomeThresholdFormula(facts) {
 // KOT: Ακίνητη περιουσία
 export function kotPropertyThresholdFormula(facts) {
   const propertyValue = parseFloat(facts.propertyValue);
-  let adults = parseInt(facts.adults) || 0;
-  let dependentChildren = parseInt(facts.dependentChildren) || 0;
-  let unsupportedChildren = parseInt(facts.unsupportedChildren) || 0;
+  let adults = parseInt(facts.adults);
+  let dependentChildren = parseInt(facts.dependentChildren);
+  let unsupportedChildren = parseInt(facts.unsupportedChildren);
   const totalAdults = adults;
   const totalChildren = dependentChildren + unsupportedChildren;
   let threshold = Math.min(120000 + (totalAdults + totalChildren - 1) * 15000, 180000);
