@@ -44,7 +44,7 @@
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
-              Αξιολόγηση
+              Δείτε Αποτελέσματα
             </button>
             <div v-if="allResults" class="govgr-mt-9">
               <ResultsForm :results="allResults" class="govgr-mb-9" />

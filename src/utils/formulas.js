@@ -96,7 +96,7 @@ export function housingIncomeThresholdFormula(facts) {
 export function housingPropertyThresholdFormula(facts) {
     const propertyValue = parseFloat(facts.propertyValue);
     const dependentChildren = parseInt(facts.dependentChildren);
-    const unprotectedChildren = parseInt(facts.unprotectedChildren);
+    const unprotectedChildren = parseInt(facts.unsupportedChildren);
     const hostedPersons = parseInt(facts.hostedPersons);
 
     if (

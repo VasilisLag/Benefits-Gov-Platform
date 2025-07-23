@@ -43,12 +43,12 @@
 
           <div v-if="isFormSummary">
             <SummaryTable
-              :questions="questions.map(q => q.question)"
-              :answers="questions.map(q => q.answer)"
+              :questions="answeredQuestions.map(q => q.question)"
+              :answers="answeredQuestions.map(q => q.answer)"
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
-              Αξιολόγηση
+              Δείτε Αποτελέσματα
             </button>
             <div v-if="results" class="govgr-mt-9">
               <ResultsForm :results="summaryResults" class="govgr-mb-9" />
@@ -129,6 +129,9 @@ export default {
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
+    answeredQuestions() {
+      return this.questions.filter(q => q.answer !== null && q.answer !== undefined);
+    },
     isLastQuestion() {
       return this.currentQuestionIndex === this.questions.length;
     },
@@ -185,6 +188,7 @@ export default {
       }
       this.currentQuestionIndex--;
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer ?? null;
+      this.clearAnswersFrom(this.currentQuestionIndex);
     },
     submitAnswers() {
       if (this.currentQuestion) {
@@ -198,6 +202,12 @@ export default {
       this.results = null;
       this.currentQuestionIndex = index;
       this.currentOption = this.questions[index]?.answer ?? null;
+      this.clearAnswersFrom(this.currentQuestionIndex);
+    },
+    clearAnswersFrom(index) {
+      for (let i = index + 1; i < this.questions.length; i++) {
+        this.questions[i].answer = null;
+      }
     },
   },
   beforeRouteLeave(to, from, next) {
