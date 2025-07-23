@@ -114,7 +114,7 @@ export default {
       'businessIncome',
       'maritalStatus',
       'dependentChildren',
-      'unprotectedChildren',
+      'unsupportedChildren',
       'hostedPersons',
       'area',
       'heatingSource',
@@ -136,19 +136,19 @@ export default {
       questionsInfo:  questionsInfo.filter(q => q.tag === "all").map(q => q),
       benefits: [
         {
-          key: 'children',
+          key: 'childrenBenefit',
           title: 'Επίδομα Παιδιού',
           evaluate: (questions, facts) => evaluateAll(questions, facts, 'childrenBenefit'),
           calculate: calcChildrenBenefitAllowance
         },
         {
-          key: 'housing',
+          key: 'housingBenefit',
           title: 'Επίδομα Στέγασης',
           evaluate: (questions, facts) => evaluateAll(questions, facts, 'housingBenefit'),
           calculate: calcHousingBenefitAllowance
         },
         {
-          key: 'heating',
+          key: 'heatingBenefit',
           title: 'Επίδομα Θέρμανσης',
           evaluate: (questions, facts) => evaluateAll(questions, facts, 'heatingBenefit'),
           calculate: calcHeatingBenefitAllowance
@@ -216,12 +216,17 @@ export default {
         .filter(([, eligible]) => eligible === false)
         .map(([benefit]) => benefit);
 
+      // Μια ερώτηση πρέπει να παραμείνει ΜΟΝΟ αν:
+      // - Δεν έχει benefitTags (γενική ερώτηση)
+      // - Ή τουλάχιστον ένα benefitTag της δεν είναι στα excluded (δηλαδή αφορά επίδομα που δεν έχει αποκλειστεί)
       const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
       const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
         if (!q.benefitTags || q.benefitTags.length === 0) return true;
+        // Αν ΟΛΑ τα benefitTags είναι στα excluded, τότε να αφαιρεθεί
         return !q.benefitTags.every(tag => excluded.includes(tag));
       });
 
+      // Όσες ερωτήσεις αφορούν μόνο αποκλεισμένα επιδόματα και δεν έχουν απαντηθεί, να μηδενίζονται
       this.allQuestions.forEach(q => {
         if (
           q.benefitTags &&
