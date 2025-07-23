@@ -117,7 +117,7 @@ export default {
     ];
     return {
       title: 'Προσομοίωση Αξιολόγησης Επιδόματος Θέρμανσης',
-      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
+      allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,
       results: null,
@@ -126,6 +126,18 @@ export default {
     };
   },
   computed: {
+    questions() {
+      // Δυναμικό filter με βάση showIf
+      const facts = {};
+      this.allQuestions.forEach(q => {
+        if (q.answer !== undefined && q.answer !== null) facts[q.key] = q.answer;
+      });
+      return this.allQuestions.filter(q => {
+        if (!q.showIf) return true;
+        const { key, value } = q.showIf;
+        return facts[key] === value;
+      });
+    },
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
@@ -152,7 +164,7 @@ export default {
     },
     facts() {
       const facts = {};
-      this.questions.forEach(q => {
+      this.allQuestions.forEach(q => {
         if (q.answer !== undefined && q.answer !== null) facts[q.key] = q.answer;
       });
       return facts;
