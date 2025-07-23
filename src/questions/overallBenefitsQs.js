@@ -8,7 +8,7 @@ const questions = [
     required: true,
     tag: "demography",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit"],
+    benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit"],
     eligibility: {
       childrenBenefit: {
         type: "match",
@@ -36,7 +36,7 @@ const questions = [
     required: true,
     tag: "demography",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "vulnerableBenefits"],
+    benefitTags: ["childrenBenefit", "heatingBenefit", "kot", "kea"],
     eligibility: {
       childrenBenefit: {
         type: "match",
@@ -79,7 +79,7 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kot"],
+    benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kot"],
     eligibility: {
       childrenBenefit: {
         type: "formula",
@@ -109,7 +109,7 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["heatingBenefit"]
+    benefitTags: ["heatingBenefit"]
   },
   {
     key: "businessIncome",
@@ -128,7 +128,7 @@ const questions = [
     required: false,
     tag: "income",
     answer: null,
-    benefits: ["heatingBenefit"],
+    benefitTags: ["heatingBenefit"],
     showIf: { key: "isBusinessOwner", value: "Ναι" },
     eligibility: {
       heatingBenefit: {
@@ -146,7 +146,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["heatingBenefit", "childrenBenefit", "housingBenefit", "kea"]
+    benefitTags: ["heatingBenefit", "childrenBenefit", "housingBenefit", "kea"]
   },
   // Εξαρτώμενα τέκνα
   {
@@ -156,7 +156,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
+    benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -191,7 +191,7 @@ const questions = [
     required: false,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit", "kea", "kot"],
+    benefitTags: ["housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -214,7 +214,7 @@ const questions = [
     required: false,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit", "kea", "kot"]
+    benefitTags: ["housingBenefit", "kea", "kot"]
   },
   // Τόπος διαμονής
   {
@@ -224,7 +224,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["heatingBenefit"]
+    benefitTags: ["heatingBenefit"]
   },
   // Πηγή θέρμανσης
   {
@@ -235,7 +235,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["heatingBenefit"]
+    benefitTags: ["heatingBenefit"]
   },
   // Ενεργό μισθωτήριο συμβόλαιο
   {
@@ -246,7 +246,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit"],
+    benefitTags: ["housingBenefit"],
     eligibility: {
       housingBenefit: {
         type: "match",
@@ -263,7 +263,7 @@ const questions = [
     required: true,
     tag: "household",
     answer: null,
-    benefits: ["housingBenefit"]
+    benefitTags: ["housingBenefit"]
   },
   // Αξία ακίνητης περιουσίας
   {
@@ -273,7 +273,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["heatingBenefit", "housingBenefit", "kea", "kot"],
+    benefitTags: ["heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -314,7 +314,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["housingBenefit", "kea"],
+    benefitTags: ["housingBenefit", "kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -347,7 +347,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["kea"],
+    benefitTags: ["kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -386,7 +386,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefits: ["housingBenefit", "vulnerableBenefits"],
+    benefitTags: ["housingBenefit", "vulnerableBenefits"],
     eligibility: {
       housingBenefit: {
         type: "match",
@@ -414,7 +414,7 @@ const questions = [
     required: true,
     tag: "vulnerable",
     answer: null,
-    benefits: ["kot"],
+    benefitTags: ["kot"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>
@@ -435,7 +435,7 @@ const questions = [
     required: true,
     tag: "income",
     answer: null,
-    benefits: ["kea"],
+    benefitTags: ["kea"],
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια</summary>

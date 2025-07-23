@@ -216,22 +216,34 @@ export default {
         .filter(([, eligible]) => eligible === false)
         .map(([benefit]) => benefit);
 
+      // Log επιλεξιμότητα επιδομάτων
+      console.log('Benefit eligibility:', this.benefitEligibility);
+
       // Μια ερώτηση πρέπει να παραμείνει ΜΟΝΟ αν:
       // - Δεν έχει benefitTags (γενική ερώτηση)
       // - Ή τουλάχιστον ένα benefitTag της δεν είναι στα excluded (δηλαδή αφορά επίδομα που δεν έχει αποκλειστεί)
       const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
       const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
-        if (!q.benefitTags || q.benefitTags.length === 0) return true;
-        // Αν ΟΛΑ τα benefitTags είναι στα excluded, τότε να αφαιρεθεί
-        return !q.benefitTags.every(tag => excluded.includes(tag));
+        const tags = q.benefitTags;
+        // Αν δεν έχει benefitTags (γενική ερώτηση), πάντα να εμφανίζεται
+        if (!tags || tags.length === 0) return true;
+        // Αν ΟΛΑ τα benefitTags είναι στα excluded, να ΜΗΝ εμφανίζεται
+        if (tags.every(tag => excluded.includes(tag))) return false;
+        // Αν τουλάχιστον ένα benefitTag δεν είναι excluded, να εμφανίζεται
+        return true;
       });
+
+      // Log απαντημένες και επόμενες ερωτήσεις
+      console.log('Answered questions:', answered.map(q => q.key));
+      console.log('Upcoming questions:', remaining.map(q => q.key));
 
       // Όσες ερωτήσεις αφορούν μόνο αποκλεισμένα επιδόματα και δεν έχουν απαντηθεί, να μηδενίζονται
       this.allQuestions.forEach(q => {
+        const tags = q.benefitTags;
         if (
-          q.benefitTags &&
-          q.benefitTags.length > 0 &&
-          q.benefitTags.every(tag => excluded.includes(tag)) &&
+          tags &&
+          tags.length > 0 &&
+          tags.every(tag => excluded.includes(tag)) &&
           q.answer === undefined
         ) {
           q.answer = null;
@@ -280,16 +292,17 @@ export default {
         const excluded = Object.entries(this.benefitEligibility)
           .filter(([, eligible]) => eligible === false)
           .map(([benefit]) => benefit);
-        if (
-          !q ||
-          !q.benefitTags ||
-          q.benefitTags.length === 0 ||
-          !q.benefitTags.every(tag => excluded.includes(tag))
-        ) {
-          break;
+        if (!q) break;
+        const tags = q.benefitTags;
+        // Αν δεν έχει benefitTags (γενική ερώτηση), σταμάτα εδώ
+        if (!tags || tags.length === 0) break;
+        // Αν ΟΛΑ τα benefitTags είναι στα excluded, skip (δώσε null και συνέχισε)
+        if (tags.every(tag => excluded.includes(tag))) {
+          q.answer = null;
+          continue;
         }
-        // Αν είναι excluded, δώσε τιμή null και συνέχισε
-        q.answer = null;
+        // Αν τουλάχιστον ένα benefitTag δεν είναι excluded, σταμάτα εδώ
+        break;
       } while (this.currentQuestionIndex < this.allQuestions.length);
 
       this.filterQuestions();
