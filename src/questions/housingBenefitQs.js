@@ -16,6 +16,32 @@ export default[
     }
   },
   {
+    key: "residesInGreece",
+    question: "Διαμένετε μόνιμα στην Ελλάδα;",
+    options: ["Ναι", "Όχι"],
+    category: "radio",
+    required: true,
+    note: `
+      <details class="govgr-details">
+        <summary class="govgr-details__summary"> Βοήθεια </summary>
+        <div class="govgr-details__content">
+          <p class="govgr-body" style = text-align:left;>
+            Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.
+          </p>
+        </div>
+      </details>
+    `,
+    tag: "demography",
+    answer: null,
+    eligibility: {
+      housingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      }
+    }
+  },
+  {
     key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",

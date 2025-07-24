@@ -104,6 +104,7 @@ export default {
   },
   data() {
     const questionOrder = [
+      'submittedTaxDeclaration',
       'residesInGreece',
       'adults',
       'dependentChildren',

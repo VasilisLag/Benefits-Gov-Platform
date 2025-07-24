@@ -1,5 +1,28 @@
 const questions = [
   {
+    key: "submittedTaxDeclaration",
+    question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
+    options: [
+      "Ναι",
+      "Όχι"
+    ],
+    category: "radio",
+    tag: "demography",
+    answer: null,
+    eligibility: {
+      kea: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      },
+      kot: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      },
+    }
+  },
+  {
     key: "residesInGreece",
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],

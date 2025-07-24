@@ -24,6 +24,16 @@ const questions = [
         type: "match",
         value: "Ναι",
         disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      },
+      kea: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      },
+    kot: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
       }
     }
   },
@@ -44,6 +54,11 @@ const questions = [
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
       },
       heatingBenefit: {
+        type: "match",
+        value: "Ναι",
+        disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      },
+      housingBenefit: {
         type: "match",
         value: "Ναι",
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
