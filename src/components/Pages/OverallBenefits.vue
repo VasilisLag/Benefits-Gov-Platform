@@ -224,6 +224,11 @@ export default {
       // - Ή τουλάχιστον ένα benefitTag της δεν είναι στα excluded (δηλαδή αφορά επίδομα που δεν έχει αποκλειστεί)
       const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
       const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
+        // Υποστήριξη showIf: αν υπάρχει, να εμφανίζεται μόνο αν ικανοποιείται η συνθήκη
+        if (q.showIf) {
+          const { key, value } = q.showIf;
+          if (this.facts[key] !== value) return false;
+        }
         const tags = q.benefitTags;
         // Αν δεν έχει benefitTags (γενική ερώτηση), πάντα να εμφανίζεται
         if (!tags || tags.length === 0) return true;
@@ -285,7 +290,7 @@ export default {
         return;
       }
 
-      // Προχώρα στο επόμενο index και κάνε skip τα excluded
+      // Προχώρα στο επόμενο index και κάνε skip τα excluded ή όσα κρύβονται από showIf
       do {
         this.currentQuestionIndex++;
         const q = this.allQuestions[this.currentQuestionIndex];
@@ -293,6 +298,14 @@ export default {
           .filter(([, eligible]) => eligible === false)
           .map(([benefit]) => benefit);
         if (!q) break;
+        // skip αν υπάρχει showIf και δεν ικανοποιείται
+        if (q.showIf) {
+          const { key, value } = q.showIf;
+          if (this.facts[key] !== value) {
+            q.answer = null;
+            continue;
+          }
+        }
         const tags = q.benefitTags;
         // Αν δεν έχει benefitTags (γενική ερώτηση), σταμάτα εδώ
         if (!tags || tags.length === 0) break;
@@ -301,7 +314,7 @@ export default {
           q.answer = null;
           continue;
         }
-        // Αν τουλάχιστον ένα benefitTag δεν είναι excluded, σταμάτα εδώ
+        // Αν τουλάχιστον ένα benefitTag δεν είναι excluded και δεν έχει showIf που να το κρύβει, σταμάτα εδώ
         break;
       } while (this.currentQuestionIndex < this.allQuestions.length);
 

@@ -218,7 +218,7 @@ export function keaIncomeThresholdFormula(facts) {
   const guaranteedIncome = baseAmount + (totalAdults-1) * 108 + (totalChildren * 54);
   const threshold = 6 * Math.min(guaranteedIncome, 972);
 
-  if (isNaN(income6m) || totalAdults < 1) {
+  if (isNaN(income6m) || isNaN(threshold) ||totalAdults < 1) {
     return { eligible: null, disqualifyReason: null };
   }
   return {
@@ -241,7 +241,7 @@ export function keaPropertyThresholdFormula(facts) {
   const totalAdults = adults + unsupportedChildren;
   const totalChildren = dependentChildren;
   let threshold = Math.min(150000, 90000 + (totalAdults + totalChildren - 1) * 15000);
-  if (isNaN(propertyValue)) {
+  if (isNaN(propertyValue) || isNaN(threshold)) {
     return { eligible: null, disqualifyReason: null };
   }
   return {
