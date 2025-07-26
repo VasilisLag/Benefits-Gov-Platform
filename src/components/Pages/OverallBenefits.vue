@@ -322,9 +322,19 @@ export default {
       if (this.currentQuestionIndex === this.questions.length) {
         this.results = null;
       }
-      this.currentQuestionIndex--;
-      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
-      this.clearAnswersFrom(this.currentQuestionIndex);
+      // Find previous answered question (visible)
+      let prevIndex = -1;
+      for (let i = this.currentQuestionIndex - 1; i >= 0; i--) {
+        if (this.questions[i].answer !== null && this.questions[i].answer !== undefined) {
+          prevIndex = i;
+          break;
+        }
+      }
+      if (prevIndex >= 0) {
+        this.currentQuestionIndex = prevIndex;
+        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+        this.clearAnswersFrom(this.currentQuestionIndex);
+      }
     },
     goToQuestion(keyOrIndex) {
       // Accept either a key (string) or index (number)
