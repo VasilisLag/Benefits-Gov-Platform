@@ -41,6 +41,7 @@
             <SummaryTable
               :questions="answeredQuestions.map(q => q.question)"
               :answers="answeredQuestions.map(q => q.answer)"
+              :questionKeys="answeredQuestions.map(q => q.key)"
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
@@ -321,14 +322,29 @@ export default {
       if (this.currentQuestionIndex === this.questions.length) {
         this.results = null;
       }
-      this.currentQuestionIndex--;
-      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
-      this.clearAnswersFrom(this.currentQuestionIndex);
+      // Find previous answered question (visible)
+      let prevIndex = -1;
+      for (let i = this.currentQuestionIndex - 1; i >= 0; i--) {
+        if (this.questions[i].answer !== null && this.questions[i].answer !== undefined) {
+          prevIndex = i;
+          break;
+        }
+      }
+      if (prevIndex >= 0) {
+        this.currentQuestionIndex = prevIndex;
+        this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
+        this.clearAnswersFrom(this.currentQuestionIndex);
+      }
     },
     goToQuestion(index) {
+      // Accept either a key (string) or index (number)
+      console.log(index)
+      let idx = typeof index === 'string'
+        ? this.questions.findIndex(q => q.key === index)
+        : index;
       this.allResults = null;
-      this.currentQuestionIndex = index;
-      this.currentOption = this.questions[index]?.answer || null;
+      this.currentQuestionIndex = idx;
+      this.currentOption = this.questions[idx]?.answer || null;
       this.clearAnswersFrom(this.currentQuestionIndex);
     },
     clearAnswersFrom(index) {

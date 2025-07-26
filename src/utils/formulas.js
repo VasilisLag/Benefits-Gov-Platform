@@ -230,7 +230,7 @@ export function keaIncomeThresholdFormula(facts) {
 // KEA: Ακίνητη περιουσία
 export function keaPropertyThresholdFormula(facts) {
   const propertyValue = parseFloat(facts.propertyValue);
-  let adults = parseInt(facts.adults) (parseInt(facts.hostedPersons) + 1);
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";

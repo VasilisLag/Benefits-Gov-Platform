@@ -14,7 +14,7 @@
           {{ answers[index] !== undefined && answers[index] !== null && answers[index] !== '' ? answers[index] : '-' }}
         </dd>
         <dd class="govgr-summary-list__actions">
-          <button class="govgr-link" @click="$emit('edit', index)">
+          <button class="govgr-link" @click="$emit('edit', questionKeys ? questionKeys[index] : index)">
             Αλλαγή<span class="govgr-visually-hidden"> της απάντησης για: {{ question }}</span>
           </button>
         </dd>
@@ -36,6 +36,11 @@ export default {
       type: Array,
       required: true,
       default: () => []
+    },
+    questionKeys: {
+      type: Array,
+      required: false,
+      default: null
     },
   },
 };
