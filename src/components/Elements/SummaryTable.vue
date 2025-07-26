@@ -14,9 +14,10 @@
           {{ answers[index] !== undefined && answers[index] !== null && answers[index] !== '' ? answers[index] : '-' }}
         </dd>
         <dd class="govgr-summary-list__actions">
-          <button class="govgr-link" @click="$emit('edit', index)">
+          <button class="govgr-link" @click="$emit('edit', questionKeys ? questionKeys[index] : index)">
             Αλλαγή<span class="govgr-visually-hidden"> της απάντησης για: {{ question }}</span>
           </button>
+          <span v-if="false">{{ logRow(index) }}</span>
         </dd>
       </div>
     </dl>
@@ -37,7 +38,26 @@ export default {
       required: true,
       default: () => []
     },
+    questionKeys: {
+      type: Array,
+      required: false
+    }
   },
+  methods: {
+    logAllRows() {
+      (this.questions || []).forEach((question, index) => {
+        const key = this.questionKeys ? this.questionKeys[index] : index;
+        const answer = this.answers[index];
+        console.log('SummaryTable row:', { key, index, answer });
+      });
+    }
+  },
+  mounted() {
+    this.logAllRows();
+  },
+  updated() {
+    this.logAllRows();
+  }
 };
 </script>
 

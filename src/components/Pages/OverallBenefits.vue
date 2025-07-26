@@ -41,6 +41,7 @@
             <SummaryTable
               :questions="answeredQuestions.map(q => q.question)"
               :answers="answeredQuestions.map(q => q.answer)"
+              :questionKeys="answeredQuestions.map(q => q.key)"
               @edit="goToQuestion"
             />
             <button class="govgr-btn govgr-btn-primary govgr-mt-6" @click="submitAnswers">
@@ -325,11 +326,17 @@ export default {
       this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
       this.clearAnswersFrom(this.currentQuestionIndex);
     },
-    goToQuestion(index) {
+    goToQuestion(keyOrIndex) {
+      // Accept either a key (string) or index (number)
+      let index = typeof keyOrIndex === 'string'
+        ? this.questions.findIndex(q => q.key === keyOrIndex)
+        : keyOrIndex;
+      console.log('goToQuestion:', keyOrIndex, 'resolved index:', index);
       this.allResults = null;
       this.currentQuestionIndex = index;
-      this.currentOption = this.questions[index]?.answer || null;
       this.clearAnswersFrom(this.currentQuestionIndex);
+
+      this.currentOption = this.questions[this.currentQuestionIndex]?.answer || null;
     },
     clearAnswersFrom(index) {
       for (let i = index + 1; i < this.questions.length; i++) {
