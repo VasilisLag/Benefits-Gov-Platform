@@ -19,8 +19,7 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
   let allowanceAmount = 0;
   if (eligible && !isNaN(income6m)) {
     allowanceAmount = parseInt((incomeThreshold - income6m) / 6);
-    if(allowanceAmount > 0)
-    {
+    if (allowanceAmount > 0) {
       return {
         title,
         eligible: true,
@@ -29,16 +28,23 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
         reasons: []
       };
     }
-
-  } else {
+    // If eligible but allowanceAmount <= 0, return object with 0 and explanatory message
     return {
       title,
-      eligible: null,
-      allowanceAmount: null,
-      message: null,
-      reasons: reasons
+      eligible: true,
+      allowanceAmount: 0,
+      message: `Δεν προκύπτει ποσό επιδότησης για τα δεδομένα που δηλώσατε.`,
+      reasons: []
     };
   }
+  // Always return an object, even if not eligible or missing data
+  return {
+    title,
+    eligible: null,
+    allowanceAmount: null,
+    message: null,
+    reasons: reasons
+  };
 }
 
 // Υπολογισμός ποσού για Κοινωνικό Οικιακό Τιμολόγιο (KOT)
@@ -170,15 +176,14 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
       reasons: []
     };
   }
-  else if (!eligible) {
-    return {
-      title,
-      eligible: null,
-      allowanceAmount: null,
-      message: null,
-      reasons: reasons
-    };
-  }
+  // Always return an object, even if not eligible or missing data
+  return {
+    title,
+    eligible: null,
+    allowanceAmount: null,
+    message: null,
+    reasons: reasons
+  };
 }
 export function calcChildrenBenefitAllowance(facts, eligible, reasons)
 {
@@ -239,14 +244,13 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
     };
   }
 
-  else if(!eligible){
-    return {
-        title,
-        eligible: null,
-        allowanceAmount:null,
-        message: null,
-        reasons: reasons
-    }
-  }
+  // Always return an object, even if not eligible or missing data
+  return {
+    title,
+    eligible: null,
+    allowanceAmount: null,
+    message: null,
+    reasons: reasons
+  };
 
 }

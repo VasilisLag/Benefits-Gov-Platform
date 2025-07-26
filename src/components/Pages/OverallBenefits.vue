@@ -236,13 +236,21 @@ export default {
 
       this.allQuestions.forEach(q => {
         const tags = q.benefitTags;
+        // Clear answer for any question that is now excluded (not visible)
         if (
           tags &&
           tags.length > 0 &&
           tags.every(tag => excluded.includes(tag)) &&
-          q.answer === undefined
+          q.answer !== null
         ) {
           q.answer = null;
+        }
+        // Also clear answer if showIf is not satisfied
+        if (q.showIf) {
+          const { key, value } = q.showIf;
+          if (this.facts[key] !== value && q.answer !== null) {
+            q.answer = null;
+          }
         }
       });
 
@@ -267,7 +275,7 @@ export default {
         const calcResult = benefit.calculate(facts, result.eligible, result.reasons);
         resultsArr.push(calcResult);
       });
-
+      console.log(this.benefits)
       // Αν κανένα επίδομα δεν είναι eligible, δείξε τα αποτελέσματα και σταμάτα τη φόρμα
       if (Object.values(this.benefitEligibility).every(e => !e)) {
         this.allResults = resultsArr.map(benefit => ({
@@ -352,13 +360,16 @@ export default {
         resultsArr.push(calcResult);
       });
 
-      this.allResults = resultsArr.map(benefit => ({
-        title: benefit.title,
-        eligible: benefit.eligible,
-        allowanceAmount: benefit.allowanceAmount || 0,
-        reasons: benefit.reasons || [],
-        message: benefit.message || '',
-      }));
+      // Defensive: skip undefined results to avoid runtime errors
+      this.allResults = resultsArr
+        .filter(b => b && typeof b === 'object' && b.title !== undefined)
+        .map(benefit => ({
+          title: benefit.title,
+          eligible: benefit.eligible,
+          allowanceAmount: benefit.allowanceAmount || 0,
+          reasons: benefit.reasons || [],
+          message: benefit.message || '',
+        }));
     },
     beforeRouteLeave(to, from, next) {
       this.allQuestions.forEach(q => { q.answer = null; });
