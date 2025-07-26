@@ -8,7 +8,7 @@ const questions = [
     required: true,
     tag: "demography",
     answer: null,
-    benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit"],
+    benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     eligibility: {
       childrenBenefit: {
         type: "match",

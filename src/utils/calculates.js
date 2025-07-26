@@ -2,7 +2,7 @@
 export function calcKEABenefitAllowance(facts, eligible, reasons) {
   const title = "Ελάχιστο Εγγυημένο Εισόδημα";
   const income6m = parseFloat(facts.income6m);
-  let adults = parseInt(facts.adults) || parseInt(facts.hostedPersons);
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
@@ -11,6 +11,17 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
     dependentChildren -= 1;
     adults += 1;
   }
+
+  if(!eligible) {
+    return {
+      title,
+      eligible: false,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+
   const totalAdults = adults + unsupportedChildren;
   const totalChildren = dependentChildren;
   const baseAmount = 216;
@@ -31,13 +42,13 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
     // If eligible but allowanceAmount <= 0, return object with 0 and explanatory message
     return {
       title,
-      eligible: true,
+      eligible: false,
       allowanceAmount: 0,
-      message: `Δεν προκύπτει ποσό επιδότησης για τα δεδομένα που δηλώσατε.`,
-      reasons: []
+      message: null,
+      reasons: ['Δεν προκύπτει ποσό επιδότησης για τα δεδομένα που δηλώσατε.']
     };
   }
-  // Always return an object, even if not eligible or missing data
+
   return {
     title,
     eligible: null,
@@ -52,6 +63,17 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
   const title = "Κοινωνικό Οικιακό Τιμολόγιο";
   const keaEligible = facts.keaEligible;
   let allowanceAmount = null;
+
+  if(!eligible) {
+    return {
+      title,
+      eligible: false,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+
   if (keaEligible && eligible) {
     allowanceAmount = 0.075;
     return {
@@ -88,6 +110,16 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
   const dependentChildren = parseInt(facts.dependentChildren);
   const area = facts.area;
   const heatingSource = facts.heatingSource;
+
+  if(!eligible) {
+    return {
+      title,
+      eligible: false,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
 
   let baseAmount = null;
   let coefficient = 1;
@@ -133,15 +165,16 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
       message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`,
       reasons: []
     };
-  } else {
-    return {
-      title,
-      eligible: null,
-      allowanceAmount: null,
-      message: null,
-      reasons: reasons
-    };
   }
+
+  return {
+    title,
+    eligible: null,
+    allowanceAmount: null,
+    message: null,
+    reasons: reasons
+  };
+
 }
 export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const title = "Επίδομα Στέγασης";
@@ -150,6 +183,16 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const unsupportedChildren = parseInt(facts.unsupportedChildren);
   const hostedPersons = parseInt(facts.hostedPersons);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
+
+  if(!eligible) {
+    return {
+      title,
+      eligible: false,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
 
   if (
     eligible &&
@@ -176,7 +219,7 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
       reasons: []
     };
   }
-  // Always return an object, even if not eligible or missing data
+
   return {
     title,
     eligible: null,
@@ -191,6 +234,17 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
   const income = parseFloat(facts.income);
   const dependentChildren = parseInt(facts.dependentChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
+
+  if(!eligible) {
+    return {
+      title,
+      eligible: false,
+      allowanceAmount: null,
+      message: null,
+      reasons: reasons
+    };
+  }
+
   if (
     eligible &&
     income !== undefined && income !== null &&
@@ -244,7 +298,6 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
     };
   }
 
-  // Always return an object, even if not eligible or missing data
   return {
     title,
     eligible: null,

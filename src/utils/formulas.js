@@ -202,7 +202,7 @@ export function childrenBenefitIncomeFormula(facts) {
 // KEA: Εισοδηματικό όριο 6μήνου
 export function keaIncomeThresholdFormula(facts) {
   const income6m = parseFloat(facts.income6m);
-  let adults = parseInt(facts.adults);
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
@@ -230,7 +230,7 @@ export function keaIncomeThresholdFormula(facts) {
 // KEA: Ακίνητη περιουσία
 export function keaPropertyThresholdFormula(facts) {
   const propertyValue = parseFloat(facts.propertyValue);
-  let adults = parseInt(facts.adults);
+  let adults = parseInt(facts.adults) (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
@@ -266,7 +266,7 @@ export function keaVehicleThresholdFormula(facts) {
 // KEA: Καταθέσεις
 export function keaSavingsThresholdFormula(facts) {
   const savings = parseFloat(facts.savings);
-  let adults = parseInt(facts.adults) || 0;
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
@@ -289,7 +289,7 @@ export function keaSavingsThresholdFormula(facts) {
 
 export function kotIncomeThresholdFormula(facts) {
   const income = parseFloat(facts.income);
-  let adults = parseInt(facts.adults);
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let vulnerableCategory = facts.vulnerableCategory;
@@ -322,7 +322,7 @@ export function kotIncomeThresholdFormula(facts) {
 // KOT: Ακίνητη περιουσία
 export function kotPropertyThresholdFormula(facts) {
   const propertyValue = parseFloat(facts.propertyValue);
-  let adults = parseInt(facts.adults);
+  let adults = parseInt(facts.adults) || (parseInt(facts.hostedPersons) + 1);
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
 
