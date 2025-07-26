@@ -6,11 +6,6 @@
           {{ question }}
         </span>
       </legend>
-      <p class="govgr-hint govgr-mt-3 hints">Μπορείτε να επιλέξετε μόνο μία επιλογή.</p>
-      <p class="govgr-error-message hints govgr-mb-6">
-        <span class="govgr-visually-hidden">Λάθος:</span>
-        Πρέπει να επιλέξετε μια απάντηση
-      </p>
       <div class="govgr-radios govgr-mt-3">
         <div class="govgr-radios__item" v-for="(option, index) in options" :key="index">
           <label class="govgr-label govgr-radios__label">
