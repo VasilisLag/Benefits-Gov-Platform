@@ -222,7 +222,7 @@ export function keaIncomeThresholdFormula(facts) {
     return { eligible: null, disqualifyReason: null };
   }
   return {
-    eligible: income6m < threshold,
+    eligible: income6m <= threshold,
     disqualifyReason: `Το εισόδημα σας κατα τους τελευταίους 6 μήνες (${income6m?.toLocaleString('el-GR')}€) υπερβαίνει το εισοδηματικό όριο (${threshold?.toLocaleString('el-GR')}€).`
   };
 }
@@ -314,7 +314,7 @@ export function kotIncomeThresholdFormula(facts) {
     threshold += 8000;
   }
   return {
-    eligible: income < threshold,
+    eligible: income <= threshold,
     disqualifyReason: `Το εισόδημα σας (${income?.toLocaleString('el-GR')}€) υπερβαίνει το εισοδηματικό όριο (${threshold?.toLocaleString('el-GR')}€).`
   };
 }

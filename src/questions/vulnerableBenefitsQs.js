@@ -45,7 +45,7 @@ const questions = [
   },
   {
     key: "adults",
-    question: "Πόσοι ενήλικες μένετε στο νοικοκυριό σας;",
+    question: "Απο πόσα ενήλικα μέλη αποτελείται το νοικοκυριό σας;",
     category: "textbox",
     tag: "household",
     answer: null,
