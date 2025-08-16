@@ -119,7 +119,7 @@ export default {
       'luxuryBelonging'
     ];
     return {
-      title: 'Προσομοίωση Αξιολόγησης Ε.Ε.Ε και Κ.Ο.Τ.',
+      title: 'Αξιολόγηση Επιλεξιμότητας Ε.Ε.Ε και Κ.Ο.Τ.',
       allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       filteredQuestions: [],
       currentQuestionIndex: 0,

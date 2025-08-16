@@ -128,7 +128,7 @@ export default {
       'vulnerableCategory',
     ];
     return {
-      title: 'Συνολική Προσομοίωση',
+      title: 'Συνολική Αξιολόγηση Επιλεξιμότητας',
       allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,

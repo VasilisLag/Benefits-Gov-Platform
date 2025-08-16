@@ -111,7 +111,7 @@ export default {
       'dependentChildren'
     ];
     return {
-      title: 'Προσομοίωση Αξιολόγησης Επιδόματος Παιδιού',
+      title: 'Αξιολόγηση Επιλεξιμότητας Επίδομα Παιδιού',
       questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,

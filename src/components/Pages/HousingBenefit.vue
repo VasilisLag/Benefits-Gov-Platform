@@ -118,7 +118,7 @@ export default {
       'luxuryBelonging'
     ];
     return {
-      title: 'Προσομοίωση Αξιολόγησης Επιδόματος Στέγασης',
+      title: 'Αξιολόγηση Επιλεξιμότητας Επίδομα Στέγασης',
       questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,

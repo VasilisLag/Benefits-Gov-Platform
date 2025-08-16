@@ -116,7 +116,7 @@ export default {
       'heatingSource'
     ];
     return {
-      title: 'Προσομοίωση Αξιολόγησης Επιδόματος Θέρμανσης',
+      title: 'Αξιολόγηση Επιλεξιμότητας Επίδομα Θέρμανσης',
       allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
       currentQuestionIndex: 0,
       currentOption: null,
