@@ -6,7 +6,7 @@ const questions = [
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "demography",
+    tag: "profile",
     answer: null,
     benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     eligibility: {
@@ -30,7 +30,7 @@ const questions = [
         value: "Ναι",
         disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
       },
-    kot: {
+      kot: {
         type: "match",
         value: "Ναι",
         disqualifyReason: "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
@@ -44,7 +44,7 @@ const questions = [
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "demography",
+    tag: "profile",
     answer: null,
     benefitTags: ["childrenBenefit", "heatingBenefit", "kot", "kea"],
     eligibility: {
@@ -72,8 +72,7 @@ const questions = [
         type: "match",
         value: "Ναι",
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
-      },
-
+      }
     },
     note: `
       <details class="govgr-details">
@@ -159,7 +158,7 @@ const questions = [
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
     required: true,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["heatingBenefit", "childrenBenefit", "housingBenefit", "kea"]
   },
@@ -169,7 +168,7 @@ const questions = [
     question: "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
     category: "textbox",
     required: true,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
@@ -204,7 +203,7 @@ const questions = [
     question: "Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας;(αν έχετε)",
     category: "textbox",
     required: false,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["housingBenefit", "kea", "kot"],
     note: `
@@ -227,7 +226,7 @@ const questions = [
     question: "Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)",
     category: "textbox",
     required: false,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["housingBenefit", "kea", "kot"]
   },
@@ -237,7 +236,7 @@ const questions = [
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
     required: true,
-    tag: "household",
+    tag: "housing",
     answer: null,
     benefitTags: ["heatingBenefit"]
   },
@@ -248,7 +247,7 @@ const questions = [
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
     required: true,
-    tag: "household",
+    tag: "housing",
     answer: null,
     benefitTags: ["heatingBenefit"]
   },
@@ -259,7 +258,7 @@ const questions = [
     options: ["Ναι", "Όχι"],
     category: "radio",
     required: true,
-    tag: "household",
+    tag: "housing",
     answer: null,
     benefitTags: ["housingBenefit"],
     eligibility: {
@@ -276,7 +275,7 @@ const questions = [
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
     required: true,
-    tag: "household",
+    tag: "housing",
     answer: null,
     benefitTags: ["housingBenefit"]
   },
@@ -417,7 +416,7 @@ const questions = [
         type: "match",
         value: "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
         disqualifyReason: "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών."
-      },
+      }
     }
   },
   // Ευάλωτες κατηγορίες
@@ -427,7 +426,7 @@ const questions = [
     category: "radio",
     options: ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
     required: true,
-    tag: "vulnerable",
+    tag: "special-needs",
     answer: null,
     benefitTags: ["kot"],
     note: `
