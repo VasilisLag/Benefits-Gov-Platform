@@ -94,6 +94,97 @@ import {
   calcHousingBenefitAllowance
 } from '@/utils/calculates.js';
 
+function questionsInitialize() {
+  // Static array for reference:
+  // const questionOrder = [
+  //   'submittedTaxDeclaration',
+  //   'residesInGreece',
+  //   'income',
+  //   'income6m',
+  //   'isBusinessOwner',
+  //   'businessIncome',
+  //   'maritalStatus',
+  //   'dependentChildren',
+  //   'unsupportedChildren',
+  //   'hostedPersons',
+  //   'area',
+  //   'heatingSource',
+  //   'activeRent',
+  //   'rent',
+  //   'propertyValue',
+  //   'savings',
+  //   'vehicleValue',
+  //   'luxuryBelonging',
+  //   'vulnerableCategory',
+  // ];
+  // return questionOrder.map(key => allQuestions.find(q => q.key === key));
+
+  // Νέα λογική: ταξινόμηση με βάση tag, knockout potential και showIf
+  const tagOrder = [
+    'profile',
+    'family',
+    'income',
+    'housing',
+    'assets',
+    'special-needs'
+  ];
+
+  // Ομαδοποίηση ερωτήσεων ανά tag
+  const grouped = {};
+  tagOrder.forEach(tag => { grouped[tag] = []; });
+  allQuestions.forEach(q => {
+    if (tagOrder.includes(q.tag)) {
+      grouped[q.tag].push(q);
+    }
+  });
+
+  // Ταξινόμηση εντός κατηγορίας με βάση knockout potential (μέγεθος eligibility)
+  tagOrder.forEach(tag => {
+    grouped[tag].sort((a, b) => {
+      const aKnockout = a.eligibility ? Object.keys(a.eligibility).length : 0;
+      const bKnockout = b.eligibility ? Object.keys(b.eligibility).length : 0;
+      return bKnockout - aKnockout;
+    });
+  });
+
+  let ordered = [];
+  tagOrder.forEach(tag => {
+    grouped[tag].forEach(q => {
+      ordered.push(q);
+    });
+  });
+
+  // Μαζική τοποθέτηση όλων των children (με showIf) ακριβώς μετά το parent, ανεξάρτητα από tag/grouping
+  let parents = ordered.filter(q => ordered.some(child => child.showIf && child.showIf.key === q.key));
+  parents.forEach(parent => {
+    // Βρες όλα τα children για αυτό το parent, με βάση τη σειρά που είχαν στο ordered
+    const children = ordered
+      .map((item, idx) => ({ item, idx }))
+      .filter(({ item }) => item.showIf && item.showIf.key === parent.key)
+      .sort((a, b) => a.idx - b.idx)
+      .map(({ item }) => item);
+    if (children.length > 0) {
+      // Αφαίρεσε τα children από το array
+      children.forEach(child => {
+        const idx = ordered.indexOf(child);
+        if (idx !== -1) ordered.splice(idx, 1);
+      });
+      // Βρες το index του parent (μπορεί να έχει αλλάξει λόγω splice)
+      const parentIdx = ordered.indexOf(parent);
+      // Εισήγαγε τα children ακριβώς μετά το parent
+      ordered.splice(parentIdx + 1, 0, ...children);
+    }
+  });
+
+  
+
+  console.log(ordered);
+
+  return ordered;
+
+
+}
+
 export default {
   name: 'OverallBenefits',
   components: {
@@ -106,30 +197,9 @@ export default {
     ExpandableFAQ
   },
   data() {
-    const questionOrder = [
-      'submittedTaxDeclaration',
-      'residesInGreece',
-      'income',
-      'income6m',
-      'isBusinessOwner',
-      'businessIncome',
-      'maritalStatus',
-      'dependentChildren',
-      'unsupportedChildren',
-      'hostedPersons',
-      'area',
-      'heatingSource',
-      'activeRent',
-      'rent',
-      'propertyValue',
-      'savings',
-      'vehicleValue',
-      'luxuryBelonging',
-      'vulnerableCategory',
-    ];
     return {
       title: 'Συνολική Αξιολόγηση Επιλεξιμότητας',
-      allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
+      allQuestions: questionsInitialize(),
       currentQuestionIndex: 0,
       currentOption: null,
       results: null,
@@ -216,7 +286,7 @@ export default {
         .filter(([, eligible]) => eligible === false)
         .map(([benefit]) => benefit);
 
-      console.log('Benefit eligibility:', this.benefitEligibility);
+      // console.log('Benefit eligibility:', this.benefitEligibility);
 
       const answered = this.allQuestions.slice(0, this.currentQuestionIndex);
       const remaining = this.allQuestions.slice(this.currentQuestionIndex).filter(q => {
@@ -232,8 +302,8 @@ export default {
         return true;
       });
 
-      console.log('Answered questions:', answered.map(q => q.key));
-      console.log('Upcoming questions:', remaining.map(q => q.key));
+      // console.log('Answered questions:', answered.map(q => q.key));
+      // console.log('Upcoming questions:', remaining.map(q => q.key));
 
       this.allQuestions.forEach(q => {
         const tags = q.benefitTags;
@@ -338,7 +408,7 @@ export default {
     },
     goToQuestion(index) {
       // Accept either a key (string) or index (number)
-      console.log(index)
+      // console.log(index)
       let idx = typeof index === 'string'
         ? this.questions.findIndex(q => q.key === index)
         : index;
@@ -389,6 +459,7 @@ export default {
   created() {
     // Αρχικό filtering (όλα τα επιδόματα ενεργά)
     this.filteredQuestions = [...this.allQuestions];
+    console.log('Questions Order:', this.filteredQuestions.map(q => q.key));
   }
 };
 </script>
