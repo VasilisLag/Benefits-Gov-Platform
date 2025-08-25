@@ -400,7 +400,7 @@ const questions = [
     required: true,
     tag: "assets",
     answer: null,
-    benefitTags: ["housingBenefit", "vulnerableBenefits"],
+    benefitTags: ["housingBenefit", "kea", "kot"],
     eligibility: {
       housingBenefit: {
         type: "match",
