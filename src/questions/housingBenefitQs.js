@@ -4,7 +4,6 @@ export default[
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "demography",
     answer: null,
     eligibility: {
@@ -20,7 +19,6 @@ export default[
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια </summary>
@@ -45,7 +43,6 @@ export default[
     key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
-    required: true,
     tag: "income",
     answer: null,
     eligibility: {
@@ -61,7 +58,6 @@ export default[
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "household",
     answer: null,
     eligibility: {
@@ -76,7 +72,6 @@ export default[
     key: "rent",
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
-    required: true,
     tag: "household",
     answer: null
   },
@@ -85,7 +80,6 @@ export default[
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "household",
     answer: null
   },
@@ -111,7 +105,6 @@ export default[
         </div>
       </details>
     `,
-    required: false,
     tag: "household",
     answer: null
   },
@@ -132,7 +125,6 @@ export default[
         </div>
       </details>
     `,
-    required: false,
     tag: "household",
     answer: null
   },
@@ -140,7 +132,6 @@ export default[
     key: "hostedPersons",
     question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)` ,
     category: "textbox",
-    required: false,
     tag: "household",
     answer: null
   },
@@ -160,7 +151,6 @@ export default[
         </div>
       </details>
     `,
-    required: true,
     tag: "assets",
     answer: null
     ,
@@ -188,7 +178,6 @@ export default[
         </div>
       </details>
     `,
-    required: true,
     tag: "assets",
     answer: null
     ,
@@ -210,7 +199,6 @@ export default[
       "Οικιακούς βοηθούς, οδηγούς ή δασκάλους",
     ],
     category: "radio",
-    required: true,
     tag: "assets",
     answer: null,
     eligibility: {

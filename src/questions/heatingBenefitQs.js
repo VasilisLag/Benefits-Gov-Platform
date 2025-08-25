@@ -4,7 +4,6 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "demography",
     answer: null,
     eligibility: {
@@ -20,7 +19,6 @@ const questions = [
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     note: `
       <details class="govgr-details">
         <summary class="govgr-details__summary"> Βοήθεια </summary>
@@ -45,7 +43,6 @@ const questions = [
     key: "income",
     question: "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ;",
     category: "textbox",
-    required: true,
     tag: "income",
     answer: null,
     eligibility: {
@@ -60,7 +57,6 @@ const questions = [
     question: "Ασκείτε επιχειρηματική δραστηριότητα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    required: true,
     tag: "income",
     answer: null,
   },
@@ -78,7 +74,6 @@ const questions = [
         </div>
       </details>
     `,
-    required: false,
     tag: "income",
     answer: null,
     showIf: { key: "isBusinessOwner", value: "Ναι" },
@@ -103,7 +98,6 @@ const questions = [
         </div>
       </details>
     `,
-    required: true,
     tag: "assets",
     answer: null,
     eligibility: {
@@ -118,7 +112,6 @@ const questions = [
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
-    required: true,
     tag: "household",
     answer: null
   },
@@ -143,7 +136,6 @@ const questions = [
             </ul>
         </div>
       </details>`,
-    required: true,
     tag: "household",
     answer: null
   },
@@ -151,7 +143,6 @@ const questions = [
     key: "area",
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
-    required: true,
     tag: "household",
     answer: null
   },
@@ -160,7 +151,6 @@ const questions = [
     question: "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
-    required: true,
     tag: "household",
     answer: null
   },
