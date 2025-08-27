@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="govgr-warning-text" style="text-align:left;">
+      <span class="govgr-warning-text__icon">!</span>
+        <strong class="govgr-warning-text__text">
+          <span class="govgr-warning-text__assistive">Προσοχή</span>
+            Τα αποτελέσματα αποτελούν εκτίμηση και όχι ακριβή αξιολόγηση.<br> 
+            Για επίσημη ενημέρωση απευθυνθείτε στις αρμόδιες αρχές.
+        </strong>
+    </div>
+    
     <div v-if="results.length === 1" class="single-benefit-result">
       <h2 class="govgr-heading-l" id="result">
         {{ results[0].eligible ? `Είστε Δικαιούχος για το ${results[0].title}` : `Δεν είστε Δικαιούχος για το ${results[0].title}` }}
