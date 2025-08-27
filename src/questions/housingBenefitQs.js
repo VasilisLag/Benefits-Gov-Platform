@@ -4,7 +4,7 @@ export default[
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       housingBenefit: {
@@ -29,7 +29,7 @@ export default[
         </div>
       </details>
     `,
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       housingBenefit: {
@@ -58,7 +58,7 @@ export default[
     question: "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "household",
+    tag: "housing",
     answer: null,
     eligibility: {
       housingBenefit: {
@@ -72,7 +72,7 @@ export default[
     key: "rent",
     question: "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
     category: "textbox",
-    tag: "household",
+    tag: "housing",
     answer: null
   },
   {
@@ -80,7 +80,7 @@ export default[
     question: "Είναι η οικογένειά σας μονογονεϊκή;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {
@@ -105,7 +105,7 @@ export default[
         </div>
       </details>
     `,
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {
@@ -125,14 +125,14 @@ export default[
         </div>
       </details>
     `,
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {
     key: "hostedPersons",
     question: `Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας;(αν έχετε)` ,
     category: "textbox",
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {

@@ -7,7 +7,7 @@ const questions = [
       "Όχι"
     ],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       kea: {
@@ -27,7 +27,7 @@ const questions = [
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     benefitTags: ["kea", "kot"],
     eligibility: {
@@ -47,7 +47,7 @@ const questions = [
     key: "adults",
     question: "Απο πόσα ενήλικα μέλη αποτελείται το νοικοκυριό σας;",
     category: "textbox",
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["kea", "kot"],
     eligibility: {
@@ -84,7 +84,7 @@ const questions = [
             </ul>
         </div>
       </details>`,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["kea", "kot"],
   },
@@ -106,7 +106,7 @@ const questions = [
         </div>
       </details>
     `,
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["kea", "kot"],
   },
@@ -115,7 +115,7 @@ const questions = [
     question: "Είστε μονογονεϊκή οικογένεια;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "household",
+    tag: "family",
     answer: null,
     benefitTags: ["kea"],
   },
@@ -135,7 +135,7 @@ const questions = [
         </div>
       </details>
     `,
-    tag: "vulnerable",
+    tag: "special-needs",
     answer: null,
     benefitTags: ["kot"],
   },

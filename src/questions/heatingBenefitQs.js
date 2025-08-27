@@ -4,7 +4,7 @@ const questions = [
     question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
     options: ["Ναι", "Όχι"],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       heatingBenefit: {
@@ -29,7 +29,7 @@ const questions = [
         </div>
       </details>
     `,
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       heatingBenefit: {
@@ -112,7 +112,7 @@ const questions = [
     question: "Ποιά είναι η οικογενειακή σας κατάσταση;",
     options: ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
     category: "dropdown",
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {
@@ -136,14 +136,14 @@ const questions = [
             </ul>
         </div>
       </details>`,
-    tag: "household",
+    tag: "family",
     answer: null
   },
   {
     key: "area",
     question: "Ποιός είναι ο τόπος διαμονής σας;",
     category: "geo-dropdown",
-    tag: "household",
+    tag: "housing",
     answer: null
   },
   {
@@ -151,7 +151,7 @@ const questions = [
     question: "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
     category: "dropdown",
     options: ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)","Τηλεθέρμανση/Καυσόξυλα"],
-    tag: "household",
+    tag: "housing",
     answer: null
   },
 ];

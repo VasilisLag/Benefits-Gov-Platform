@@ -7,7 +7,7 @@ const questions = [
       "Όχι"
     ],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       childrenBenefit: {
@@ -25,7 +25,7 @@ const questions = [
       "Όχι"
     ],
     category: "radio",
-    tag: "demography",
+    tag: "profile",
     answer: null,
     eligibility: {
       childrenBenefit: {
@@ -56,7 +56,7 @@ const questions = [
       "Όχι"
     ],
     category: "radio",
-    tag: "household",
+    tag: "family",
     answer: null,
     note: `
       <details class="govgr-details">
@@ -75,7 +75,7 @@ const questions = [
     key: "dependentChildren",
     question: "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
     category: "textbox",
-    tag: "household",
+    tag: "family",
     answer: null,
     note: `  
       <details class="govgr-details">
