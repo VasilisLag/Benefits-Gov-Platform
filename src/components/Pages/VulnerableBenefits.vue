@@ -103,52 +103,91 @@ export default {
     ExpandableFAQ
   },
   data() {
-    const questionOrder = [
-      'submittedTaxDeclaration',
-      'residesInGreece',
-      'adults',
-      'dependentChildren',
-      'unsupportedChildren',
-      'isSingleParent',
-      'vulnerableCategory',
-      'income',
-      'income6m',
-      'propertyValue',
-      'vehicleValue',
-      'savings',
-      'luxuryBelonging'
-    ];
-    return {
-      title: 'Αξιολόγηση Επιλεξιμότητας Ε.Ε.Ε και Κ.Ο.Τ.',
-      allQuestions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
-      filteredQuestions: [],
-      currentQuestionIndex: 0,
-      currentOption: null,
-      results: null,
-      summaryResults: [],
-      allResults: null,
-      benefitEligibility: {
-        kea: null,
-        kot: null
-      },
-      questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q),
-      benefits: [
-        {
-          key: 'kea',
-          title: 'Ελάχιστο Εγγυημένο Εισόδημα',
-          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kea'),
-          calculate: calcKEABenefitAllowance
+      function questionsInitialize() {
+        const tagOrder = [
+          'profile',
+          'family',
+          'income',
+          'housing',
+          'assets',
+          'special-needs'
+        ];
+
+        const grouped = {};
+        tagOrder.forEach(tag => { grouped[tag] = []; });
+        allQuestions.forEach(q => {
+          if (tagOrder.includes(q.tag)) {
+            grouped[q.tag].push(q);
+          }
+        });
+
+        tagOrder.forEach(tag => {
+          grouped[tag].sort((a, b) => {
+            const aKnockout = a.eligibility ? Object.keys(a.eligibility).length : 0;
+            const bKnockout = b.eligibility ? Object.keys(b.eligibility).length : 0;
+            return bKnockout - aKnockout;
+          });
+        });
+
+        let ordered = [];
+        tagOrder.forEach(tag => {
+          grouped[tag].forEach(q => {
+            ordered.push(q);
+          });
+        });
+
+        // Μαζική τοποθέτηση όλων των children (με showIf) ακριβώς μετά το parent, ανεξάρτητα από tag/grouping
+        let parents = ordered.filter(q => ordered.some(child => child.showIf && child.showIf.key === q.key));
+        parents.forEach(parent => {
+          const children = ordered
+            .map((item, idx) => ({ item, idx }))
+            .filter(({ item }) => item.showIf && item.showIf.key === parent.key)
+            .sort((a, b) => a.idx - b.idx)
+            .map(({ item }) => item);
+          if (children.length > 0) {
+            children.forEach(child => {
+              const idx = ordered.indexOf(child);
+              if (idx !== -1) ordered.splice(idx, 1);
+            });
+            const parentIdx = ordered.indexOf(parent);
+            ordered.splice(parentIdx + 1, 0, ...children);
+          }
+        });
+
+        return ordered;
+      }
+
+      return {
+        title: 'Αξιολόγηση Επιλεξιμότητας Ε.Ε.Ε και Κ.Ο.Τ.',
+        allQuestions: questionsInitialize(),
+        filteredQuestions: [],
+        currentQuestionIndex: 0,
+        currentOption: null,
+        results: null,
+        summaryResults: [],
+        allResults: null,
+        benefitEligibility: {
+          kea: null,
+          kot: null
         },
-        {
-          key: 'kot',
-          title: 'Κοινωνικό Οικιακό Τιμολόγιο',
-          evaluate: (questions, facts) => evaluateAll(questions, facts, 'kot'),
-          calculate: calcKOTBenefitAllowance
-        }
-        // Προσθέτεις εδώ νέα επιδόματα π.χ. { key: 'housing', ... }
-      ],
-    };
-  },
+        questionsInfo: questionsInfo.filter(q => q.tag === "vulnerableBenefit").map(q => q),
+        benefits: [
+          {
+            key: 'kea',
+            title: 'Ελάχιστο Εγγυημένο Εισόδημα',
+            evaluate: (questions, facts) => evaluateAll(questions, facts, 'kea'),
+            calculate: calcKEABenefitAllowance
+          },
+          {
+            key: 'kot',
+            title: 'Κοινωνικό Οικιακό Τιμολόγιο',
+            evaluate: (questions, facts) => evaluateAll(questions, facts, 'kot'),
+            calculate: calcKOTBenefitAllowance
+          }
+          // Προσθέτεις εδώ νέα επιδόματα π.χ. { key: 'housing', ... }
+        ],
+      };
+    },
   computed: {
     questions() {
       return this.filteredQuestions;
@@ -323,6 +362,7 @@ export default {
   created() {
     // Αρχικό filtering (όλα τα επιδόματα ενεργά)
     this.filteredQuestions = [...this.allQuestions];
+    console.log('Questions Order:', this.filteredQuestions.map(q => q.key));
   },
   beforeRouteLeave(to, from, next) {
     this.allQuestions.forEach(q => { q.answer = null; });

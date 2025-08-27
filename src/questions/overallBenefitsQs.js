@@ -123,7 +123,7 @@ const questions = [
   },
   {
     key: "businessIncome",
-    question: "Ποια είναι τα συνολικά ακαθάριστα έσοδά σας από αυτή τη δραστηριότητα σε ευρώ;",
+    question: "Ποια είναι τα συνολικά ακαθάριστα έσοδά σας από την επιχειρηματική δραστηριότητα σε ευρώ;",
     category: "textbox",
     note: `
       <details class="govgr-details">

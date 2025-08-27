@@ -103,30 +103,70 @@ export default {
     ExpandableFAQ
   },
   data() {
-    const questionOrder = [
-      'submittedTaxDeclaration',
-      'residesInGreece',
-      'income',
-      'activeRent',
-      'rent',
-      'isSingleParent',
-      'dependentChildren',
-      'unsupportedChildren',
-      'hostedPersons',
-      'propertyValue',
-      'savings',
-      'luxuryBelonging'
-    ];
-    return {
-      title: 'Αξιολόγηση Επιλεξιμότητας Επίδομα Στέγασης',
-      questions: questionOrder.map(key => allQuestions.find(q => q.key === key)),
-      currentQuestionIndex: 0,
-      currentOption: null,
-      results: null,
-      summaryResults: [],
-      questionsInfo: questionsInfo.filter(q => q.tag === "housingBenefit").map(q => q)
-    };
-  },
+      function questionsInitialize() {
+        const tagOrder = [
+          'profile',
+          'family',
+          'income',
+          'housing',
+          'assets',
+          'special-needs'
+        ];
+
+        const grouped = {};
+        tagOrder.forEach(tag => { grouped[tag] = []; });
+        allQuestions.forEach(q => {
+          if (tagOrder.includes(q.tag)) {
+            grouped[q.tag].push(q);
+          }
+        });
+
+        tagOrder.forEach(tag => {
+          grouped[tag].sort((a, b) => {
+            const aKnockout = a.eligibility ? Object.keys(a.eligibility).length : 0;
+            const bKnockout = b.eligibility ? Object.keys(b.eligibility).length : 0;
+            return bKnockout - aKnockout;
+          });
+        });
+
+        let ordered = [];
+        tagOrder.forEach(tag => {
+          grouped[tag].forEach(q => {
+            ordered.push(q);
+          });
+        });
+
+        // Μαζική τοποθέτηση όλων των children (με showIf) ακριβώς μετά το parent, ανεξάρτητα από tag/grouping
+        let parents = ordered.filter(q => ordered.some(child => child.showIf && child.showIf.key === q.key));
+        parents.forEach(parent => {
+          const children = ordered
+            .map((item, idx) => ({ item, idx }))
+            .filter(({ item }) => item.showIf && item.showIf.key === parent.key)
+            .sort((a, b) => a.idx - b.idx)
+            .map(({ item }) => item);
+          if (children.length > 0) {
+            children.forEach(child => {
+              const idx = ordered.indexOf(child);
+              if (idx !== -1) ordered.splice(idx, 1);
+            });
+            const parentIdx = ordered.indexOf(parent);
+            ordered.splice(parentIdx + 1, 0, ...children);
+          }
+        });
+
+        return ordered;
+      }
+
+      return {
+        title: 'Αξιολόγηση Επιλεξιμότητας Επίδομα Στέγασης',
+        questions: questionsInitialize(),
+        currentQuestionIndex: 0,
+        currentOption: null,
+        results: null,
+        summaryResults: [],
+        questionsInfo: questionsInfo.filter(q => q.tag === "housingBenefit").map(q => q)
+      };
+    },
   computed: {
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
@@ -220,9 +260,15 @@ export default {
     this.results = null;
     this.summaryResults = [];
     next();
+  },
+  created() {
+    // Αρχικό filtering (όλες οι ερωτήσεις ενεργές)
+    console.log('Questions Order:', this.questions.map(q => q.key));
   }
 };
 </script>
+
+
 
 <style scoped>
 section {
