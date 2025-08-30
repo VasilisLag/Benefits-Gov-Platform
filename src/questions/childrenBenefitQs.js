@@ -50,7 +50,7 @@ const questions = [
   },
   {
     key: "isSingleParent",
-    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    question: "Είναι η οικογένειά σας μονογονεϊκή και είστε υπεύθυνος/η επιμέλειας των τέκνων;",
     options: [
       "Ναι",
       "Όχι"
@@ -59,17 +59,12 @@ const questions = [
     tag: "family",
     answer: null,
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body">
-            <ul style="list-style-type: disc; padding-left:20px; text-align:left;">
-              <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
-              <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
-            </ul>
-          </p>
-        </div>
-      </details>`
+      <p class="govgr-body">
+        <ul style="list-style-type: disc; padding-left:20px; text-align:left;">
+          <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
+          <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
+        </ul>
+      </p>`
   },
   {
     key: "dependentChildren",
@@ -78,24 +73,19 @@ const questions = [
     tag: "family",
     answer: null,
     note: `  
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body">
-            <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-              <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
-                <ul style="list-style-type: circle; padding-left:20px;">
-                  <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
-                  <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
-                </ul>
-              </li>
-              <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση, στο «Μεταλυκειακό έτος – Τάξη Μαθητείας» των ΕΠΑ.Λ. ή σε ΙΕΚ, έως το 24ο έτος</li>
-              <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
-              <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια (όταν έχει επέλθει θάνατος και των δύο γονέων)</li>
+      <p class="govgr-body">
+        <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+          <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
+            <ul style="list-style-type: circle; padding-left:20px;">
+              <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
+              <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
             </ul>
-          </p>
-        </div>
-      </details>`
+          </li>
+          <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση, στο «Μεταλυκειακό έτος – Τάξη Μαθητείας» των ΕΠΑ.Λ. ή σε ΙΕΚ, έως το 24ο έτος</li>
+          <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
+          <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια (όταν έχει επέλθει θάνατος και των δύο γονέων)</li>
+        </ul>
+      </p>`
     ,
     eligibility: {
       childrenBenefit: {

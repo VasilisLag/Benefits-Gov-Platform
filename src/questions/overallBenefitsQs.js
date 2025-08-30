@@ -42,6 +42,11 @@ const questions = [
     question: "Διαμένετε μόνιμα στην Ελλάδα;",
     options: ["Ναι", "Όχι"],
     category: "radio",
+    note: `
+      <p class="govgr-body" style = text-align:left;>
+        Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.
+      </p>
+    `,
     tag: "profile",
     answer: null,
     benefitTags: ["childrenBenefit", "heatingBenefit", "kot", "kea"],
@@ -72,16 +77,6 @@ const questions = [
         disqualifyReason: "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
       }
     },
-    note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια </summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body" style = text-align:left;>
-            Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.
-          </p>
-        </div>
-      </details>
-    `
   },
   // Ετήσιο οικογενειακό εισόδημα
   {
@@ -126,14 +121,9 @@ const questions = [
     question: "Ποια είναι τα συνολικά ακαθάριστα έσοδά σας από την επιχειρηματική δραστηριότητα σε ευρώ;",
     category: "textbox",
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body" style = text-align:left;> 
-            Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.
-          </p>
-        </div>
-      </details>
+      <p class="govgr-body" style = text-align:left;> 
+        Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.
+      </p>
     `,
     tag: "income",
     answer: null,
@@ -165,22 +155,17 @@ const questions = [
     answer: null,
     benefitTags: ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
-              <ul style="list-style-type: circle; padding-left:20px;">
-                <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
-                <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
-              </ul>
-            </li>
-            <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>
-            <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
-            <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:
+          <ul style="list-style-type: circle; padding-left:20px;">
+            <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>
+            <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>
           </ul>
-        </div>
-      </details>
+        </li>
+        <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>
+        <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>
+        <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>
+      </ul>
     `,
     eligibility: {
       childrenBenefit: {
@@ -199,17 +184,12 @@ const questions = [
     answer: null,
     benefitTags: ["housingBenefit", "kea", "kot"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body" style = text-align:left;> 
-            Τα ανήλικα μέλη του νοικοκυριού που είναι 
-            ορφανά και από τους δύο γονείς ή που κανείς γονέας δεν μπορεί να ασκήσει 
-            τη γονική τους μέριμνα, λόγω ασθενείας, αναπηρίας, κράτησης ή στρατιωτικής θητείας και 
-            που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.
-          </p>
-        </div>
-      </details>
+      <p class="govgr-body" style = text-align:left;> 
+        Τα ανήλικα μέλη του νοικοκυριού που είναι 
+        ορφανά και από τους δύο γονείς ή που κανείς γονέας δεν μπορεί να ασκήσει 
+        τη γονική τους μέριμνα, λόγω ασθενείας, αναπηρίας, κράτησης ή στρατιωτικής θητείας και 
+        που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.
+      </p>
     `
   },
   // Φιλοξενούμενα μέλη
@@ -275,16 +255,11 @@ const questions = [
     answer: null,
     benefitTags: ["heatingBenefit", "housingBenefit", "kea", "kot"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Η συνολική φορολογητέα αξία αφορά όλα τα ακίνητα που ανήκουν στα μέλη του νοικοκυριού.</li>
-            <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 120.000€.</li>
-            <li>Προσαυξάνεται κατά 15.000€ για κάθε πρόσθετο μέλος του νοικοκυριού έως τα 180.000€.</li>
-          </ul>
-        </div>
-      </details>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Η συνολική φορολογητέα αξία αφορά όλα τα ακίνητα που ανήκουν στα μέλη του νοικοκυριού.</li>
+        <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 120.000€.</li>
+        <li>Προσαυξάνεται κατά 15.000€ για κάθε πρόσθετο μέλος του νοικοκυριού έως τα 180.000€.</li>
+      </ul>
     `,
     eligibility: {
       heatingBenefit: {
@@ -315,16 +290,11 @@ const questions = [
     answer: null,
     benefitTags: ["housingBenefit", "kea"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Συμπεριλαμβάνονται καταθέσεις, μετοχές και ομόλογα σε Ελλάδα και εξωτερικό.</li>
-            <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 7.000€.</li>
-            <li>Προσαυξάνεται κατά 3.500€ για κάθε πρόσθετο μέλος του νοικοκυριού.</li>
-          </ul>
-        </div>
-      </details>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Συμπεριλαμβάνονται καταθέσεις, μετοχές και ομόλογα σε Ελλάδα και εξωτερικό.</li>
+        <li>Για μονοπρόσωπο νοικοκυριό, το όριο είναι 7.000€.</li>
+        <li>Προσαυξάνεται κατά 3.500€ για κάθε πρόσθετο μέλος του νοικοκυριού.</li>
+      </ul>
     `,
     eligibility: {
       housingBenefit: {
@@ -347,21 +317,16 @@ const questions = [
     answer: null,
     benefitTags: ["kea"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>
-            <li>Η αντικειμενική δαπάνη αφορά:
-              <ul style="list-style-type: circle; padding-left:20px;">
-                <li>Επιβατικά αυτοκίνητα Ιδιωτικής Χρήσης (Ι.Χ.).</li>
-                <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>
-              </ul>
-            </li>
-            <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>
+        <li>Η αντικειμενική δαπάνη αφορά:
+          <ul style="list-style-type: circle; padding-left:20px;">
+            <li>Επιβατικά αυτοκίνητα Ιδιωτικής Χρήσης (Ι.Χ.).</li>
+            <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>
           </ul>
-        </div>
-      </details>
+        </li>
+        <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>
+      </ul>
     `,
     eligibility: {
       kea: {
@@ -412,15 +377,10 @@ const questions = [
     answer: null,
     benefitTags: ["kot"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
-            <li>Εάν υπάρχει μέλος με αναπηρία 67% και άνω, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>8.000 ευρώ</strong>.</li>
-            <li>Εάν υπάρχει μέλος που χρήζει μηναχικής υποστήριξης κατ' οίκον, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>15.000 ευρώ</strong>.</li>
-          </ul>
-        </div>
-      </details>
+      <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
+        <li>Εάν υπάρχει μέλος με αναπηρία 67% και άνω, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>8.000 ευρώ</strong>.</li>
+        <li>Εάν υπάρχει μέλος που χρήζει μηναχικής υποστήριξης κατ' οίκον, τα εισοδηματικά όρια του νοικοκυριού αυξάνονται κατά <strong>15.000 ευρώ</strong>.</li>
+      </ul>
     `
   },
   // Εισόδημα τελευταίων 6 μηνών
@@ -432,14 +392,9 @@ const questions = [
     answer: null,
     benefitTags: ["kea"],
     note: `
-      <details class="govgr-details">
-        <summary class="govgr-details__summary"> Βοήθεια</summary>
-        <div class="govgr-details__content">
-          <p class="govgr-body" style = text-align:left;> 
-            Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα.
-          </p>
-        </div>
-      </details>
+      <p class="govgr-body" style = text-align:left;> 
+        Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα.
+      </p>
     `,
     eligibility: {
       kea: {

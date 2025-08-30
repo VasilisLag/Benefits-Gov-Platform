@@ -15,6 +15,7 @@
                 :questionIndex="currentQuestionIndex"
                 :numberOfQuestions="questions.length"
                 :currentTag="currentTag"
+                :note="currentQuestion.note"
                 @back="goBack"
                 @next="nextQuestion"
                 @submit="submitAnswers"
@@ -33,12 +34,6 @@
               </QuestionForm>
             </div>
 
-            <!-- Note (βοήθεια) -->
-            <div class="question-column-right">
-              <div class="note-box">
-                <p v-if="currentQuestion?.note" v-html="currentQuestion.note" />
-              </div>
-            </div>
           </div>
 
           <div v-if="isFormSummary">

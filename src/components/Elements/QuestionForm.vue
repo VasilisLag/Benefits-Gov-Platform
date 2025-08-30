@@ -24,6 +24,13 @@
       >
         Συνέχεια
       </button>
+        <!-- Note κάτω από το κουμπί Συνέχεια -->
+      <details class="govgr-details" open v-if="note">
+        <summary class="govgr-details__summary">Επεξήγηση</summary>
+        <div class="govgr-details__content">
+          <div v-html="note"></div>
+        </div>
+      </details>
 
       <button
         v-if="isLastQuestion"
@@ -48,6 +55,7 @@ export default {
     questionIndex: Number,
     numberOfQuestions: Number,
     currentTag: String,
+    note: String,
   },
   computed: {
     hasNotChosen() {
