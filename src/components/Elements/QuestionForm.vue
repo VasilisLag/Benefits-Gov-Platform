@@ -96,7 +96,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 320px;
+  min-height: 100px;
   padding-bottom: 1rem;
 }
 
