@@ -58,13 +58,6 @@ const questions = [
     category: "radio",
     tag: "family",
     answer: null,
-    note: `
-      <p class="govgr-body">
-        <ul style="list-style-type: disc; padding-left:20px; text-align:left;">
-          <li>Είστε υπεύθυνος/η επιμέλειας για τα εξαρτώμενα τέκνα.</li>
-          <li>Υπάρχει σχετική δικαστική απόφαση για την επιμέλεια των τέκνων.</li>
-        </ul>
-      </p>`
   },
   {
     key: "dependentChildren",

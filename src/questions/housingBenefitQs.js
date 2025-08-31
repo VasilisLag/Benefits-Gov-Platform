@@ -72,7 +72,7 @@ export default[
   },
   {
     key: "isSingleParent",
-    question: "Είναι η οικογένειά σας μονογονεϊκή;",
+    question: "Είναι η οικογένειά σας μονογονεϊκή και είστε υπεύθυνος/η επιμέλειας των τέκνων;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     tag: "family",
