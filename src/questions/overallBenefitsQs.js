@@ -2,7 +2,7 @@ const questions = [
   // Φορολογική δήλωση
   {
     key: "submittedTaxDeclaration",
-    question: "Έχετε υποβάλει δήλωση φορολογίας εισοδήματος το τρέχον έτος;",
+    question: "Είστε υπόχρεος/η υποβολής φορολογικής δήλωσης;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     tag: "profile",
