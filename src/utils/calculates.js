@@ -75,7 +75,7 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
   }
 
   if (keaEligible && eligible) {
-    allowanceAmount = 0.075;
+    allowanceAmount = "0.075 ανα Κιλοβατώρα";
     return {
       title,
       eligible: true,
@@ -85,7 +85,7 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
     };
   }
   if (eligible) {
-    allowanceAmount = 0.045;
+    allowanceAmount = "0.045 ανα Κιλοβατώρα";
     return {
       title,
       eligible: true,
