@@ -103,7 +103,7 @@ const questions = [
   },
   {
     key: "isSingleParent",
-    question: "Είστε μονογονεϊκή οικογένεια;",
+    question: "Είναι η οικογένειά σας μονογονεϊκή και είστε υπεύθυνος/η επιμέλειας των τέκνων;",
     options: ["Ναι", "Όχι"],
     category: "radio",
     tag: "family",
@@ -127,7 +127,7 @@ const questions = [
   },
   {
     key: "income",
-    question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού;",
+    question: "Ποιο είναι το συνολικό ετήσιο εισόδημά όλων των μελών του νοικοκυριού(βάσει της τελευταίας υποβληθείσας φορολογικής δήλωσης);",
     category: "textbox",
     tag: "income",
     answer: null,
@@ -160,7 +160,7 @@ const questions = [
   },
   {
     key: "propertyValue",
-    question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας σε ευρώ;",
+    question: "Ποια είναι η συνολική φορολογητέα αξία της ακίνητης περιουσίας σας(βάσει του πιο πρόσφατου ΕΝ.Φ.Ι.Α.) σε ευρώ;",
     category: "textbox",
     note: `
       <ul style="list-style-type: disc; padding-left:30px; text-align:left;">
