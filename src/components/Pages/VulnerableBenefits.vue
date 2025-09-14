@@ -50,7 +50,8 @@
                 :items="allResults.map(r => ({
                   title: r.title,
                   content: r.eligible ? r.message : r.reasons,
-                  eligible: r.eligible
+                  eligible: r.eligible,
+                  link: r.link
                 }))"
               />
             </div>
@@ -280,6 +281,7 @@ export default {
           allowanceAmount: benefit.allowanceAmount || 0,
           reasons: benefit.reasons || [],
           message: benefit.message || '',
+          link: benefit.link || null
         }));
         this.currentQuestionIndex = this.questions.length;
         return;
@@ -350,6 +352,7 @@ export default {
         allowanceAmount: benefit.allowanceAmount || 0,
         reasons: benefit.reasons || [],
         message: benefit.message || '',
+        link: benefit.link || null
       }));
     },
   },

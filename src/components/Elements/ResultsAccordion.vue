@@ -11,8 +11,7 @@
         </ul>
         
         <p v-else v-html="items[0].content" class="results-content"></p>
-        <div v-if="items[0].eligible" class="results-content govgr-mt-2">
-          Επισκεφθείτε το site του <a href="https://www.idika.gr/epidomapaidiou/" target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19">ΗΔΙΚΑ</a> για να συνεχίσετε τη διαδικασία
+        <div v-if="items[0].eligible && items[0].link" v-html="items[0].link" class="results-content govgr-mt-2">       
         </div>
       </div>
     </div>
@@ -32,6 +31,7 @@
             <li v-for="(reason, i) in item.content" :key="i">{{ reason }}</li>
           </ul>
           <p v-else v-html="item.content" class="results-content"></p>
+          <div v-if="item.eligible && item.link" v-html="item.link" class="results-content govgr-mt-2"></div>
         </div>
       </details>
     </div>

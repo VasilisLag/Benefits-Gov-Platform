@@ -51,7 +51,8 @@
                 :items="summaryResults.map(r => ({
                   title: r.title,
                   content: r.eligible ? r.message : r.reasons,
-                  eligible: r.eligible
+                  eligible: r.eligible,
+                  link: r.link
                 }))"
               />
             </div>
@@ -223,6 +224,7 @@ export default {
           reasons: result.reasons,
           allowanceAmount: 0,
           message: "Δεν είστε δικαιούχος.",
+          link: result.link
         };
         this.summaryResults = [this.results];
         this.currentQuestionIndex = this.questions.length;

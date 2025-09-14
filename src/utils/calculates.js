@@ -6,6 +6,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
   let dependentChildren = parseInt(facts.dependentChildren);
   let unsupportedChildren = parseInt(facts.unsupportedChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
+    const link = `Επισκεφθείτε το site του ΟΠΕΚΑ <a href="https://keaprogram.gr/pubnr" 
+          target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19">Ελάχιστο Εγγυημένο Εισόδημα</a> για να συνεχίσετε τη διαδικασία.`;
 
   if (isSingleParent && dependentChildren > 0) {
     dependentChildren -= 1;
@@ -18,7 +20,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
       eligible: false,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 
@@ -36,7 +39,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
         eligible: true,
         allowanceAmount,
         message: `Εκτιμώμενο ποσό επιδότησης τον μήνα: <b>${allowanceAmount}€</b>`,
-        reasons: []
+        reasons: [],
+        link: link
       };
     }
     // If eligible but allowanceAmount <= 0, return object with 0 and explanatory message
@@ -45,7 +49,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
       eligible: false,
       allowanceAmount: 0,
       message: null,
-      reasons: ['Δεν προκύπτει ποσό επιδότησης για τα δεδομένα που δηλώσατε.']
+      reasons: ['Δεν προκύπτει ποσό επιδότησης για τα δεδομένα που δηλώσατε.'],
+      link: null
     };
   }
 
@@ -54,7 +59,8 @@ export function calcKEABenefitAllowance(facts, eligible, reasons) {
     eligible: null,
     allowanceAmount: null,
     message: null,
-    reasons: reasons
+    reasons: reasons,
+    link: null
   };
 }
 
@@ -63,14 +69,16 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
   const title = "Κοινωνικό Οικιακό Τιμολόγιο";
   const keaEligible = facts.keaEligible;
   let allowanceAmount = null;
-
+  const link = `Επισκεφθείτε το site της ΗΔΙΚΑ <a href="https://www.idika.gr/kot/" 
+          target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19">Κοινωνικό Οικιακό Τιμολόγιο</a> για να συνεχίσετε τη διαδικασία.`;
   if(!eligible) {
     return {
       title,
       eligible: false,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 
@@ -80,7 +88,8 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
       title,
       eligible: true,
       allowanceAmount,
-      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Α</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${parseFloat(allowanceAmount.split(" ")[0])}€`,
+      link: link,
       reasons: []
     };
   }
@@ -90,7 +99,8 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
       title,
       eligible: true,
       allowanceAmount,
-      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${allowanceAmount}€`,
+      message: `Είστε επιλέξιμος για το ΚΟΤ: <b>Κατηγορία Β</b>. Εκτιμώμενο ποσό επιδότησης κιλοβατώρας: ${parseFloat(allowanceAmount.split(" ")[0])}€`,
+      link: link,
       reasons: []
     };
   } else {
@@ -99,7 +109,8 @@ export function calcKOTBenefitAllowance(facts, eligible, reasons) {
       eligible: null,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 }
@@ -110,14 +121,17 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
   const dependentChildren = parseInt(facts.dependentChildren);
   const area = facts.area;
   const heatingSource = facts.heatingSource;
-
+  const link = `Επισκεφθείτε το site της ΑΑΔΕ <a href="https://www.aade.gr/mythermansi" 
+    target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19"> myThermansi</a> για να συνεχίσετε τη διαδικασία`;
+  
   if(!eligible) {
     return {
       title,
       eligible: false,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 
@@ -163,7 +177,8 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
       eligible: true,
       allowanceAmount: allowanceAmount,
       message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>.`,
-      reasons: []
+      reasons: [],
+      link: link
     };
   }
 
@@ -172,7 +187,8 @@ export function calcHeatingBenefitAllowance(facts, eligible, reasons) {
     eligible: null,
     allowanceAmount: null,
     message: null,
-    reasons: reasons
+    reasons: reasons,
+    link: null
   };
 
 }
@@ -183,14 +199,16 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
   const unsupportedChildren = parseInt(facts.unsupportedChildren);
   const hostedPersons = parseInt(facts.hostedPersons);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
-
+  const link =`Επισκεφθείτε το site του <a href="https://www.epidomastegasis.gr/pub/Home/Index" 
+    target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19">ΟΠΕΚΑ</a> για να συνεχίσετε τη διαδικασία`
   if(!eligible) {
     return {
       title,
       eligible: false,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 
@@ -216,7 +234,8 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
       eligible: true,
       allowanceAmount: allowanceAmount,
       message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
-      reasons: []
+      reasons: [],
+      link: link
     };
   }
 
@@ -225,7 +244,8 @@ export function calcHousingBenefitAllowance(facts, eligible, reasons) {
     eligible: null,
     allowanceAmount: null,
     message: null,
-    reasons: reasons
+    reasons: reasons,
+    link: null
   };
 }
 export function calcChildrenBenefitAllowance(facts, eligible, reasons)
@@ -234,14 +254,17 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
   const income = parseFloat(facts.income);
   const dependentChildren = parseInt(facts.dependentChildren);
   let isSingleParent = facts.isSingleParent === "Ναι" || facts.maritalStatus === "Μονογονέας";
-
+  const link =`Επισκεφθείτε το site του <a href="https://www.idika.gr/epidomapaidiou/" 
+    target="_blank" rel="noopener" class="govgr-link govgr-!-font-size-19">ΗΔΙΚΑ</a> για να συνεχίσετε τη διαδικασία`
+ 
   if(!eligible) {
     return {
       title,
       eligible: false,
       allowanceAmount: null,
       message: null,
-      reasons: reasons
+      reasons: reasons,
+      link: null
     };
   }
 
@@ -294,7 +317,8 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
       eligible: true,
       allowanceAmount: allowanceAmount,
       message: `Εκτιμώμενο ποσό επιδότησης το μήνα: <b>${allowanceAmount}€</b>`,
-      reasons: []
+      reasons: [],
+      link: link
     };
   }
 
@@ -303,7 +327,8 @@ export function calcChildrenBenefitAllowance(facts, eligible, reasons)
     eligible: null,
     allowanceAmount: null,
     message: null,
-    reasons: reasons
+    reasons: reasons,
+    link: null
   };
 
 }
