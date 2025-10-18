@@ -1,0 +1,115 @@
+[
+  {
+    "key": "submittedTaxDeclaration",
+    "question": "Είστε υπόχρεος/η υποβολής φορολογικής δήλωσης;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "tag": "profile",
+    "answer": null,
+    "eligibility": {
+      "heatingBenefit": {
+        "type": "match",
+        "value": "Ναι",
+        "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση."
+      }
+    }
+  },
+  {
+    "key": "residesInGreece",
+    "question": "Διαμένετε μόνιμα στην Ελλάδα;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.\n</p>",
+    "tag": "profile",
+    "answer": null,
+    "eligibility": {
+      "heatingBenefit": {
+        "type": "match",
+        "value": "Ναι",
+        "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα."
+      }
+    }
+  },
+  {
+    "key": "income",
+    "question": "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ (βάσει της τελευταίας υποβληθείσας φορολογικής δήλωσης);",
+    "category": "textbox",
+    "options": null,
+    "tag": "income",
+    "answer": null,
+    "eligibility": {
+      "heatingBenefit": {
+        "type": "formula",
+        "formulaKey": "heatingIncomeThresholdFormula"
+      }
+    }
+  },
+  {
+    "key": "isBusinessOwner",
+    "question": "Ασκείτε επιχειρηματική δραστηριότητα;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "tag": "income",
+    "answer": null
+  },
+  {
+    "key": "businessIncome",
+    "question": "Ποια είναι τα συνολικά ακαθάριστα έσοδά σας από την επιχειρηματική δραστηριότητα σε ευρώ;",
+    "category": "textbox",
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.\n</p>",
+    "tag": "income",
+    "answer": null,
+    "showIf": { "key": "isBusinessOwner", "value": "Ναι" },
+    "eligibility": {
+      "heatingBenefit": {
+        "type": "formula",
+        "formulaKey": "heatingBusinessIncomeFormula"
+      }
+    }
+  },
+  {
+    "key": "propertyValue",
+    "question": "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει του πιο πρόσφατου ΕΝ.Φ.Ι.Α.) σε ευρώ;",
+    "category": "textbox",
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Αυτό αφορά τη συνολική αξία της περιουσίας του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και εξαρτώμενων τέκνων.\n</p>",
+    "tag": "assets",
+    "answer": null,
+    "eligibility": {
+      "heatingBenefit": {
+        "type": "formula",
+        "formulaKey": "heatingPropertyThresholdFormula"
+      }
+    }
+  },
+  {
+    "key": "maritalStatus",
+    "question": "Ποιά είναι η οικογενειακή σας κατάσταση;",
+    "options": ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
+    "category": "dropdown",
+    "tag": "family",
+    "answer": null
+  },
+  {
+    "key": "dependentChildren",
+    "question": "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
+    "category": "textbox",
+    "note": "<ul style='list-style-type: disc; padding-left:30px; text-align:left;'>\n  <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:\n    <ul style='list-style-type: circle; padding-left:20px;'>\n      <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>\n      <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>\n    </ul>\n  </li>\n  <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>\n  <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>\n  <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>\n</ul>",
+    "tag": "family",
+    "answer": null
+  },
+  {
+    "key": "area",
+    "question": "Ποιός είναι ο τόπος διαμονής σας;",
+    "category": "geo-dropdown",
+    "tag": "housing",
+    "answer": null
+  },
+  {
+    "key": "heatingSource",
+    "question": "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
+    "category": "dropdown",
+    "options": ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)", "Τηλεθέρμανση/Καυσόξυλα"],
+    "tag": "housing",
+    "answer": null
+  }
+]

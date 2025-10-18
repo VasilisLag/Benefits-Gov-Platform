@@ -1,0 +1,213 @@
+[
+  {
+    "key": "submittedTaxDeclaration",
+    "question": "Είστε υπόχρεος/η υποβολής φορολογικής δήλωσης;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "tag": "profile",
+    "answer": null,
+    "benefitTags": ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
+    "eligibility": {
+      "childrenBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση." },
+      "heatingBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση." },
+      "housingBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση." },
+      "kea": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση." },
+      "kot": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται να έχει υποβληθεί φορολογική δήλωση." }
+    }
+  },
+  {
+    "key": "residesInGreece",
+    "question": "Διαμένετε μόνιμα στην Ελλάδα;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Πρέπει να διαμένετε στην Ελλάδα κατά τα τελευταία, 5 τουλάχιστον, έτη.\n</p>",
+    "tag": "profile",
+    "answer": null,
+    "benefitTags": ["childrenBenefit", "heatingBenefit", "kot", "kea"],
+    "eligibility": {
+      "childrenBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα." },
+      "heatingBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα." },
+      "housingBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα." },
+      "kea": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα." },
+      "kot": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται μόνιμη κατοικία στην Ελλάδα." }
+    }
+  },
+  {
+    "key": "income",
+    "question": "Ποιο είναι το συνολικό ετήσιο οικογενειακό εισόδημά σας σε ευρώ (βάσει της τελευταίας υποβληθείσας φορολογικής δήλωσης);",
+    "category": "textbox",
+    "tag": "income",
+    "answer": null,
+    "benefitTags": ["childrenBenefit", "heatingBenefit", "housingBenefit", "kot"],
+    "eligibility": {
+      "childrenBenefit": { "type": "formula", "formulaKey": "childrenBenefitIncomeFormula" },
+      "heatingBenefit": { "type": "formula", "formulaKey": "heatingIncomeThresholdFormula" },
+      "housingBenefit": { "type": "formula", "formulaKey": "housingIncomeThresholdFormula", "disqualifyReason": "Το εισόδημά σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης." },
+      "kot": { "type": "formula", "formulaKey": "kotIncomeThresholdFormula" }
+    }
+  },
+  {
+    "key": "isBusinessOwner",
+    "question": "Ασκείτε επιχειρηματική δραστηριότητα;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "tag": "income",
+    "answer": null,
+    "benefitTags": ["heatingBenefit"]
+  },
+  {
+    "key": "businessIncome",
+    "question": "Ποια είναι τα συνολικά ακαθάριστα έσοδά σας από την επιχειρηματική δραστηριότητα σε ευρώ;",
+    "category": "textbox",
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Αφορά τα συνολικά ακαθάριστα έσοδα του αιτούντος, του/της συζύγου ή μέρους συμφώνου συμβίωσης και των εξαρτώμενων τέκνων.\n</p>",
+    "tag": "income",
+    "answer": null,
+    "benefitTags": ["heatingBenefit"],
+    "showIf": { "key": "isBusinessOwner", "value": "Ναι" },
+    "eligibility": { "heatingBenefit": { "type": "formula", "formulaKey": "heatingBusinessIncomeFormula" } }
+  },
+  {
+    "key": "maritalStatus",
+    "question": "Ποιά είναι η οικογενειακή σας κατάσταση;",
+    "options": ["Άγαμος/η", "Έγγαμος/η - Σύμφωνο συμβίωσης", "Μονογονέας"],
+    "category": "dropdown",
+    "tag": "family",
+    "answer": null,
+    "benefitTags": ["heatingBenefit", "childrenBenefit", "housingBenefit", "kea"]
+  },
+  {
+    "key": "dependentChildren",
+    "question": "Πόσα παιδιά έχετε ως εξαρτώμενα μέλη;",
+    "category": "textbox",
+    "tag": "family",
+    "answer": null,
+    "benefitTags": ["childrenBenefit", "heatingBenefit", "housingBenefit", "kea", "kot"],
+    "note": "<ul style='list-style-type: disc; padding-left:30px; text-align:left;'>\n  <li>Τέκνα από γάμο, φυσικά, θετά ή αναγνωρισμένα, εφόσον είναι άγαμα και:\n    <ul style='list-style-type: circle; padding-left:20px;'>\n      <li>δεν υπερβαίνουν το 18ο έτος της ηλικίας τους</li>\n      <li>το 19ο έτος, αν φοιτούν στη μέση εκπαίδευση</li>\n    </ul>\n  </li>\n  <li>Τέκνα που φοιτούν σε ανώτερη ή ανώτατη εκπαίδευση έως το 24ο έτος</li>\n  <li>Τέκνα με ποσοστό αναπηρίας 67% και άνω</li>\n  <li>Ορφανά τέκνα που αποτελούν ιδία οικογένεια</li>\n</ul>",
+    "eligibility": { "childrenBenefit": { "type": "range", "min": 1, "disqualifyReason": "Δεν έχετε δηλώσει εξαρτώμενα τέκνα." } }
+  },
+  {
+    "key": "unsupportedChildren",
+    "question": "Πόσα απροστάτευτα τέκνα έχετε στο νοικοκυριό σας; (αν έχετε)",
+    "category": "textbox",
+    "tag": "family",
+    "answer": null,
+    "benefitTags": ["housingBenefit", "kea", "kot"],
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Τα ανήλικα μέλη του νοικοκυριού που είναι \n  ορφανά και από τους δύο γονείς ή που κανείς γονέας δεν μπορεί να ασκήσει \n  τη γονική τους μέριμνα, λόγω ασθενείας, αναπηρίας, κράτησης ή στρατιωτικής θητείας και \n  που η επιμέλειά τους έχει ανατεθεί με δικαστική απόφαση σε μέλος του νοικοκυριού.\n</p>"
+  },
+  {
+    "key": "hostedPersons",
+    "question": "Πόσα φιλοξενούμενα μέλη έχετε στο νοικοκυριό σας; (αν έχετε)",
+    "category": "textbox",
+    "tag": "family",
+    "answer": null,
+    "benefitTags": ["housingBenefit", "kea", "kot"]
+  },
+  {
+    "key": "area",
+    "question": "Ποιός είναι ο τόπος διαμονής σας;",
+    "category": "geo-dropdown",
+    "tag": "housing",
+    "answer": null,
+    "benefitTags": ["heatingBenefit"]
+  },
+  {
+    "key": "heatingSource",
+    "question": "Ποιός είναι η πηγή θέρμανσης για την οποία επιθυμείτε επιδότηση;",
+    "category": "dropdown",
+    "options": ["Ηλεκτρικό Ρεύμα", "Φυσικό Αέριο", "Πετρέλαιο/Φωτιστικό Πετρέλαιο/Υγραέριο", "Βιομάζα (Πέλετ)", "Τηλεθέρμανση/Καυσόξυλα"],
+    "tag": "housing",
+    "answer": null,
+    "benefitTags": ["heatingBenefit"]
+  },
+  {
+    "key": "activeRent",
+    "question": "Έχετε ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία σας;",
+    "options": ["Ναι", "Όχι"],
+    "category": "radio",
+    "tag": "housing",
+    "answer": null,
+    "benefitTags": ["housingBenefit"],
+    "eligibility": { "housingBenefit": { "type": "match", "value": "Ναι", "disqualifyReason": "Απαιτείται ενεργό μισθωτήριο συμβόλαιο για την κύρια κατοικία." } }
+  },
+  {
+    "key": "rent",
+    "question": "Ποιο είναι το μηνιαίο ποσό ενοικίου που καταβάλλετε σε ευρώ;",
+    "category": "textbox",
+    "tag": "housing",
+    "answer": null,
+    "benefitTags": ["housingBenefit"]
+  },
+  {
+    "key": "propertyValue",
+    "question": "Ποια είναι η συνολική αντικειμενική αξία της ακίνητης περιουσίας σας (βάσει του πιο πρόσφατου ΕΝ.Φ.Ι.Α.) σε ευρώ;",
+    "category": "textbox",
+    "tag": "assets",
+    "answer": null,
+    "benefitTags": ["heatingBenefit", "housingBenefit", "kea", "kot"],
+    "note": "<ul style='list-style-type: disc; padding-left:30px; text-align:left;'>\n  <li>Η συνολική φορολογητέα αξία αφορά όλα τα ακίνητα που ανήκουν στα μέλη του νοικοκυριού.</li>\n</ul>",
+    "eligibility": {
+      "heatingBenefit": { "type": "formula", "formulaKey": "heatingPropertyThresholdFormula" },
+      "housingBenefit": { "type": "formula", "formulaKey": "housingPropertyThresholdFormula", "disqualifyReason": "Η αξία της ακίνητης περιουσίας σας υπερβαίνει το επιτρεπτό όριο για το επίδομα στέγασης." },
+      "kea": { "type": "formula", "formulaKey": "keaPropertyThresholdFormula" },
+      "kot": { "type": "formula", "formulaKey": "kotPropertyThresholdFormula" }
+    }
+  },
+  {
+    "key": "savings",
+    "question": "Ποιο είναι το συνολικό ποσό καταθέσεων, μετοχών, ομολόγων και λοιπών περιουσιακών στοιχείων σας σε ευρώ;",
+    "category": "textbox",
+    "tag": "assets",
+    "answer": null,
+    "benefitTags": ["housingBenefit", "kea"],
+    "note": "<ul style='list-style-type: disc; padding-left:30px; text-align:left;'>\n  <li>Συμπεριλαμβάνονται καταθέσεις, μετοχές και ομόλογα σε Ελλάδα και εξωτερικό.</li>\n</ul>",
+    "eligibility": { "housingBenefit": { "type": "formula", "formulaKey": "housingSavingsThresholdFormula", "disqualifyReason": "Οι καταθέσεις σας υπερβαίνουν το επιτρεπτό όριο για το επίδομα στέγασης." }, "kea": { "type": "formula", "formulaKey": "keaSavingsThresholdFormula" } }
+  },
+  {
+    "key": "vehicleValue",
+    "question": "Ποια είναι η συνολική αντικειμενική δαπάνη των επιβατικών αυτοκινήτων σας (Ι.Χ./Μ.Χ.) σε ευρώ;",
+    "category": "textbox",
+    "tag": "assets",
+    "answer": null,
+    "benefitTags": ["kea"],
+    "note": "<ul style='list-style-type: disc; padding-left:30px; text-align:left;'>\n  <li>Το ποσό υπολογίζεται βάσει της τελευταίας πράξης προσδιορισμού φόρου.</li>\n  <li>Η αντικειμενική δαπάνη αφορά:\n    <ul style='list-style-type: circle; padding-left:20px;'>\n      <li>Επιβατικά αυτοκίνητα Ιδιωτικής Χρήσης (Ι.Χ.).</li>\n      <li>Επιβατικά αυτοκίνητα Μικτής Χρήσης (Μ.Χ.).</li>\n    </ul>\n  </li>\n  <li>Η συνολική αντικειμενική δαπάνη δεν μπορεί να υπερβαίνει το ποσό των 6.000 ευρώ.</li>\n</ul>",
+    "eligibility": { "kea": { "type": "formula", "formulaKey": "keaVehicleThresholdFormula" } }
+  },
+  {
+    "key": "luxuryBelonging",
+    "question": "Διαθέτετε κάποιο από τα παρακάτω στοιχεία που αποκλείουν το επίδομα;",
+    "options": [
+      "Όχι, δεν διαθέτω κάποιο από τα παρακάτω",
+      "Αμοιβές πληρωμάτων σκαφών αναψυχής",
+      "Δαπάνες για δίδακτρα άνω των 1.500€ σε ιδιωτικά σχολεία",
+      "Οικιακούς βοηθούς, οδηγούς ή δασκάλους"
+    ],
+    "category": "radio",
+    "tag": "assets",
+    "answer": null,
+    "benefitTags": ["housingBenefit", "kea", "kot"],
+    "eligibility": {
+      "housingBenefit": { "type": "match", "value": "Όχι, δεν διαθέτω κάποιο από τα παρακάτω", "disqualifyReason": "Αποκλείεστε από το Επίδομα Στέγασης λόγω κατοχής πολυτελών αγαθών." },
+      "kea": { "type": "match", "value": "Όχι, δεν διαθέτω κάποιο από τα παρακάτω", "disqualifyReason": "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών." },
+      "kot": { "type": "match", "value": "Όχι, δεν διαθέτω κάποιο από τα παρακάτω", "disqualifyReason": "Αποκλείεστε από το Ελάχιστο Εγγυημένο Εισόδημα λόγω κατοχής πολυτελών αγαθών." }
+    }
+  },
+  {
+    "key": "vulnerableCategory",
+    "question": "Υπάρχει μέλος ή μέλη στο νοικοκυριό σας που ανήκουν σε κάποια απο τις παρακάτω ευάλωτες κατηγορίες;",
+    "category": "radio",
+    "options": ["Όχι δεν υπάρχουν", "Αναπηρία 67% και άνω", "Χρειάζονται μηχανική υποστήριξη κατ' οίκον με ιατρικές συσκευές"],
+    "tag": "special-needs",
+    "answer": null,
+    "benefitTags": ["kot"]
+  },
+  {
+    "key": "income6m",
+    "question": "Ποιο είναι το συνολικό εισόδημα του νοικοκυριού σας για τους τελευταίους 6 μήνες σε ευρώ;",
+    "category": "textbox",
+    "tag": "income",
+    "answer": null,
+    "benefitTags": ["kea"],
+    "note": "<p class='govgr-body' style='text-align:left;'>\n  Το εισόδημα αφορά όλα τα μέλη του νοικοκυριού, ενήλικα και ανήλικα.\n</p>",
+    "eligibility": { "kea": { "type": "formula", "formulaKey": "keaIncomeThresholdFormula" } }
+  }
+]

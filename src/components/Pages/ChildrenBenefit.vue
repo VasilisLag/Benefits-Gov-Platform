@@ -82,7 +82,7 @@ import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
-import allQuestions from '@/questions/childrenBenefitQs.js';
+import allQuestions from '@/questions/childrenBenefitQs.json';
 import { evaluateAll } from '@/engine/evaluateAll.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
 import { calcChildrenBenefitAllowance } from '@/utils/calculates.js';

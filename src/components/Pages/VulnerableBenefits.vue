@@ -81,7 +81,7 @@ import SummaryTable from '@/components/Elements/SummaryTable.vue';
 import ResultsForm from '@/components/Elements/ResultsForm.vue';
 import ResultsAccordion from '@/components/Elements/ResultsAccordion.vue';
 import ExpandableFAQ from '@/components/Elements/ExpandableFAQ.vue';
-import allQuestions from '@/questions/vulnerableBenefitsQs.js';
+import allQuestions from '@/questions/vulnerableBenefitsQs.json';
 import { calcKEABenefitAllowance, calcKOTBenefitAllowance } from '@/utils/calculates.js';
 import { evaluateAll } from '@/engine/evaluateAll.js';
 import { questionsInfo } from '@/info/questionsInfo.js';
